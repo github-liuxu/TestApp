@@ -22,7 +22,37 @@
 		588B7E1F2B63F1B6005ADA60 /* TimelineAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E1E2B63F1B6005ADA60 /* TimelineAction.swift */; };
 		588B7E212B64E92E005ADA60 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E202B64E92E005ADA60 /* Utils.swift */; };
 		588B7E232B64EE24005ADA60 /* PreViewTimelineInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E222B64EE24005ADA60 /* PreViewTimelineInteraction.swift */; };
+		588B7E412B67A3FD005ADA60 /* meishesdk.lic in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E402B67A3FD005ADA60 /* meishesdk.lic */; };
+		588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */; };
+		588B7E582B67AF61005ADA60 /* LDXImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		588B7E612B68DBB3005ADA60 /* AlbumUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */; };
+		588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E632B68E8E9005ADA60 /* CaptureViewController.swift */; };
+		588B7E682B68EE04005ADA60 /* CaptureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E672B68EE04005ADA60 /* CaptureAction.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		588B7E502B67ACAE005ADA60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AAA8FE271ACDA0CE002A9710;
+			remoteInfo = LDXImagePickerDemo;
+		};
+		588B7E522B67ACAE005ADA60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AAA8FE031ACDA079002A9710;
+			remoteInfo = LDXImagePicker;
+		};
+		588B7E542B67ACC1005ADA60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AAA8FE021ACDA079002A9710;
+			remoteInfo = LDXImagePicker;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		585C69D82A7CC5D500BB945E /* Embed Frameworks */ = {
@@ -32,6 +62,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				585C69D72A7CC5D500BB945E /* NvStreamingSdkCore.framework in Embed Frameworks */,
+				588B7E582B67AF61005ADA60 /* LDXImagePicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,6 +86,11 @@
 		588B7E1E2B63F1B6005ADA60 /* TimelineAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineAction.swift; sourceTree = "<group>"; };
 		588B7E202B64E92E005ADA60 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		588B7E222B64EE24005ADA60 /* PreViewTimelineInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreViewTimelineInteraction.swift; sourceTree = "<group>"; };
+		588B7E402B67A3FD005ADA60 /* meishesdk.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = meishesdk.lic; sourceTree = "<group>"; };
+		588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LDXImagePicker.xcodeproj; path = LDXImagePicker/LDXImagePicker.xcodeproj; sourceTree = "<group>"; };
+		588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumUtils.swift; sourceTree = "<group>"; };
+		588B7E632B68E8E9005ADA60 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		588B7E672B68EE04005ADA60 /* CaptureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				585C69D62A7CC5D500BB945E /* NvStreamingSdkCore.framework in Frameworks */,
+				588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +109,7 @@
 		585C69B02A7BBDC300BB945E = {
 			isa = PBXGroup;
 			children = (
+				588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */,
 				585C69BB2A7BBDC300BB945E /* TestApp */,
 				585C69BA2A7BBDC300BB945E /* Products */,
 				585C69D42A7CC5D400BB945E /* Frameworks */,
@@ -89,11 +127,13 @@
 		585C69BB2A7BBDC300BB945E /* TestApp */ = {
 			isa = PBXGroup;
 			children = (
+				588B7E402B67A3FD005ADA60 /* meishesdk.lic */,
 				588B7E152B63E539005ADA60 /* MyWork */,
 				585C69BC2A7BBDC300BB945E /* AppDelegate.swift */,
 				585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */,
 				585C69C02A7BBDC300BB945E /* ViewController.swift */,
 				585C69D02A7CC2C400BB945E /* EditViewController.swift */,
+				588B7E632B68E8E9005ADA60 /* CaptureViewController.swift */,
 				585C69C22A7BBDC300BB945E /* Main.storyboard */,
 				585C69C52A7BBDC400BB945E /* Assets.xcassets */,
 				585C69C72A7BBDC400BB945E /* LaunchScreen.storyboard */,
@@ -113,14 +153,33 @@
 		588B7E152B63E539005ADA60 /* MyWork */ = {
 			isa = PBXGroup;
 			children = (
-				588B7E162B63E572005ADA60 /* TimelineCreate.swift */,
+				588B7E6A2B690262005ADA60 /* action */,
 				588B7E202B64E92E005ADA60 /* Utils.swift */,
-				588B7E1E2B63F1B6005ADA60 /* TimelineAction.swift */,
 				588B7E182B63E8A7005ADA60 /* PreView.swift */,
 				588B7E222B64EE24005ADA60 /* PreViewTimelineInteraction.swift */,
 				588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */,
+				588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */,
 			);
 			path = MyWork;
+			sourceTree = "<group>";
+		};
+		588B7E4C2B67ACAE005ADA60 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				588B7E512B67ACAE005ADA60 /* LDXImagePickerDemo.app */,
+				588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		588B7E6A2B690262005ADA60 /* action */ = {
+			isa = PBXGroup;
+			children = (
+				588B7E162B63E572005ADA60 /* TimelineCreate.swift */,
+				588B7E1E2B63F1B6005ADA60 /* TimelineAction.swift */,
+				588B7E672B68EE04005ADA60 /* CaptureAction.swift */,
+			);
+			path = action;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +197,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				588B7E552B67ACC1005ADA60 /* PBXTargetDependency */,
 			);
 			name = TestApp;
 			productName = TestApp;
@@ -170,6 +230,12 @@
 			mainGroup = 585C69B02A7BBDC300BB945E;
 			productRefGroup = 585C69BA2A7BBDC300BB945E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 588B7E4C2B67ACAE005ADA60 /* Products */;
+					ProjectRef = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				585C69B82A7BBDC300BB945E /* TestApp */,
@@ -177,11 +243,29 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		588B7E512B67ACAE005ADA60 /* LDXImagePickerDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LDXImagePickerDemo.app;
+			remoteRef = 588B7E502B67ACAE005ADA60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LDXImagePicker.framework;
+			remoteRef = 588B7E522B67ACAE005ADA60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		585C69B72A7BBDC300BB945E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				588B7E412B67A3FD005ADA60 /* meishesdk.lic in Resources */,
 				585C69C92A7BBDC400BB945E /* LaunchScreen.storyboard in Resources */,
 				588B7E1B2B63E8B5005ADA60 /* Livewindow.xib in Resources */,
 				585C69C62A7BBDC400BB945E /* Assets.xcassets in Resources */,
@@ -196,9 +280,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				588B7E682B68EE04005ADA60 /* CaptureAction.swift in Sources */,
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
 				588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */,
+				588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */,
 				585C69D22A7CC2C400BB945E /* EditViewController.swift in Sources */,
+				588B7E612B68DBB3005ADA60 /* AlbumUtils.swift in Sources */,
 				588B7E232B64EE24005ADA60 /* PreViewTimelineInteraction.swift in Sources */,
 				588B7E1F2B63F1B6005ADA60 /* TimelineAction.swift in Sources */,
 				585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */,
@@ -209,6 +296,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		588B7E552B67ACC1005ADA60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LDXImagePicker;
+			targetProxy = 588B7E542B67ACC1005ADA60 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		585C69C22A7BBDC300BB945E /* Main.storyboard */ = {
@@ -370,7 +465,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.meishe.sdkdemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.meishe.ms240sdkdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -404,7 +499,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.meishe.sdkdemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.meishe.ms240sdkdemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

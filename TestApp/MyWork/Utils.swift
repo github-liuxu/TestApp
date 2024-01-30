@@ -7,6 +7,8 @@
 
 import Foundation
 
+let Documents = NSHomeDirectory() + "/Documents/"
+
 func currentDateAndTime() -> String {
     let date = Date()
     let zone = NSTimeZone.system

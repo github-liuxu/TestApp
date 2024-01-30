@@ -45,12 +45,22 @@
                                     <action selector="editClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UCE-vF-NVa"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ylv-Hq-28f">
+                                <rect key="frame" x="155" y="323.66666666666669" width="83" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="capture"/>
+                                <connections>
+                                    <segue destination="f8K-7J-gie" kind="show" identifier="" id="r6M-IR-ZAW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Jeb-Eh-PS2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1oi-rk-lvt"/>
+                            <constraint firstItem="Ylv-Hq-28f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Hu-5f-QqT"/>
                             <constraint firstItem="Jeb-Eh-PS2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ZAt-kE-tpu"/>
+                            <constraint firstItem="Jeb-Eh-PS2" firstAttribute="top" secondItem="Ylv-Hq-28f" secondAttribute="bottom" constant="50" id="csW-G6-Lmn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TdG-75-Pl0"/>
@@ -73,6 +83,67 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yeY-VQ-nkq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="794" y="-24"/>
+        </scene>
+        <!--Capture View Controller-->
+        <scene sceneID="QbL-Jb-0p6">
+            <objects>
+                <viewController storyboardIdentifier="CaptureViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f8K-7J-gie" customClass="CaptureViewController" customModule="TestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BhK-m4-YtK">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uzF-uD-gNM" customClass="NvsLiveWindow">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVJ-3G-dHc">
+                                        <rect key="frame" x="159" y="586" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="lQx-3B-xvM"/>
+                                            <constraint firstAttribute="width" constant="75" id="ohY-jh-3cL"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="record"/>
+                                        <connections>
+                                            <action selector="recordClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="o1p-EL-Mdl"/>
+                                        </connections>
+                                    </button>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UKx-Eu-l1x">
+                                        <rect key="frame" x="304" y="32" width="49" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="Omd-QO-LzQ"/>
+                                            <constraint firstAttribute="width" constant="47" id="a2r-Qk-K2U"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="switchCamera:" destination="f8K-7J-gie" eventType="valueChanged" id="xiW-Qs-cHW"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="UKx-Eu-l1x" secondAttribute="trailing" constant="42" id="1oE-bJ-q5Z"/>
+                                    <constraint firstAttribute="bottom" secondItem="OVJ-3G-dHc" secondAttribute="bottom" constant="54" id="DZY-97-NkK"/>
+                                    <constraint firstItem="OVJ-3G-dHc" firstAttribute="centerX" secondItem="uzF-uD-gNM" secondAttribute="centerX" id="HGM-d6-J0G"/>
+                                    <constraint firstItem="UKx-Eu-l1x" firstAttribute="top" secondItem="uzF-uD-gNM" secondAttribute="top" constant="32" id="vTn-M7-CG1"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="AOx-xp-BJu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uzF-uD-gNM" firstAttribute="leading" secondItem="AOx-xp-BJu" secondAttribute="leading" id="GsO-Dj-3FO"/>
+                            <constraint firstItem="uzF-uD-gNM" firstAttribute="top" secondItem="AOx-xp-BJu" secondAttribute="top" id="O7R-Fe-EUN"/>
+                            <constraint firstItem="AOx-xp-BJu" firstAttribute="bottom" secondItem="uzF-uD-gNM" secondAttribute="bottom" id="a3N-7N-RwG"/>
+                            <constraint firstItem="AOx-xp-BJu" firstAttribute="trailing" secondItem="uzF-uD-gNM" secondAttribute="trailing" id="i80-Vu-Q2w"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="5AY-6g-OoC"/>
+                    <connections>
+                        <outlet property="livewindow" destination="uzF-uD-gNM" id="tVe-w3-Nf0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Sx-Jt-ZK6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="791.60305343511448" y="-721.12676056338034"/>
         </scene>
     </scenes>
     <resources>

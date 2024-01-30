@@ -8,11 +8,12 @@
 import Foundation
 import NvStreamingSdkCore
 
-class TimelineAction: NSObject, NvsStreamingContextDelegate {
+class TimelineAction: NSObject {
     var livewindow: NvsLiveWindow!
     var timeline: NvsTimeline!
     let streamingContext = NvsStreamingContext.sharedInstance()
     
+    var didPlaybackTimelinePosition:((_ posotion: Int64, _ progress: Float) -> ())? = nil
     var playStateChanged:((_ isPlay: Bool)->())? = nil
     var timeValueChanged:((_ currentTime: String, _ duration: String)->())? = nil
     var compileProgressChanged:((_ progress: Int32) -> ())? = nil
@@ -67,6 +68,9 @@ class TimelineAction: NSObject, NvsStreamingContextDelegate {
         timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))
     }
     
+}
+
+extension TimelineAction: NvsStreamingContextDelegate {
     func didStreamingEngineStateChanged(_ state: NvsStreamingEngineState) {
         playStateChanged?(state == NvsStreamingEngineState_Playback)
     }
@@ -75,4 +79,10 @@ class TimelineAction: NSObject, NvsStreamingContextDelegate {
         compileProgressChanged?(progress)
     }
     
+    func didPlaybackTimelinePosition(_ timeline: NvsTimeline!, position: Int64) {
+        let currentTime = streamingContext!.getTimelineCurrentPosition(timeline)
+        timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))
+        
+        didPlaybackTimelinePosition?(position, Float(position) / Float(timeline.duration))
+    }
 }

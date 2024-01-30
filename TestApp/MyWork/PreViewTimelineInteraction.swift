@@ -33,6 +33,9 @@ class PreViewTimelineInteraction {
             self?.preview.currentTime.text = currentTime
             self?.preview.durationTime.text = duration
         }
+        timelineAction.didPlaybackTimelinePosition = { position, progress in
+            self.preview.slider.value = progress
+        }
         timelineAction.compileProgressChanged = { progress in
             print(progress)
         }

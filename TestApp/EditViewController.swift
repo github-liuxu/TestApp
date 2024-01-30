@@ -11,6 +11,7 @@ import Combine
 
 class EditViewController: UIViewController, NvsStreamingContextDelegate {
 
+    var albumUtils: OpenAlbumEnable?
     var localIdentifies = [String]()
     var preview: PreView!
     var preViewInteraction: PreViewTimelineInteraction!
