@@ -10,7 +10,8 @@ import UIKit
 class AssetView: UIView {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    var dataSources: [DataSourceItem] = [DataSourceItem]()
+    var didSelectBlock: ((_ index: Int, _ item: DataSourceItem) -> Void)? = nil
     override func awakeFromNib() {
         setup()
         super.awakeFromNib()
@@ -29,6 +30,14 @@ class AssetView: UIView {
         }
     }
     
+    func reload() {
+        collectionView.reloadData()
+    }
+    
+    func didSelectItem(_ block: @escaping ((_ index: Int, _ item: DataSourceItem) -> Void)) {
+        didSelectBlock = block
+    }
+    
     class func LoadView() -> AssetView? {
         let nib = UINib.init(nibName: "AssetView", bundle: Bundle.main)
         return nib.instantiate(withOwner: self).first as? AssetView
@@ -37,13 +46,16 @@ class AssetView: UIView {
 
 extension AssetView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return dataSources.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssetCollectionViewCell", for: indexPath) as! AssetCollectionViewCell
+        cell.imageView.image = UIImage(contentsOfFile: dataSources[indexPath.item].imagePath)
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        didSelectBlock?(indexPath.item, dataSources[indexPath.item])
+    }
 }

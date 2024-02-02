@@ -13,10 +13,12 @@ class CaptureViewController: UIViewController {
     @IBOutlet weak var livewindow: NvsLiveWindow!
     var streamingContext = NvsStreamingContext.sharedInstance()
     let capture = CaptureAction()
+    var filterAsset = FilterAssetGetter()
     override func viewDidLoad() {
         super.viewDidLoad()
         livewindow.fillMode = NvsLiveWindowFillModePreserveAspectFit
         capture.startPreview(livewindow: livewindow)
+        
         // Do any additional setup after loading the view.
     }
     
@@ -40,7 +42,18 @@ class CaptureViewController: UIViewController {
             UIView.animate(withDuration: 0.25) {
                 filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
             }
+            
+            filterAsset.didLoadAsset { datas in
+                filterView.dataSources.append(contentsOf: datas)
+                filterView.reload()
+            }
+            
+            filterView.didSelectItem {[weak self] index, item in
+                guard let weakSelf = self else { return }
+                weakSelf.capture.applyFilter(item: item)
+            }
         }
+        
     }
     
     @IBAction func switchCamera(_ sender: UISwitch) {

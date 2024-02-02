@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58131F272B6CFFC200FED7FE /* videofx in Resources */ = {isa = PBXBuildFile; fileRef = 58131F262B6CFFC100FED7FE /* videofx */; };
 		585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69BC2A7BBDC300BB945E /* AppDelegate.swift */; };
 		585C69BF2A7BBDC300BB945E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */; };
 		585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69C02A7BBDC300BB945E /* ViewController.swift */; };
@@ -33,6 +34,7 @@
 		588B7E7A2B6A4669005ADA60 /* AssetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E782B6A4669005ADA60 /* AssetCollectionViewCell.swift */; };
 		588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */; };
 		588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E7D2B6A49D2005ADA60 /* DataSource.swift */; };
+		58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		58131F262B6CFFC100FED7FE /* videofx */ = {isa = PBXFileReference; lastKnownFileType = folder; path = videofx; sourceTree = "<group>"; };
 		585C69B92A7BBDC300BB945E /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		585C69BC2A7BBDC300BB945E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 		588B7E782B6A4669005ADA60 /* AssetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCollectionViewCell.swift; sourceTree = "<group>"; };
 		588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetCollectionViewCell.xib; sourceTree = "<group>"; };
 		588B7E7D2B6A49D2005ADA60 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAssetGetter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				588B7E402B67A3FD005ADA60 /* meishesdk.lic */,
+				58131F262B6CFFC100FED7FE /* videofx */,
 				588B7E152B63E539005ADA60 /* MyWork */,
 				585C69BC2A7BBDC300BB945E /* AppDelegate.swift */,
 				585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */,
@@ -209,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				588B7E7D2B6A49D2005ADA60 /* DataSource.swift */,
+				58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */,
 			);
 			path = dataSource;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 				585C69C92A7BBDC400BB945E /* LaunchScreen.storyboard in Resources */,
 				588B7E1B2B63E8B5005ADA60 /* Livewindow.xib in Resources */,
 				585C69C62A7BBDC400BB945E /* Assets.xcassets in Resources */,
+				58131F272B6CFFC200FED7FE /* videofx in Resources */,
 				588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */,
 				585C69C42A7BBDC300BB945E /* Main.storyboard in Resources */,
 				588B7E732B6A3D7B005ADA60 /* AssetView.xib in Resources */,
@@ -316,6 +323,7 @@
 				588B7E752B6A3D92005ADA60 /* AssetView.swift in Sources */,
 				588B7E682B68EE04005ADA60 /* CaptureAction.swift in Sources */,
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
+				58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */,
 				588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */,
 				588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */,
 				588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */,

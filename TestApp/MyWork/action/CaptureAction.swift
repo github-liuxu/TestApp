@@ -11,6 +11,7 @@ import NvStreamingSdkCore
 class CaptureAction: NSObject {
     var streamingContext = NvsStreamingContext.sharedInstance()
     var cameraIndex: UInt32 = 0
+    var filterFx: NvsCaptureVideoFx?
     func startPreview(livewindow: NvsLiveWindow) {
         streamingContext?.connectCapturePreview(with: livewindow)
         streamingContext?.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
@@ -32,6 +33,17 @@ class CaptureAction: NSObject {
             cameraIndex = 0
         }
         streamingContext?.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
+    }
+    
+    func applyFilter(item: DataSourceItem) {
+        var pid = NSMutableString()
+        streamingContext?.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
+        if let filterFx = filterFx {
+            streamingContext?.removeCaptureVideoFx(filterFx.index)
+        }
+        if pid.length > 0 {
+            filterFx = streamingContext?.appendPackagedCaptureVideoFx(pid as String)
+        }
     }
 
 }
