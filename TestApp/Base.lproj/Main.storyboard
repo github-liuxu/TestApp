@@ -117,13 +117,23 @@
                                             <action selector="switchCamera:" destination="f8K-7J-gie" eventType="valueChanged" id="xiW-Qs-cHW"/>
                                         </connections>
                                     </switch>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSa-i7-0zg">
+                                        <rect key="frame" x="306" y="108" width="59" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="filter"/>
+                                        <connections>
+                                            <action selector="filterClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="cA2-gt-Tub"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="UKx-Eu-l1x" secondAttribute="trailing" constant="42" id="1oE-bJ-q5Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="vSa-i7-0zg" secondAttribute="trailing" constant="28" id="9Sq-Rp-U3r"/>
                                     <constraint firstAttribute="bottom" secondItem="OVJ-3G-dHc" secondAttribute="bottom" constant="54" id="DZY-97-NkK"/>
                                     <constraint firstItem="OVJ-3G-dHc" firstAttribute="centerX" secondItem="uzF-uD-gNM" secondAttribute="centerX" id="HGM-d6-J0G"/>
                                     <constraint firstItem="UKx-Eu-l1x" firstAttribute="top" secondItem="uzF-uD-gNM" secondAttribute="top" constant="32" id="vTn-M7-CG1"/>
+                                    <constraint firstItem="vSa-i7-0zg" firstAttribute="top" secondItem="UKx-Eu-l1x" secondAttribute="bottom" constant="45" id="zQl-l3-Zdi"/>
                                 </constraints>
                             </view>
                         </subviews>

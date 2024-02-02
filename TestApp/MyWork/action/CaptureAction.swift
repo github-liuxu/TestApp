@@ -18,7 +18,7 @@ class CaptureAction: NSObject {
     
     func startRecording() {
         let recordingPath = Documents + currentDateAndTime() + ".mov"
-        streamingContext?.startRecording(recordingPath)
+        streamingContext?.startRecording(withFx: recordingPath, withFlags: 0, withRecordConfigurations: nil)
     }
     
     func stopRecording() {

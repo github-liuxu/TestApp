@@ -33,6 +33,16 @@ class CaptureViewController: UIViewController {
         sender.setTitle(text, for: .normal)
     }
     
+    @IBAction func filterClick(_ sender: UIButton) {
+        if let filterView = AssetView.LoadView() {
+            view.addSubview(filterView)
+            filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 300)
+            UIView.animate(withDuration: 0.25) {
+                filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
+            }
+        }
+    }
+    
     @IBAction func switchCamera(_ sender: UISwitch) {
         capture.switchCamera()
     }
