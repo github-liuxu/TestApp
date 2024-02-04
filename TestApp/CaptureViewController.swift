@@ -14,6 +14,11 @@ class CaptureViewController: UIViewController {
     var streamingContext = NvsStreamingContext.sharedInstance()
     let capture = CaptureAction()
     var filterAsset = FilterAssetGetter()
+    
+    deinit {
+        NvsStreamingContext.destroyInstance()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         livewindow.fillMode = NvsLiveWindowFillModePreserveAspectFit

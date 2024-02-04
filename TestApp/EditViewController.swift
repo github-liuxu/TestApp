@@ -15,6 +15,11 @@ class EditViewController: UIViewController, NvsStreamingContextDelegate {
     var localIdentifies = [String]()
     var preview: PreView!
     var preViewInteraction: PreViewTimelineInteraction!
+    
+    deinit {
+        NvsStreamingContext.destroyInstance()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = getVertionString()
