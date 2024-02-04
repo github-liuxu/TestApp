@@ -13,6 +13,8 @@ class TimelineAction: NSObject {
     var timeline: NvsTimeline!
     let streamingContext = NvsStreamingContext.sharedInstance()
     
+    var filterFx: NvsTimelineVideoFx?
+    
     var didPlaybackTimelinePosition:((_ posotion: Int64, _ progress: Float) -> ())? = nil
     var playStateChanged:((_ isPlay: Bool)->())? = nil
     var timeValueChanged:((_ currentTime: String, _ duration: String)->())? = nil
@@ -86,3 +88,39 @@ extension TimelineAction: NvsStreamingContextDelegate {
         didPlaybackTimelinePosition?(position, Float(position) / Float(timeline.duration))
     }
 }
+
+extension TimelineAction: FilterProtocal {
+    func applyFilter(item: DataSourceItem) {
+        let pid = NSMutableString()
+        streamingContext?.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
+        if filterFx?.timelineVideoFxType == NvsTimelineVideoFxType_Builtin {
+            if filterFx?.bultinTimelineVideoFxName == item.bultinName {
+                return
+            }
+        } else {
+            if filterFx?.timelineVideoFxPackageId == pid as String {
+                return
+            }
+        }
+        
+        if let filterFx = filterFx {
+            timeline.remove(filterFx)
+            self.filterFx = nil
+        }
+        if pid.length > 0 {
+            filterFx = timeline.addPackagedTimelineVideoFx(0, duration: timeline.duration, videoFxPackageId: pid as String)
+        }
+        seek(time: streamingContext?.getTimelineCurrentPosition(timeline) ?? 0)
+    }
+    
+    func setFilterStrength(value: Float) {
+        guard let filterFx = filterFx else { return }
+        filterFx.setFilterIntensity(value)
+        seek(time: streamingContext?.getTimelineCurrentPosition(timeline) ?? 0)
+    }
+    
+    func getFilterStrength() -> Float {
+        return filterFx?.getFilterIntensity() ?? 0
+    }
+}
+

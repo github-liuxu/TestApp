@@ -14,7 +14,7 @@ class CaptureViewController: UIViewController {
     var streamingContext = NvsStreamingContext.sharedInstance()
     let capture = CaptureAction()
     var filterAsset = FilterAssetGetter()
-    
+    var filterInteraction: FilterInteraction?
     deinit {
         NvsStreamingContext.destroyInstance()
     }
@@ -47,22 +47,7 @@ class CaptureViewController: UIViewController {
             UIView.animate(withDuration: 0.25) {
                 filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
             }
-            
-            filterAsset.didLoadAsset { datas in
-                filterView.dataSources.append(contentsOf: datas)
-                filterView.reload()
-            }
-            
-            filterView.didSelectItem {[weak self] index, item in
-                guard let weakSelf = self else { return }
-                weakSelf.capture.applyFilter(item: item)
-                filterView.slider.value = weakSelf.capture.getFilterStrength()
-            }
-            
-            filterView.didSliderValueChanged = {[weak self] value in
-                guard let weakSelf = self else { return }
-                weakSelf.capture.setFilterStrength(value: value)
-            }
+            filterInteraction = FilterInteraction(filterView, filterAction: self.capture)
         }
         
     }

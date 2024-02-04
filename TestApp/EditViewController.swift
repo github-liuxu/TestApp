@@ -15,6 +15,7 @@ class EditViewController: UIViewController, NvsStreamingContextDelegate {
     var localIdentifies = [String]()
     var preview: PreView!
     var preViewInteraction: PreViewTimelineInteraction!
+    var filterInteraction: FilterInteraction?
     
     deinit {
         NvsStreamingContext.destroyInstance()
@@ -41,4 +42,14 @@ class EditViewController: UIViewController, NvsStreamingContextDelegate {
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func fliterClick(_ sender: UIButton) {
+        if let filterView = AssetView.LoadView() {
+            view.addSubview(filterView)
+            filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 300)
+            UIView.animate(withDuration: 0.25) {
+                filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
+            }
+            filterInteraction = FilterInteraction(filterView, filterAction: self.preViewInteraction.timelineAction)
+        }
+    }
 }

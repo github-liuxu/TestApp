@@ -35,6 +35,9 @@ class CaptureAction: NSObject {
         streamingContext?.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
     }
     
+}
+
+extension CaptureAction: FilterProtocal {
     func applyFilter(item: DataSourceItem) {
         let pid = NSMutableString()
         streamingContext?.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
@@ -64,5 +67,4 @@ class CaptureAction: NSObject {
     func getFilterStrength() -> Float {
         return filterFx?.getFilterIntensity() ?? 0
     }
-
 }

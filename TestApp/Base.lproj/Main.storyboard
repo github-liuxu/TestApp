@@ -76,8 +76,22 @@
                     <view key="view" contentMode="scaleToFill" id="1gx-Si-mkz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9X-tU-7UM">
+                                <rect key="frame" x="16" y="749" width="59" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="filter"/>
+                                <connections>
+                                    <action selector="fliterClick:" destination="1DD-2T-y07" eventType="touchUpInside" id="glw-6q-Yb3"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="old-Ro-R2R"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="J9X-tU-7UM" firstAttribute="leading" secondItem="old-Ro-R2R" secondAttribute="leading" constant="16" id="nZh-my-Q2H"/>
+                            <constraint firstItem="old-Ro-R2R" firstAttribute="bottom" secondItem="J9X-tU-7UM" secondAttribute="bottom" constant="34" id="rtu-aM-0Rr"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yeY-VQ-nkq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

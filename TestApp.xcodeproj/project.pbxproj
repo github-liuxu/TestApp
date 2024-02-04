@@ -17,6 +17,8 @@
 		585C69D22A7CC2C400BB945E /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69D02A7CC2C400BB945E /* EditViewController.swift */; };
 		585C69D62A7CC5D500BB945E /* NvStreamingSdkCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */; };
 		585C69D72A7CC5D500BB945E /* NvStreamingSdkCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5862AAAE2B6F3BB600195421 /* FilterInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */; };
+		5862AAB22B6F3D4900195421 /* FilterProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAB12B6F3D4900195421 /* FilterProtocal.swift */; };
 		588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E162B63E572005ADA60 /* TimelineCreate.swift */; };
 		588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E182B63E8A7005ADA60 /* PreView.swift */; };
 		588B7E1B2B63E8B5005ADA60 /* Livewindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */; };
@@ -88,6 +90,8 @@
 		585C69CA2A7BBDC400BB945E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		585C69D02A7CC2C400BB945E /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NvStreamingSdkCore.framework; sourceTree = "<group>"; };
+		5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInteraction.swift; sourceTree = "<group>"; };
+		5862AAB12B6F3D4900195421 /* FilterProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterProtocal.swift; sourceTree = "<group>"; };
 		588B7E162B63E572005ADA60 /* TimelineCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineCreate.swift; sourceTree = "<group>"; };
 		588B7E182B63E8A7005ADA60 /* PreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreView.swift; sourceTree = "<group>"; };
 		588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Livewindow.xib; sourceTree = "<group>"; };
@@ -165,15 +169,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5862AAB02B6F3D3C00195421 /* protocal */ = {
+			isa = PBXGroup;
+			children = (
+				5862AAB12B6F3D4900195421 /* FilterProtocal.swift */,
+			);
+			path = protocal;
+			sourceTree = "<group>";
+		};
 		588B7E152B63E539005ADA60 /* MyWork */ = {
 			isa = PBXGroup;
 			children = (
+				5862AAB02B6F3D3C00195421 /* protocal */,
 				588B7E7C2B6A49A1005ADA60 /* dataSource */,
 				588B7E702B6A3D65005ADA60 /* view */,
 				588B7E6A2B690262005ADA60 /* action */,
 				588B7E202B64E92E005ADA60 /* Utils.swift */,
 				588B7E182B63E8A7005ADA60 /* PreView.swift */,
 				588B7E222B64EE24005ADA60 /* PreViewTimelineInteraction.swift */,
+				5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */,
 				588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */,
 				588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */,
 			);
@@ -321,7 +335,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				588B7E752B6A3D92005ADA60 /* AssetView.swift in Sources */,
+				5862AAAE2B6F3BB600195421 /* FilterInteraction.swift in Sources */,
 				588B7E682B68EE04005ADA60 /* CaptureAction.swift in Sources */,
+				5862AAB22B6F3D4900195421 /* FilterProtocal.swift in Sources */,
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
 				58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */,
 				588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */,
