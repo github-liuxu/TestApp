@@ -36,11 +36,11 @@ class ViewController: UIViewController {
             var array = [String]()
             assets.forEach { phasset in
                 array.append(phasset.localIdentifier)
-                let edit = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EditViewController") as! EditViewController
-                edit.localIdentifies = array
-                edit.albumUtils = self?.albumUtils
-                self?.navigationController?.pushViewController(edit, animated: true)
             }
+            let edit = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EditViewController") as! EditViewController
+            edit.localIdentifies = array
+            edit.albumUtils = self?.albumUtils
+            self?.navigationController?.pushViewController(edit, animated: true)
         }
     }
     

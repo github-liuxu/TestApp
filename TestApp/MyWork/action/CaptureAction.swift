@@ -36,7 +36,7 @@ class CaptureAction: NSObject {
     }
     
     func applyFilter(item: DataSourceItem) {
-        var pid = NSMutableString()
+        let pid = NSMutableString()
         streamingContext?.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         if filterFx?.captureVideoFxType == NvsCaptureVideoFxType_Builtin {
             if filterFx?.bultinCaptureVideoFxName == item.bultinName {
