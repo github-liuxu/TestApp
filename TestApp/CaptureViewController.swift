@@ -51,6 +51,12 @@ class CaptureViewController: UIViewController {
             filterView.didSelectItem {[weak self] index, item in
                 guard let weakSelf = self else { return }
                 weakSelf.capture.applyFilter(item: item)
+                filterView.slider.value = weakSelf.capture.getFilterStrength()
+            }
+            
+            filterView.didSliderValueChanged = {[weak self] value in
+                guard let weakSelf = self else { return }
+                weakSelf.capture.setFilterStrength(value: value)
             }
         }
         

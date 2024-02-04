@@ -20,18 +20,27 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fyh-oe-ZCj">
                         <rect key="frame" x="0.0" y="0.0" width="115" height="115"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O40-B3-eEW">
+                        <rect key="frame" x="36.666666666666664" y="94" width="41.999999999999993" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="Fyh-oe-ZCj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="1zI-vz-e6I"/>
+                <constraint firstItem="O40-B3-eEW" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="964-px-BAJ"/>
                 <constraint firstAttribute="bottom" secondItem="Fyh-oe-ZCj" secondAttribute="bottom" id="b6l-W5-G3F"/>
                 <constraint firstAttribute="trailing" secondItem="Fyh-oe-ZCj" secondAttribute="trailing" id="fLk-bm-eAw"/>
                 <constraint firstItem="Fyh-oe-ZCj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="n27-8e-7xO"/>
+                <constraint firstAttribute="bottom" secondItem="O40-B3-eEW" secondAttribute="bottom" id="xqa-Za-4yQ"/>
             </constraints>
             <size key="customSize" width="115" height="115"/>
             <connections>
                 <outlet property="imageView" destination="Fyh-oe-ZCj" id="D3o-d5-lhm"/>
+                <outlet property="name" destination="O40-B3-eEW" id="5ax-d1-las"/>
             </connections>
             <point key="canvasLocation" x="104.58015267175573" y="11.619718309859156"/>
         </collectionViewCell>

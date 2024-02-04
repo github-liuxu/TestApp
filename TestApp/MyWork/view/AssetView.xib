@@ -19,7 +19,7 @@
                     <rect key="frame" x="0.0" y="35" width="393" height="817"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5oV-pi-mgC">
-                        <size key="itemSize" width="128" height="128"/>
+                        <size key="itemSize" width="75" height="75"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -37,19 +37,30 @@
                         <action selector="closeClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="3pB-Bb-LaW"/>
                     </connections>
                 </button>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="gx0-dX-F1w">
+                    <rect key="frame" x="18" y="0.0" width="304" height="36"/>
+                    <connections>
+                        <action selector="sliderValueChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="aYa-m5-PMd"/>
+                    </connections>
+                </slider>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="0B9-j9-6yw" secondAttribute="trailing" id="5wU-dc-2dK"/>
+                <constraint firstItem="gx0-dX-F1w" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="IAE-ov-8lO"/>
+                <constraint firstItem="gx0-dX-F1w" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="PdY-AX-kNq"/>
                 <constraint firstItem="PjA-HU-WYR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QPU-0b-fxI"/>
                 <constraint firstItem="0B9-j9-6yw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="35" id="VJm-x6-n8F"/>
                 <constraint firstAttribute="bottom" secondItem="0B9-j9-6yw" secondAttribute="bottom" id="Zv6-kg-MkF"/>
                 <constraint firstItem="0B9-j9-6yw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gVJ-il-2Ms"/>
+                <constraint firstItem="PjA-HU-WYR" firstAttribute="leading" secondItem="gx0-dX-F1w" secondAttribute="trailing" constant="8" symbolic="YES" id="hm8-M8-z4B"/>
                 <constraint firstAttribute="trailing" secondItem="PjA-HU-WYR" secondAttribute="trailing" id="oL0-qO-zH7"/>
+                <constraint firstItem="0B9-j9-6yw" firstAttribute="top" secondItem="gx0-dX-F1w" secondAttribute="bottom" id="vY3-xz-MVo"/>
             </constraints>
             <connections>
                 <outlet property="collectionView" destination="0B9-j9-6yw" id="zpB-Ee-Gqx"/>
+                <outlet property="slider" destination="gx0-dX-F1w" id="KO2-hK-jEH"/>
             </connections>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
         </view>

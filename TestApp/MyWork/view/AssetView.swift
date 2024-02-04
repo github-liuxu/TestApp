@@ -9,9 +9,11 @@ import UIKit
 
 class AssetView: UIView {
 
+    @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var collectionView: UICollectionView!
     var dataSources: [DataSourceItem] = [DataSourceItem]()
     var didSelectBlock: ((_ index: Int, _ item: DataSourceItem) -> Void)? = nil
+    var didSliderValueChanged: ((_ value: Float) -> Void)? = nil
     override func awakeFromNib() {
         setup()
         super.awakeFromNib()
@@ -34,6 +36,10 @@ class AssetView: UIView {
         collectionView.reloadData()
     }
     
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        didSliderValueChanged?(slider.value)
+    }
+    
     func didSelectItem(_ block: @escaping ((_ index: Int, _ item: DataSourceItem) -> Void)) {
         didSelectBlock = block
     }
@@ -52,6 +58,7 @@ extension AssetView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssetCollectionViewCell", for: indexPath) as! AssetCollectionViewCell
         cell.imageView.image = UIImage(contentsOfFile: dataSources[indexPath.item].imagePath)
+        cell.name.text = dataSources[indexPath.item].name
         return cell
     }
     

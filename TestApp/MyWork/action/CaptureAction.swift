@@ -38,12 +38,31 @@ class CaptureAction: NSObject {
     func applyFilter(item: DataSourceItem) {
         var pid = NSMutableString()
         streamingContext?.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
+        if filterFx?.captureVideoFxType == NvsCaptureVideoFxType_Builtin {
+            if filterFx?.bultinCaptureVideoFxName == item.bultinName {
+                return
+            }
+        } else {
+            if filterFx?.captureVideoFxPackageId == pid as String {
+                return
+            }
+        }
+        
         if let filterFx = filterFx {
             streamingContext?.removeCaptureVideoFx(filterFx.index)
         }
         if pid.length > 0 {
             filterFx = streamingContext?.appendPackagedCaptureVideoFx(pid as String)
         }
+    }
+    
+    func setFilterStrength(value: Float) {
+        guard let filterFx = filterFx else { return }
+        filterFx.setFilterIntensity(value)
+    }
+    
+    func getFilterStrength() -> Float {
+        return filterFx?.getFilterIntensity() ?? 0
     }
 
 }

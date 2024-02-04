@@ -12,6 +12,7 @@ protocol AssetGetter {
 }
 
 struct DataSourceItem {
+    var bultinName = ""
     var packagePath = ""
     var licPath = ""
     var imagePath = ""
@@ -19,19 +20,34 @@ struct DataSourceItem {
 }
 
 class DataSource: NSObject {
-    
+    var assetDir: String?
     override init() {
-        super.init()
-        loadAsset()
+        fatalError("init method error!")
     }
-    
-    func loadAsset() {
-        
+    init(_ assetDir: String) {
+        self.assetDir = assetDir;
+        super.init()
     }
 }
 
 extension DataSource: AssetGetter {
     func didLoadAsset(_ block: ([DataSourceItem]) -> Void) {
-        return block([DataSourceItem()])
+        let fm = FileManager.default
+        var array = [DataSourceItem]()
+        var item = DataSourceItem()
+        item.packagePath = ""
+        item.imagePath = ""
+        item.name = "无"
+        array.append(item)
+        guard let assetDir = assetDir else { return block([]) }
+        fm.subpaths(atPath: assetDir)?.forEach({ name in
+            if name.hasSuffix("videofx") {
+                var item = DataSourceItem()
+                item.packagePath = assetDir + "/" + name
+                item.imagePath = assetDir + "/" + name.split(separator: ".").first! as String + ".png"
+                array.append(item)
+            }
+        })
+        block(array)
     }
 }
