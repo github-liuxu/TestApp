@@ -19,12 +19,13 @@
 		585C69D72A7CC5D500BB945E /* NvStreamingSdkCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5862AAAE2B6F3BB600195421 /* FilterInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */; };
 		5862AAB22B6F3D4900195421 /* FilterProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAB12B6F3D4900195421 /* FilterProtocal.swift */; };
+		5862AAB72B6F71B100195421 /* SequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAB62B6F71B100195421 /* SequenceView.swift */; };
+		5862AABB2B6F888100195421 /* SequenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5862AABA2B6F888100195421 /* SequenceView.xib */; };
 		588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E162B63E572005ADA60 /* TimelineCreate.swift */; };
 		588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E182B63E8A7005ADA60 /* PreView.swift */; };
 		588B7E1B2B63E8B5005ADA60 /* Livewindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */; };
 		588B7E1F2B63F1B6005ADA60 /* TimelineAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E1E2B63F1B6005ADA60 /* TimelineAction.swift */; };
 		588B7E212B64E92E005ADA60 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E202B64E92E005ADA60 /* Utils.swift */; };
-		588B7E232B64EE24005ADA60 /* PreViewTimelineInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E222B64EE24005ADA60 /* PreViewTimelineInteraction.swift */; };
 		588B7E412B67A3FD005ADA60 /* meishesdk.lic in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E402B67A3FD005ADA60 /* meishesdk.lic */; };
 		588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */; };
 		588B7E582B67AF61005ADA60 /* LDXImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -92,12 +93,13 @@
 		585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NvStreamingSdkCore.framework; sourceTree = "<group>"; };
 		5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInteraction.swift; sourceTree = "<group>"; };
 		5862AAB12B6F3D4900195421 /* FilterProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterProtocal.swift; sourceTree = "<group>"; };
+		5862AAB62B6F71B100195421 /* SequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceView.swift; sourceTree = "<group>"; };
+		5862AABA2B6F888100195421 /* SequenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SequenceView.xib; sourceTree = "<group>"; };
 		588B7E162B63E572005ADA60 /* TimelineCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineCreate.swift; sourceTree = "<group>"; };
 		588B7E182B63E8A7005ADA60 /* PreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreView.swift; sourceTree = "<group>"; };
 		588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Livewindow.xib; sourceTree = "<group>"; };
 		588B7E1E2B63F1B6005ADA60 /* TimelineAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineAction.swift; sourceTree = "<group>"; };
 		588B7E202B64E92E005ADA60 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		588B7E222B64EE24005ADA60 /* PreViewTimelineInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreViewTimelineInteraction.swift; sourceTree = "<group>"; };
 		588B7E402B67A3FD005ADA60 /* meishesdk.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = meishesdk.lic; sourceTree = "<group>"; };
 		588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LDXImagePicker.xcodeproj; path = LDXImagePicker/LDXImagePicker.xcodeproj; sourceTree = "<group>"; };
 		588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumUtils.swift; sourceTree = "<group>"; };
@@ -177,6 +179,14 @@
 			path = protocal;
 			sourceTree = "<group>";
 		};
+		5862AAB42B6F714400195421 /* interaction */ = {
+			isa = PBXGroup;
+			children = (
+				5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */,
+			);
+			path = interaction;
+			sourceTree = "<group>";
+		};
 		588B7E152B63E539005ADA60 /* MyWork */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,10 +194,9 @@
 				588B7E7C2B6A49A1005ADA60 /* dataSource */,
 				588B7E702B6A3D65005ADA60 /* view */,
 				588B7E6A2B690262005ADA60 /* action */,
+				5862AAB42B6F714400195421 /* interaction */,
 				588B7E202B64E92E005ADA60 /* Utils.swift */,
 				588B7E182B63E8A7005ADA60 /* PreView.swift */,
-				588B7E222B64EE24005ADA60 /* PreViewTimelineInteraction.swift */,
-				5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */,
 				588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */,
 				588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */,
 			);
@@ -220,6 +229,8 @@
 				588B7E742B6A3D92005ADA60 /* AssetView.swift */,
 				588B7E782B6A4669005ADA60 /* AssetCollectionViewCell.swift */,
 				588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */,
+				5862AAB62B6F71B100195421 /* SequenceView.swift */,
+				5862AABA2B6F888100195421 /* SequenceView.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -323,6 +334,7 @@
 				58131F272B6CFFC200FED7FE /* videofx in Resources */,
 				588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */,
 				585C69C42A7BBDC300BB945E /* Main.storyboard in Resources */,
+				5862AABB2B6F888100195421 /* SequenceView.xib in Resources */,
 				588B7E732B6A3D7B005ADA60 /* AssetView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,6 +349,7 @@
 				588B7E752B6A3D92005ADA60 /* AssetView.swift in Sources */,
 				5862AAAE2B6F3BB600195421 /* FilterInteraction.swift in Sources */,
 				588B7E682B68EE04005ADA60 /* CaptureAction.swift in Sources */,
+				5862AAB72B6F71B100195421 /* SequenceView.swift in Sources */,
 				5862AAB22B6F3D4900195421 /* FilterProtocal.swift in Sources */,
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
 				58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */,
@@ -345,7 +358,6 @@
 				588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */,
 				585C69D22A7CC2C400BB945E /* EditViewController.swift in Sources */,
 				588B7E612B68DBB3005ADA60 /* AlbumUtils.swift in Sources */,
-				588B7E232B64EE24005ADA60 /* PreViewTimelineInteraction.swift in Sources */,
 				588B7E1F2B63F1B6005ADA60 /* TimelineAction.swift in Sources */,
 				585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */,
 				585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */,

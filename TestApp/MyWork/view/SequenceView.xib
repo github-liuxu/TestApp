@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SequenceView" customModule="TestApp">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="76"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6n-WJ-aqd" customClass="NvsMultiThumbnailSequenceView">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="76"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3h-f8-kzZ">
+                    <rect key="frame" x="196" y="0.0" width="1" height="76"/>
+                    <color key="backgroundColor" systemColor="systemBlueColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="QMn-cI-16b"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cWP-h9-Ut4">
+                    <rect key="frame" x="339.33333333333331" y="33.333333333333329" width="53.666666666666686" height="34.333333333333329"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button" image="plus.app" catalog="system"/>
+                    <buttonConfiguration key="configuration" style="plain" image="plus.app" catalog="system" title=" "/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="I3h-f8-kzZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9LD-sr-PuZ"/>
+                <constraint firstItem="I3h-f8-kzZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="A8Y-Cs-GAG"/>
+                <constraint firstItem="v6n-WJ-aqd" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="AgL-PX-Hf9"/>
+                <constraint firstAttribute="bottom" secondItem="v6n-WJ-aqd" secondAttribute="bottom" id="HBr-T6-NDk"/>
+                <constraint firstItem="cWP-h9-Ut4" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="Hbr-k2-gS1"/>
+                <constraint firstItem="v6n-WJ-aqd" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cyO-Aw-oUM"/>
+                <constraint firstItem="v6n-WJ-aqd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="fbB-qs-ScW"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="cWP-h9-Ut4" secondAttribute="trailing" id="na0-9N-uw8"/>
+                <constraint firstAttribute="bottom" secondItem="I3h-f8-kzZ" secondAttribute="bottom" id="sex-1x-Sfd"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="sequenceView" destination="v6n-WJ-aqd" id="4Zm-Gh-WxC"/>
+            </connections>
+            <point key="canvasLocation" x="81.679389312977094" y="261.97183098591552"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="plus.app" catalog="system" width="128" height="114"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

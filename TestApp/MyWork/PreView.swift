@@ -14,18 +14,12 @@ class PreView: UIView {
     
     @IBOutlet weak var playBtn: UIButton!
     
-    @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var durationTime: UILabel!
     @IBOutlet weak var currentTime: UILabel!
     var playBackAction: ((_ btn: UIButton)->())? = nil
-    var valueChangedAction: ((_ slider: UISlider)->())? = nil
     
     @IBAction func playClick(_ sender: UIButton) {
         playBackAction?(sender);
-    }
-    
-    @IBAction func valueChanged(_ sender: UISlider) {
-        valueChangedAction?(sender);
     }
     
     func setPlayState(isPlay: Bool) {

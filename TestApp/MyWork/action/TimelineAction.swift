@@ -62,12 +62,16 @@ class TimelineAction: NSObject {
         streamingContext?.compileTimeline(timeline, startTime: 0, endTime: timeline.duration, outputFilePath: compilePath, videoResolutionGrade: NvsCompileVideoResolutionGradeCustom, videoBitrateGrade: NvsCompileVideoBitrateGrade(rawValue: NvsCompileBitrateGradeMedium.rawValue), flags: 0)
     }
     
-    func sliderValueChanged(_ sender: UISlider) {
-        let ctime = Int64(sender.value * Float(timeline.duration))
-        streamingContext?.seekTimeline(timeline, timestamp: ctime, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: 0)
-        
-        let currentTime = streamingContext!.getTimelineCurrentPosition(timeline)
-        timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))
+    func sliderValueChanged(_ value: Int64) {
+        var time = value
+        if value < 0 {
+            time = 0
+        }
+        if value > timeline.duration {
+            time = timeline.duration
+        }
+        streamingContext?.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: 0)
+        timeValueChanged?(formatTime(time: time), formatTime(time: timeline.duration))
     }
     
 }

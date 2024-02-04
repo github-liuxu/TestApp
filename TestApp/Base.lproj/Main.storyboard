@@ -85,18 +85,31 @@
                                     <action selector="fliterClick:" destination="1DD-2T-y07" eventType="touchUpInside" id="glw-6q-Yb3"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LzE-lA-B4j" userLabel="UIView">
+                                <rect key="frame" x="0.0" y="359" width="393" height="64"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="v9g-BH-weD"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="old-Ro-R2R"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="LzE-lA-B4j" firstAttribute="top" secondItem="old-Ro-R2R" secondAttribute="top" constant="300" id="1Ex-4e-RyK"/>
+                            <constraint firstItem="LzE-lA-B4j" firstAttribute="leading" secondItem="old-Ro-R2R" secondAttribute="leading" id="PcQ-U8-VP5"/>
+                            <constraint firstItem="LzE-lA-B4j" firstAttribute="trailing" secondItem="old-Ro-R2R" secondAttribute="trailing" id="nO6-aN-K1N"/>
                             <constraint firstItem="J9X-tU-7UM" firstAttribute="leading" secondItem="old-Ro-R2R" secondAttribute="leading" constant="16" id="nZh-my-Q2H"/>
                             <constraint firstItem="old-Ro-R2R" firstAttribute="bottom" secondItem="J9X-tU-7UM" secondAttribute="bottom" constant="34" id="rtu-aM-0Rr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="sequenceView" destination="LzE-lA-B4j" id="7gH-NL-uJ1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yeY-VQ-nkq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="794" y="-24"/>
+            <point key="canvasLocation" x="793.12977099236639" y="-24.647887323943664"/>
         </scene>
         <!--Capture View Controller-->
         <scene sceneID="QbL-Jb-0p6">
