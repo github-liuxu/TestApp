@@ -19,6 +19,7 @@ class EditViewController: UIViewController {
     var sequence: SequenceView?
     var filterInteraction: FilterInteraction?
     
+    @IBOutlet weak var sequenceTop: NSLayoutConstraint!
     deinit {
         NvsStreamingContext.destroyInstance()
     }
@@ -26,6 +27,35 @@ class EditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = getVertionString()
+        setup()
+        timelineAction = TimelineAction(livewindow: preview.livewindow)
+        guard let timelineAction = timelineAction else { return }
+        
+        bind()
+        timelineAction.addClips(localIds: localIdentifies)
+        sequence?.sequenceInitLoad(videoTrack: timelineAction.timeline.getVideoTrack(by: 0))
+        let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
+        navigationItem.setRightBarButton(save, animated: true)
+        // Do any additional setup after loading the view.
+
+    }
+
+    @IBAction func fliterClick(_ sender: UIButton) {
+        if let filterView = AssetView.LoadView() {
+            view.addSubview(filterView)
+            filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 300)
+            UIView.animate(withDuration: 0.25) {
+                filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
+            }
+            filterInteraction = FilterInteraction(filterView, filterAction: timelineAction!)
+        }
+    }
+    
+    @objc func saveAction() {
+        timelineAction?.saveAction(nil)
+    }
+    
+    func setup() {
         guard let livewidow = PreView.loadView() else { return }
         var navBottom = 30.0
         if let frame = navigationController?.navigationBar.frame {
@@ -37,30 +67,7 @@ class EditViewController: UIViewController {
         sequence = SequenceView.LoadView()
         guard let seq = sequence else { return }
         sequenceView.addSubview(seq)
-        
-        timelineAction = TimelineAction(livewindow: preview.livewindow)
-        guard let timelineAction = timelineAction else { return }
-        timelineAction.addClips(localIds: localIdentifies)
-        seq.sequenceInitLoad(videoTrack: timelineAction.timeline.getVideoTrack(by: 0))
-        let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
-        navigationItem.setRightBarButton(save, animated: true)
-        // Do any additional setup after loading the view.
-        bind()
-    }
-
-    @IBAction func fliterClick(_ sender: UIButton) {
-        if let filterView = AssetView.LoadView() {
-            view.addSubview(filterView)
-            filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 300)
-            UIView.animate(withDuration: 0.25) {
-                filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
-            }
-            filterInteraction = FilterInteraction(filterView, filterAction: self.timelineAction!)
-        }
-    }
-    
-    @objc func saveAction() {
-        timelineAction?.saveAction(nil)
+        sequenceTop.constant = CGRectGetMaxY(livewidow.bounds)
     }
     
     func bind() {
@@ -86,6 +93,18 @@ class EditViewController: UIViewController {
         sequence?.valueChangedAction = { [weak self] value in
             guard let weakSelf = self else { return }
             weakSelf.timelineAction?.sliderValueChanged(value)
+        }
+        
+        sequence?.addAlbmAction = { [weak self] in
+            guard let weakSelf = self else { return }
+            let time = weakSelf.timelineAction?.timeline.duration ?? 0
+            weakSelf.albumUtils?.openAlbum(viewController: weakSelf, { phassets in
+                weakSelf.timelineAction?.addClips(localIds: phassets.map({ phasset in
+                    return phasset.localIdentifier
+                }))
+                weakSelf.sequence?.sequenceInitLoad(videoTrack: weakSelf.timelineAction!.timeline.getVideoTrack(by: 0))
+                weakSelf.sequence?.seekValue(time)
+            })
         }
         
         timelineAction?.didPlaybackTimelinePosition = {[weak self] position, progress in

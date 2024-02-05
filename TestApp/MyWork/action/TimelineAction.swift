@@ -32,11 +32,11 @@ class TimelineAction: NSObject {
     }
     
     func addClips(localIds: Array<String>) {
+        let currentTime = streamingContext!.getTimelineCurrentPosition(timeline)
         let videoTrack = timeline.getVideoTrack(by: 0)
         localIds.forEach { localId in
             videoTrack?.appendClip(localId)
         }
-        let currentTime = streamingContext!.getTimelineCurrentPosition(timeline)
         timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))
         seek(time: currentTime)
     }

@@ -104,6 +104,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="sequenceTop" destination="1Ex-4e-RyK" id="0tp-a2-mmN"/>
                         <outlet property="sequenceView" destination="LzE-lA-B4j" id="7gH-NL-uJ1"/>
                     </connections>
                 </viewController>

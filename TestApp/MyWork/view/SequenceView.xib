@@ -31,6 +31,9 @@
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Button" image="plus.app" catalog="system"/>
                     <buttonConfiguration key="configuration" style="plain" image="plus.app" catalog="system" title=" "/>
+                    <connections>
+                        <action selector="addAlbumClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="OWG-fu-gBJ"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -48,6 +51,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="addBtn" destination="cWP-h9-Ut4" id="ejy-u2-iB7"/>
                 <outlet property="sequenceView" destination="v6n-WJ-aqd" id="4Zm-Gh-WxC"/>
             </connections>
             <point key="canvasLocation" x="81.679389312977094" y="261.97183098591552"/>
