@@ -27,11 +27,11 @@ class EditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = getVertionString()
-        setup()
+        Subview()
         timelineAction = TimelineAction(livewindow: preview.livewindow)
         guard let timelineAction = timelineAction else { return }
         
-        bind()
+        Listen()
         timelineAction.addClips(localIds: localIdentifies)
         sequence?.sequenceInitLoad(videoTrack: timelineAction.timeline.getVideoTrack(by: 0))
         let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
@@ -55,7 +55,7 @@ class EditViewController: UIViewController {
         timelineAction?.saveAction(nil)
     }
     
-    func setup() {
+    func Subview() {
         guard let livewidow = PreView.loadView() else { return }
         var navBottom = 30.0
         if let frame = navigationController?.navigationBar.frame {
@@ -70,7 +70,7 @@ class EditViewController: UIViewController {
         sequenceTop.constant = CGRectGetMaxY(livewidow.bounds)
     }
     
-    func bind() {
+    func Listen() {
         preview.playBackAction = { [weak self] btn in
             guard let weakSelf = self else { return }
             weakSelf.timelineAction?.playClick(btn)
