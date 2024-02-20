@@ -8,10 +8,16 @@
 import UIKit
 import NvStreamingSdkCore
 
+protocol TransitionCoverViewDelegate : NSObjectProtocol {
+    func didSelectIndex(index: Int)
+}
+
 class SequenceView: UIView {
     
     @IBOutlet weak var addBtn: UIButton!
     @IBOutlet weak var sequenceView: NvsMultiThumbnailSequenceView!
+    weak var transitionCoverDelegate: TransitionCoverViewDelegate?
+    let coverView = NvSequeceCoverView(frame: .zero)
     var valueChangedAction: ((_ value: Int64)->())? = nil
     var addAlbmAction:(() -> ())? = nil
     class func LoadView() -> SequenceView? {
@@ -29,6 +35,9 @@ class SequenceView: UIView {
         sequenceView.thumbnailImageFillMode = NvsThumbnailFillModeAspectCrop
         sequenceView.thumbnailAspectRatio = 1.0
         sequenceView.backgroundColor = .black
+        addSubview(coverView)
+        coverView.frame = sequenceView.bounds
+        coverView.delegate = self
     }
     
     @IBAction func addAlbumClick(_ sender: UIButton) {
@@ -36,6 +45,7 @@ class SequenceView: UIView {
     }
     
     func sequenceInitLoad(videoTrack: NvsVideoTrack) {
+        var array = Array<CGPoint>()
         var descs = Array<NvsThumbnailSequenceDesc>()
         let clipCount = videoTrack.clipCount
         (0..<clipCount).forEach { index in
@@ -51,9 +61,15 @@ class SequenceView: UIView {
             }
             
             descs.append(desc)
+            
+            let outpoint = clip!.outPoint
+            let pointx = sequenceView.pointsPerMicrosecond * Double(outpoint)
+            let point = CGPoint(x: pointx + sequenceView.startPadding, y: coverView.frame.size.height / 2.0)
+            array.append(point)
         }
         
         sequenceView.descArray = descs
+        coverView.reload(with: array.dropLast())
     }
     
     func seekValue(_ value: Int64) {
@@ -64,6 +80,7 @@ class SequenceView: UIView {
 
 extension SequenceView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        coverView.updateSubViews(contentOffsetx: scrollView.contentOffset.x)
         if (!scrollView.isDragging) {
             return
         }
@@ -71,4 +88,9 @@ extension SequenceView: UIScrollViewDelegate {
         valueChangedAction?(Int64(value))
     }
     
+}
+extension SequenceView: NvSequeceCoverViewDelegate {
+    func didSelectIndex(index: Int) {
+        transitionCoverDelegate?.didSelectIndex(index: index)
+    }
 }

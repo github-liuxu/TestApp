@@ -7,7 +7,8 @@
 
 import UIKit
 import NvStreamingSdkCore
-import Combine
+import RxSwift
+import RxCocoa
 
 class EditViewController: UIViewController {
 
@@ -18,6 +19,7 @@ class EditViewController: UIViewController {
     @IBOutlet weak var sequenceView: UIView!
     var sequence: SequenceView?
     var filterInteraction: FilterInteraction?
+    var transitionInteraction: TransitionInteraction?
     
     @IBOutlet weak var sequenceTop: NSLayoutConstraint!
     deinit {
@@ -43,9 +45,10 @@ class EditViewController: UIViewController {
     @IBAction func fliterClick(_ sender: UIButton) {
         if let filterView = AssetView.LoadView() {
             view.addSubview(filterView)
-            filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 300)
+            let height: CGFloat = 300
+            filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
             UIView.animate(withDuration: 0.25) {
-                filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
+                filterView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
             }
             filterInteraction = FilterInteraction(filterView, filterAction: timelineAction!)
         }
@@ -68,6 +71,7 @@ class EditViewController: UIViewController {
         guard let seq = sequence else { return }
         sequenceView.addSubview(seq)
         sequenceTop.constant = CGRectGetMaxY(livewidow.bounds)
+        sequence?.transitionCoverDelegate = self
     }
     
     func Listen() {
@@ -113,4 +117,21 @@ class EditViewController: UIViewController {
         }
         
     }
+}
+
+extension EditViewController: TransitionCoverViewDelegate {
+    func didSelectIndex(index: Int) {
+        if let transitionView = AssetView.LoadView() {
+            view.addSubview(transitionView)
+            let height: CGFloat = 300
+            transitionView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
+            UIView.animate(withDuration: 0.25) {
+                transitionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
+            }
+            transitionInteraction = TransitionInteraction(transitionView, transitionAction: timelineAction!)
+            transitionInteraction!.transitionIndex = index
+        }
+    }
+    
+    
 }

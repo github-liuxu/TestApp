@@ -14,7 +14,7 @@ class TimelineAction: NSObject {
     let streamingContext = NvsStreamingContext.sharedInstance()
     
     var filterFx: NvsTimelineVideoFx?
-    
+    var videoTransitionFx: NvsVideoTransition?
     var didPlaybackTimelinePosition:((_ posotion: Int64, _ progress: Float) -> ())? = nil
     var playStateChanged:((_ isPlay: Bool)->())? = nil
     var timeValueChanged:((_ currentTime: String, _ duration: String)->())? = nil
@@ -128,3 +128,27 @@ extension TimelineAction: FilterProtocal {
     }
 }
 
+extension TimelineAction: TransitionProtocal {
+    func applyTransition(item: DataSourceItem, index: UInt32) {
+        let pid = NSMutableString()
+        streamingContext?.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoTransition, sync: true, assetPackageId: pid)
+        if videoTransitionFx?.videoTransitionType == NvsVideoTransitionType_Builtin {
+            if videoTransitionFx?.bultinVideoTransitionName == item.bultinName {
+                return
+            }
+        } else {
+            if videoTransitionFx?.videoTransitionPackageId == pid as String {
+                return
+            }
+        }
+        let videoTrack = timeline.getVideoTrack(by: 0)
+        if pid.length > 0 {
+            videoTransitionFx = videoTrack?.setPackagedTransition(index, withPackageId: pid as String)
+        } else {
+            videoTransitionFx = videoTrack?.setBuiltinTransition(index, withName: item.bultinName)
+        }
+        let clip = videoTrack?.getClipWith(index)
+        streamingContext?.playbackTimeline(timeline, startTime: clip!.outPoint - 500000, endTime: clip!.outPoint + 500000, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, preload: true, flags: 0)
+    }
+    
+}

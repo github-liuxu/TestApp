@@ -56,16 +56,16 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
-        var array = [String]()
-        results.forEach { result in
-            array.append(result.assetIdentifier!)
-        }
-        let edit = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EditViewController") as! EditViewController
-        edit.localIdentifies = array
-        navigationController?.pushViewController(edit, animated: true)
-        
-    }
-}
+//extension ViewController: PHPickerViewControllerDelegate {
+//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//        picker.dismiss(animated: true)
+//        var array = [String]()
+//        results.forEach { result in
+//            array.append(result.assetIdentifier!)
+//        }
+//        let edit = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EditViewController") as! EditViewController
+//        edit.localIdentifies = array
+//        navigationController?.pushViewController(edit, animated: true)
+//        
+//    }
+//}

@@ -63,6 +63,19 @@ extension AssetView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssetCollectionViewCell", for: indexPath) as! AssetCollectionViewCell
+        cell.contentView.layer.cornerRadius = 20
+        cell.contentView.layer.borderWidth = 5
+        cell.contentView.layer.borderColor = UIColor.blue.cgColor
+        cell.contentView.layer.masksToBounds = true
         didSelectBlock?(indexPath.item, dataSources[indexPath.item])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssetCollectionViewCell", for: indexPath) as! AssetCollectionViewCell
+        cell.layer.cornerRadius = 2
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = UIColor.clear.cgColor
+        cell.layer.masksToBounds = true
     }
 }

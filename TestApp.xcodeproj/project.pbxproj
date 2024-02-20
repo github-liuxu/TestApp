@@ -38,6 +38,19 @@
 		588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */; };
 		588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E7D2B6A49D2005ADA60 /* DataSource.swift */; };
 		58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */; };
+		58F4D3392B84825200334AA9 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */; };
+		58F4D33A2B84825200334AA9 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		58F4D33B2B84837B00334AA9 /* RxBlocking.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */; };
+		58F4D33C2B84837B00334AA9 /* RxBlocking.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		58F4D33D2B84837F00334AA9 /* RxRelay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */; };
+		58F4D33E2B84837F00334AA9 /* RxRelay.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		58F4D33F2B84867900334AA9 /* RxCocoa.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */; };
+		58F4D3402B84867900334AA9 /* RxCocoa.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3412B849C5200334AA9 /* NvSequeceView.swift */; };
+		58F4D3442B84A75700334AA9 /* videotransition in Resources */ = {isa = PBXBuildFile; fileRef = 58F4D3432B84A75700334AA9 /* videotransition */; };
+		58F4D3462B84A7B200334AA9 /* TransitionAssetGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3452B84A7B200334AA9 /* TransitionAssetGetter.swift */; };
+		58F4D3482B84AA7D00334AA9 /* TransitionInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3472B84AA7D00334AA9 /* TransitionInteraction.swift */; };
+		58F4D34A2B84AB8E00334AA9 /* TransitionProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3492B84AB8E00334AA9 /* TransitionProtocal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +84,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				58F4D33C2B84837B00334AA9 /* RxBlocking.xcframework in Embed Frameworks */,
+				58F4D33A2B84825200334AA9 /* RxSwift.xcframework in Embed Frameworks */,
 				585C69D72A7CC5D500BB945E /* NvStreamingSdkCore.framework in Embed Frameworks */,
+				58F4D33E2B84837F00334AA9 /* RxRelay.xcframework in Embed Frameworks */,
 				588B7E582B67AF61005ADA60 /* LDXImagePicker.framework in Embed Frameworks */,
+				58F4D3402B84867900334AA9 /* RxCocoa.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +128,17 @@
 		588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetCollectionViewCell.xib; sourceTree = "<group>"; };
 		588B7E7D2B6A49D2005ADA60 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAssetGetter.swift; sourceTree = "<group>"; };
+		58F4D3262B847F4600334AA9 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxSwift.xcframework; sourceTree = "<group>"; };
+		58F4D32A2B847FF700334AA9 /* RxTest.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxTest.xcframework; path = RxSwift.xcframework/RxTest.xcframework; sourceTree = "<group>"; };
+		58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxRelay.xcframework; path = RxSwift.xcframework/RxRelay.xcframework; sourceTree = "<group>"; };
+		58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxCocoa.xcframework; path = RxSwift.xcframework/RxCocoa.xcframework; sourceTree = "<group>"; };
+		58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = RxSwift.xcframework/RxSwift.xcframework; sourceTree = "<group>"; };
+		58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxBlocking.xcframework; path = RxSwift.xcframework/RxBlocking.xcframework; sourceTree = "<group>"; };
+		58F4D3412B849C5200334AA9 /* NvSequeceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NvSequeceView.swift; sourceTree = "<group>"; };
+		58F4D3432B84A75700334AA9 /* videotransition */ = {isa = PBXFileReference; lastKnownFileType = folder; path = videotransition; sourceTree = "<group>"; };
+		58F4D3452B84A7B200334AA9 /* TransitionAssetGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAssetGetter.swift; sourceTree = "<group>"; };
+		58F4D3472B84AA7D00334AA9 /* TransitionInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionInteraction.swift; sourceTree = "<group>"; };
+		58F4D3492B84AB8E00334AA9 /* TransitionProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionProtocal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,8 +146,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58F4D33B2B84837B00334AA9 /* RxBlocking.xcframework in Frameworks */,
+				58F4D3392B84825200334AA9 /* RxSwift.xcframework in Frameworks */,
 				585C69D62A7CC5D500BB945E /* NvStreamingSdkCore.framework in Frameworks */,
+				58F4D33D2B84837F00334AA9 /* RxRelay.xcframework in Frameworks */,
 				588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */,
+				58F4D33F2B84867900334AA9 /* RxCocoa.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				588B7E402B67A3FD005ADA60 /* meishesdk.lic */,
+				58F4D3432B84A75700334AA9 /* videotransition */,
 				58131F262B6CFFC100FED7FE /* videofx */,
 				588B7E152B63E539005ADA60 /* MyWork */,
 				585C69BC2A7BBDC300BB945E /* AppDelegate.swift */,
@@ -166,6 +199,12 @@
 		585C69D42A7CC5D400BB945E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58F4D3262B847F4600334AA9 /* RxSwift.xcframework */,
+				58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */,
+				58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */,
+				58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */,
+				58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */,
+				58F4D32A2B847FF700334AA9 /* RxTest.xcframework */,
 				585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */,
 			);
 			name = Frameworks;
@@ -175,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				5862AAB12B6F3D4900195421 /* FilterProtocal.swift */,
+				58F4D3492B84AB8E00334AA9 /* TransitionProtocal.swift */,
 			);
 			path = protocal;
 			sourceTree = "<group>";
@@ -183,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */,
+				58F4D3472B84AA7D00334AA9 /* TransitionInteraction.swift */,
 			);
 			path = interaction;
 			sourceTree = "<group>";
@@ -229,6 +270,7 @@
 				588B7E742B6A3D92005ADA60 /* AssetView.swift */,
 				588B7E782B6A4669005ADA60 /* AssetCollectionViewCell.swift */,
 				588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */,
+				58F4D3412B849C5200334AA9 /* NvSequeceView.swift */,
 				5862AAB62B6F71B100195421 /* SequenceView.swift */,
 				5862AABA2B6F888100195421 /* SequenceView.xib */,
 			);
@@ -240,6 +282,7 @@
 			children = (
 				588B7E7D2B6A49D2005ADA60 /* DataSource.swift */,
 				58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */,
+				58F4D3452B84A7B200334AA9 /* TransitionAssetGetter.swift */,
 			);
 			path = dataSource;
 			sourceTree = "<group>";
@@ -336,6 +379,7 @@
 				585C69C42A7BBDC300BB945E /* Main.storyboard in Resources */,
 				5862AABB2B6F888100195421 /* SequenceView.xib in Resources */,
 				588B7E732B6A3D7B005ADA60 /* AssetView.xib in Resources */,
+				58F4D3442B84A75700334AA9 /* videotransition in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +398,7 @@
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
 				58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */,
 				588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */,
+				58F4D3482B84AA7D00334AA9 /* TransitionInteraction.swift in Sources */,
 				588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */,
 				588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */,
 				585C69D22A7CC2C400BB945E /* EditViewController.swift in Sources */,
@@ -362,6 +407,9 @@
 				585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */,
 				585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */,
 				588B7E7A2B6A4669005ADA60 /* AssetCollectionViewCell.swift in Sources */,
+				58F4D3462B84A7B200334AA9 /* TransitionAssetGetter.swift in Sources */,
+				58F4D34A2B84AB8E00334AA9 /* TransitionProtocal.swift in Sources */,
+				58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */,
 				585C69BF2A7BBDC300BB945E /* SceneDelegate.swift in Sources */,
 				588B7E212B64E92E005ADA60 /* Utils.swift in Sources */,
 			);
@@ -532,7 +580,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -567,7 +615,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
