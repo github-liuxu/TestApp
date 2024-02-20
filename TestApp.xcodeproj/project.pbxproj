@@ -38,14 +38,6 @@
 		588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */; };
 		588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E7D2B6A49D2005ADA60 /* DataSource.swift */; };
 		58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */; };
-		58F4D3392B84825200334AA9 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */; };
-		58F4D33A2B84825200334AA9 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		58F4D33B2B84837B00334AA9 /* RxBlocking.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */; };
-		58F4D33C2B84837B00334AA9 /* RxBlocking.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		58F4D33D2B84837F00334AA9 /* RxRelay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */; };
-		58F4D33E2B84837F00334AA9 /* RxRelay.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		58F4D33F2B84867900334AA9 /* RxCocoa.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */; };
-		58F4D3402B84867900334AA9 /* RxCocoa.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3412B849C5200334AA9 /* NvSequeceView.swift */; };
 		58F4D3442B84A75700334AA9 /* videotransition in Resources */ = {isa = PBXBuildFile; fileRef = 58F4D3432B84A75700334AA9 /* videotransition */; };
 		58F4D3462B84A7B200334AA9 /* TransitionAssetGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3452B84A7B200334AA9 /* TransitionAssetGetter.swift */; };
@@ -84,12 +76,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				58F4D33C2B84837B00334AA9 /* RxBlocking.xcframework in Embed Frameworks */,
-				58F4D33A2B84825200334AA9 /* RxSwift.xcframework in Embed Frameworks */,
 				585C69D72A7CC5D500BB945E /* NvStreamingSdkCore.framework in Embed Frameworks */,
-				58F4D33E2B84837F00334AA9 /* RxRelay.xcframework in Embed Frameworks */,
 				588B7E582B67AF61005ADA60 /* LDXImagePicker.framework in Embed Frameworks */,
-				58F4D3402B84867900334AA9 /* RxCocoa.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,12 +134,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58F4D33B2B84837B00334AA9 /* RxBlocking.xcframework in Frameworks */,
-				58F4D3392B84825200334AA9 /* RxSwift.xcframework in Frameworks */,
 				585C69D62A7CC5D500BB945E /* NvStreamingSdkCore.framework in Frameworks */,
-				58F4D33D2B84837F00334AA9 /* RxRelay.xcframework in Frameworks */,
 				588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */,
-				58F4D33F2B84867900334AA9 /* RxCocoa.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

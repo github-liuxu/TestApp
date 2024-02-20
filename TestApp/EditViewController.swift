@@ -7,8 +7,6 @@
 
 import UIKit
 import NvStreamingSdkCore
-import RxSwift
-import RxCocoa
 
 class EditViewController: UIViewController {
 
