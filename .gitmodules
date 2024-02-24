@@ -1,0 +1,3 @@
+[submodule "LDXImagePicker"]
+	path = LDXImagePicker
+	url = https://github.com/github-liuxu/LDXImagePicker.git
