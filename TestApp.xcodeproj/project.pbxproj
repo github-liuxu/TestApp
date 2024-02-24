@@ -116,12 +116,6 @@
 		588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetCollectionViewCell.xib; sourceTree = "<group>"; };
 		588B7E7D2B6A49D2005ADA60 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAssetGetter.swift; sourceTree = "<group>"; };
-		58F4D3262B847F4600334AA9 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxSwift.xcframework; sourceTree = "<group>"; };
-		58F4D32A2B847FF700334AA9 /* RxTest.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxTest.xcframework; path = RxSwift.xcframework/RxTest.xcframework; sourceTree = "<group>"; };
-		58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxRelay.xcframework; path = RxSwift.xcframework/RxRelay.xcframework; sourceTree = "<group>"; };
-		58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxCocoa.xcframework; path = RxSwift.xcframework/RxCocoa.xcframework; sourceTree = "<group>"; };
-		58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = RxSwift.xcframework/RxSwift.xcframework; sourceTree = "<group>"; };
-		58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxBlocking.xcframework; path = RxSwift.xcframework/RxBlocking.xcframework; sourceTree = "<group>"; };
 		58F4D3412B849C5200334AA9 /* NvSequeceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NvSequeceView.swift; sourceTree = "<group>"; };
 		58F4D3432B84A75700334AA9 /* videotransition */ = {isa = PBXFileReference; lastKnownFileType = folder; path = videotransition; sourceTree = "<group>"; };
 		58F4D3452B84A7B200334AA9 /* TransitionAssetGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAssetGetter.swift; sourceTree = "<group>"; };
@@ -183,12 +177,6 @@
 		585C69D42A7CC5D400BB945E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				58F4D3262B847F4600334AA9 /* RxSwift.xcframework */,
-				58F4D32E2B847FF700334AA9 /* RxBlocking.xcframework */,
-				58F4D32C2B847FF700334AA9 /* RxCocoa.xcframework */,
-				58F4D32B2B847FF700334AA9 /* RxRelay.xcframework */,
-				58F4D32D2B847FF700334AA9 /* RxSwift.xcframework */,
-				58F4D32A2B847FF700334AA9 /* RxTest.xcframework */,
 				585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */,
 			);
 			name = Frameworks;
