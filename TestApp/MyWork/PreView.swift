@@ -8,6 +8,10 @@
 import UIKit
 import NvStreamingSdkCore
 
+protocol ConnectEnable {
+    func connect(streamingContext: NvsStreamingContext, timeline: NvsTimeline?)
+}
+
 class PreView: UIView {
 
     @IBOutlet weak var livewindow: NvsLiveWindow!
@@ -34,4 +38,13 @@ class PreView: UIView {
         let nib = UINib(nibName: "Livewindow", bundle: Bundle.main)
         return nib.instantiate(withOwner: self).first as? Self
     }
+}
+
+extension PreView: ConnectEnable {
+    func connect(streamingContext: NvsStreamingContext, timeline: NvsTimeline?) {
+        livewindow.fillMode = NvsLiveWindowFillModePreserveAspectFit
+        streamingContext.connect(timeline, with: livewindow)
+    }
+    
+    
 }

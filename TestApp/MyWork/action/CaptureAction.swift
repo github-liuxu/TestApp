@@ -9,21 +9,21 @@ import UIKit
 import NvStreamingSdkCore
 
 class CaptureAction: NSObject {
-    var streamingContext = NvsStreamingContext.sharedInstance()
+    var streamingContext = NvsStreamingContext.sharedInstance()!
     var cameraIndex: UInt32 = 0
     var filterFx: NvsCaptureVideoFx?
-    func startPreview(livewindow: NvsLiveWindow) {
-        streamingContext?.connectCapturePreview(with: livewindow)
-        streamingContext?.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
+    func startPreview(connect: ConnectEnable) {
+        connect.connect(streamingContext: streamingContext, timeline: nil)
+        streamingContext.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
     }
     
     func startRecording() {
         let recordingPath = Documents + currentDateAndTime() + ".mov"
-        streamingContext?.startRecording(withFx: recordingPath, withFlags: 0, withRecordConfigurations: nil)
+        streamingContext.startRecording(withFx: recordingPath, withFlags: 0, withRecordConfigurations: nil)
     }
     
     func stopRecording() {
-        streamingContext?.stopRecording()
+        streamingContext.stopRecording()
     }
     
     func switchCamera() {
@@ -32,7 +32,7 @@ class CaptureAction: NSObject {
         } else {
             cameraIndex = 0
         }
-        streamingContext?.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
+        streamingContext.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
     }
     
 }
@@ -40,7 +40,7 @@ class CaptureAction: NSObject {
 extension CaptureAction: FilterProtocal {
     func applyFilter(item: DataSourceItem) {
         let pid = NSMutableString()
-        streamingContext?.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
+        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         if filterFx?.captureVideoFxType == NvsCaptureVideoFxType_Builtin {
             if filterFx?.bultinCaptureVideoFxName == item.bultinName {
                 return
@@ -52,10 +52,10 @@ extension CaptureAction: FilterProtocal {
         }
         
         if let filterFx = filterFx {
-            streamingContext?.removeCaptureVideoFx(filterFx.index)
+            streamingContext.removeCaptureVideoFx(filterFx.index)
         }
         if pid.length > 0 {
-            filterFx = streamingContext?.appendPackagedCaptureVideoFx(pid as String)
+            filterFx = streamingContext.appendPackagedCaptureVideoFx(pid as String)
         }
     }
     

@@ -11,7 +11,7 @@ import NvStreamingSdkCore
 class CaptureViewController: UIViewController {
 
     @IBOutlet weak var livewindow: NvsLiveWindow!
-    var streamingContext = NvsStreamingContext.sharedInstance()
+    let streamingContext = NvsStreamingContext.sharedInstance()!
     let capture = CaptureAction()
     var filterAsset = FilterAssetGetter()
     var filterInteraction: FilterInteraction?
@@ -21,8 +21,7 @@ class CaptureViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        livewindow.fillMode = NvsLiveWindowFillModePreserveAspectFit
-        capture.startPreview(livewindow: livewindow)
+        capture.startPreview(connect: self)
         
         // Do any additional setup after loading the view.
     }
@@ -56,4 +55,12 @@ class CaptureViewController: UIViewController {
         capture.switchCamera()
     }
 
+}
+
+extension CaptureViewController: ConnectEnable {
+    func connect(streamingContext: NvsStreamingContext, timeline: NvsTimeline?) {
+        livewindow.fillMode = NvsLiveWindowFillModePreserveAspectFit
+        streamingContext.connectCapturePreview(with: livewindow)
+    }
+    
 }

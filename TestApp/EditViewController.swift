@@ -28,7 +28,7 @@ class EditViewController: UIViewController {
         super.viewDidLoad()
         self.title = getVertionString()
         Subview()
-        timelineAction = TimelineAction(livewindow: preview.livewindow)
+        timelineAction = TimelineAction(connect: preview)
         guard let timelineAction = timelineAction else { return }
         
         Listen()
