@@ -15,17 +15,20 @@ class TimelineAction: NSObject {
     
     var filterFx: NvsTimelineVideoFx?
     var videoTransitionFx: NvsVideoTransition?
+    
+    var caption: NvsTimelineCaption?
+    
     var didPlaybackTimelinePosition:((_ posotion: Int64, _ progress: Float) -> ())? = nil
     var playStateChanged:((_ isPlay: Bool)->())? = nil
     var timeValueChanged:((_ currentTime: String, _ duration: String)->())? = nil
     var compileProgressChanged:((_ progress: Int32) -> ())? = nil
-    
+    let seekFlag = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue)
     init(connect: ConnectEnable) {
+        streamingContext.setColorGainForSDRToHDR(2.0)
         timeline = createTimeline(width: UInt(720), height: UInt(1280))
-        streamingContext.connect(timeline, with: livewindow)
         connect.connect(streamingContext: streamingContext, timeline: timeline)
         timeline?.appendVideoTrack()
-        streamingContext.seekTimeline(timeline, timestamp: 0, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: 0)
+        streamingContext.seekTimeline(timeline, timestamp: 0, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
         super.init()
         streamingContext.delegate = self
     }
@@ -49,7 +52,7 @@ class TimelineAction: NSObject {
     }
     
     func seek(time: Int64) {
-        streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: 0)
+        streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
     }
     
     func saveAction(_ path: String?) {
@@ -69,10 +72,43 @@ class TimelineAction: NSObject {
         if value > timeline.duration {
             time = timeline.duration
         }
-        streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: 0)
+        streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
         timeValueChanged?(formatTime(time: time), formatTime(time: timeline.duration))
     }
     
+}
+
+extension TimelineAction: CaptionProtocal {
+    func addCaption(text: String) -> NvsCaption {
+        return NvsCaption()
+    }
+    
+    func deleteCaption(caption: NvsCaption) {
+        
+    }
+    
+    func getAllCaption() -> [NvsCaption] {
+        return []
+    }
+    
+    func addCaption() {
+//        caption = timeline.addModularCaption("helloworld\n123", inPoint: 0, duration: timeline.duration)
+//        seek(time: 0)
+//        
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 0) + 3, execute: DispatchWorkItem(block: {
+//            self.caption?.setTextAlignment(NvsTextAlignmentRight)
+//        }))
+    }
+}
+
+extension TimelineAction: CompoundCaptionProtocal {
+    func applyCompoundCaption(item: DataSourceItem) {
+        let pid = NSMutableString()
+        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
+        let ccc = timeline.addCompoundCaption(0, duration: timeline.duration, compoundCaptionPackageId: pid as String)
+        let text = ccc?.getText(0)
+        print(text)
+    }
 }
 
 extension TimelineAction: NvsStreamingContextDelegate {

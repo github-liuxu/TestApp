@@ -7,6 +7,7 @@
 
 import UIKit
 import NvStreamingSdkCore
+import Dispatch
 
 class EditViewController: UIViewController {
 
@@ -18,6 +19,7 @@ class EditViewController: UIViewController {
     var sequence: SequenceView?
     var filterInteraction: FilterInteraction?
     var transitionInteraction: TransitionInteraction?
+    var compoundCaptionInteraction: CompoundCaptionInteraction?
     
     @IBOutlet weak var sequenceTop: NSLayoutConstraint!
     deinit {
@@ -37,6 +39,12 @@ class EditViewController: UIViewController {
         let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
         navigationItem.setRightBarButton(save, animated: true)
         // Do any additional setup after loading the view.
+        
+//        timelineAction.addCaption()
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 0) + 3, execute: DispatchWorkItem(block: {
+//            timelineAction.streamingContext.setColorGainForSDRToHDR(5.0)
+//            timelineAction.seek(time: 8000000)
+//        }))
 
     }
 
@@ -50,6 +58,21 @@ class EditViewController: UIViewController {
             }
             filterInteraction = FilterInteraction(filterView, filterAction: timelineAction!)
         }
+    }
+    
+    @IBAction func captionClick(_ sender: UIButton) {
+        let captionInteraction = ModulerCaptionInteraction(captionAction: timelineAction!)
+    }
+    
+    @IBAction func compoundCaptionClick(_ sender: UIButton) {
+        let height: CGFloat = 300
+        let compoundCaptionView = CompoundCaptionView.init(frame: CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height))
+        view.addSubview(compoundCaptionView)
+        compoundCaptionView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
+        UIView.animate(withDuration: 0.25) {
+            compoundCaptionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
+        }
+        compoundCaptionInteraction = CompoundCaptionInteraction(compoundCaptionView, compoundCaptionAction: timelineAction!)
     }
     
     @objc func saveAction() {

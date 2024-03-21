@@ -30,6 +30,7 @@ func createTimeline(width: UInt, height: UInt) -> NvsTimeline? {
     audioEditRes.sampleRate = 48000
     audioEditRes.channelCount = 2
     audioEditRes.sampleFormat = NvsAudSmpFmt_S16
-    let timeline:NvsTimeline = streamingContext.createTimeline(&videoEditRes, videoFps: &videoFps, audioEditRes: &audioEditRes)
+//    let timeline:NvsTimeline = streamingContext.createTimeline(&videoEditRes, videoFps: &videoFps, audioEditRes: &audioEditRes)
+    let timeline:NvsTimeline = streamingContext.createTimeline(&videoEditRes, videoFps:  &videoFps, audioEditRes: &audioEditRes, bitDepth: NvsVideoResolutionBitDepth_Auto, flags: 0)
     return timeline
 }

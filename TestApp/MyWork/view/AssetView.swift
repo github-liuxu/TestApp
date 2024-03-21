@@ -14,6 +14,7 @@ class AssetView: UIView {
     var dataSources: [DataSourceItem] = [DataSourceItem]()
     var didSelectBlock: ((_ index: Int, _ item: DataSourceItem) -> Void)? = nil
     var didSliderValueChanged: ((_ value: Float) -> Void)? = nil
+    var setCloseBlock: (() -> Void)? = nil
     override func awakeFromNib() {
         setup()
         super.awakeFromNib()
@@ -29,6 +30,7 @@ class AssetView: UIView {
             self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: self.frame.size)
         } completion: { finish in
             self.removeFromSuperview()
+            self.setCloseBlock?()
         }
     }
     

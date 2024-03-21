@@ -77,14 +77,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9X-tU-7UM">
-                                <rect key="frame" x="16" y="749" width="59" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="filter"/>
-                                <connections>
-                                    <action selector="fliterClick:" destination="1DD-2T-y07" eventType="touchUpInside" id="glw-6q-Yb3"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LzE-lA-B4j" userLabel="UIView">
                                 <rect key="frame" x="0.0" y="359" width="393" height="64"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -92,15 +84,60 @@
                                     <constraint firstAttribute="height" constant="64" id="v9g-BH-weD"/>
                                 </constraints>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ejb-Sp-9U8">
+                                <rect key="frame" x="0.0" y="738" width="393" height="45"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BJE-QA-8ak">
+                                        <rect key="frame" x="0.0" y="0.0" width="325" height="45"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9X-tU-7UM">
+                                                <rect key="frame" x="0.0" y="0.0" width="108.33333333333333" height="45"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="filter"/>
+                                                <connections>
+                                                    <action selector="fliterClick:" destination="1DD-2T-y07" eventType="touchUpInside" id="0y7-tX-9OR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZzO-35-fVa">
+                                                <rect key="frame" x="108.33333333333334" y="0.0" width="108.33333333333334" height="45"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Caption"/>
+                                                <connections>
+                                                    <action selector="captionClick:" destination="1DD-2T-y07" eventType="touchUpInside" id="Rjc-Fg-7ET"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c54-kB-Oa7">
+                                                <rect key="frame" x="216.66666666666671" y="0.0" width="108.33333333333334" height="45"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Compound"/>
+                                                <connections>
+                                                    <action selector="compoundCaptionClick:" destination="1DD-2T-y07" eventType="touchUpInside" id="oxw-I4-cww"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="BJE-QA-8ak" firstAttribute="leading" secondItem="PAz-jg-Htc" secondAttribute="leading" id="AKQ-3I-gbJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="BJE-QA-8ak" secondAttribute="bottom" id="Eo5-Dl-vwr"/>
+                                    <constraint firstAttribute="trailing" secondItem="BJE-QA-8ak" secondAttribute="trailing" id="KsR-ff-WVX"/>
+                                    <constraint firstItem="BJE-QA-8ak" firstAttribute="top" secondItem="PAz-jg-Htc" secondAttribute="top" id="Xzj-1G-4G2"/>
+                                    <constraint firstItem="PAz-jg-Htc" firstAttribute="bottom" secondItem="BJE-QA-8ak" secondAttribute="bottom" id="hfI-BY-5Sd"/>
+                                    <constraint firstAttribute="height" constant="45" id="w7G-hO-JcS"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="cyh-cA-qWC"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="PAz-jg-Htc"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="old-Ro-R2R"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="LzE-lA-B4j" firstAttribute="top" secondItem="old-Ro-R2R" secondAttribute="top" constant="300" id="1Ex-4e-RyK"/>
+                            <constraint firstItem="Ejb-Sp-9U8" firstAttribute="leading" secondItem="old-Ro-R2R" secondAttribute="leading" id="8mt-eR-6pw"/>
+                            <constraint firstItem="Ejb-Sp-9U8" firstAttribute="trailing" secondItem="old-Ro-R2R" secondAttribute="trailing" id="Gp1-kz-nsL"/>
                             <constraint firstItem="LzE-lA-B4j" firstAttribute="leading" secondItem="old-Ro-R2R" secondAttribute="leading" id="PcQ-U8-VP5"/>
+                            <constraint firstItem="old-Ro-R2R" firstAttribute="bottom" secondItem="Ejb-Sp-9U8" secondAttribute="bottom" constant="35" id="WMb-vK-3db"/>
                             <constraint firstItem="LzE-lA-B4j" firstAttribute="trailing" secondItem="old-Ro-R2R" secondAttribute="trailing" id="nO6-aN-K1N"/>
-                            <constraint firstItem="J9X-tU-7UM" firstAttribute="leading" secondItem="old-Ro-R2R" secondAttribute="leading" constant="16" id="nZh-my-Q2H"/>
-                            <constraint firstItem="old-Ro-R2R" firstAttribute="bottom" secondItem="J9X-tU-7UM" secondAttribute="bottom" constant="34" id="rtu-aM-0Rr"/>
                         </constraints>
                     </view>
                     <connections>

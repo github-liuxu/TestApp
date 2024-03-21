@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		58131F272B6CFFC200FED7FE /* videofx in Resources */ = {isa = PBXBuildFile; fileRef = 58131F262B6CFFC100FED7FE /* videofx */; };
+		582BBF062B91ADEA00089072 /* CaptionProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582BBF052B91ADEA00089072 /* CaptionProtocal.swift */; };
 		585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69BC2A7BBDC300BB945E /* AppDelegate.swift */; };
 		585C69BF2A7BBDC300BB945E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */; };
 		585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69C02A7BBDC300BB945E /* ViewController.swift */; };
@@ -21,6 +22,7 @@
 		5862AAB22B6F3D4900195421 /* FilterProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAB12B6F3D4900195421 /* FilterProtocal.swift */; };
 		5862AAB72B6F71B100195421 /* SequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAB62B6F71B100195421 /* SequenceView.swift */; };
 		5862AABB2B6F888100195421 /* SequenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5862AABA2B6F888100195421 /* SequenceView.xib */; };
+		5873F4BE2BAC65F100170BE7 /* RectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5873F4BD2BAC65F100170BE7 /* RectView.swift */; };
 		588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E162B63E572005ADA60 /* TimelineCreate.swift */; };
 		588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E182B63E8A7005ADA60 /* PreView.swift */; };
 		588B7E1B2B63E8B5005ADA60 /* Livewindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */; };
@@ -37,6 +39,14 @@
 		588B7E7A2B6A4669005ADA60 /* AssetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E782B6A4669005ADA60 /* AssetCollectionViewCell.swift */; };
 		588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */; };
 		588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E7D2B6A49D2005ADA60 /* DataSource.swift */; };
+		58B85E922BA9B0BA004C7A96 /* compoundcaption in Resources */ = {isa = PBXBuildFile; fileRef = 58B85E912BA9B0BA004C7A96 /* compoundcaption */; };
+		58B85E952BAA7EB9004C7A96 /* CompoundCaptionGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85E942BAA7EB9004C7A96 /* CompoundCaptionGetter.swift */; };
+		58B85E982BAA801A004C7A96 /* CompoundCaptionInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85E972BAA801A004C7A96 /* CompoundCaptionInteraction.swift */; };
+		58B85E9A2BAA8092004C7A96 /* CompoundCaptionProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85E992BAA8092004C7A96 /* CompoundCaptionProtocal.swift */; };
+		58B85E9C2BAA8240004C7A96 /* CompoundCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85E9B2BAA8240004C7A96 /* CompoundCaptionView.swift */; };
+		58B85E9F2BAA91CA004C7A96 /* LookinServer in Frameworks */ = {isa = PBXBuildFile; productRef = 58B85E9E2BAA91CA004C7A96 /* LookinServer */; };
+		58B85EA12BAAAB03004C7A96 /* caption in Resources */ = {isa = PBXBuildFile; fileRef = 58B85EA02BAAAB03004C7A96 /* caption */; };
+		58B85EAA2BAAD513004C7A96 /* ModulerCaptionInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85EA92BAAD513004C7A96 /* ModulerCaptionInteraction.swift */; };
 		58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */; };
 		58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3412B849C5200334AA9 /* NvSequeceView.swift */; };
 		58F4D3442B84A75700334AA9 /* videotransition in Resources */ = {isa = PBXBuildFile; fileRef = 58F4D3432B84A75700334AA9 /* videotransition */; };
@@ -86,6 +96,7 @@
 
 /* Begin PBXFileReference section */
 		58131F262B6CFFC100FED7FE /* videofx */ = {isa = PBXFileReference; lastKnownFileType = folder; path = videofx; sourceTree = "<group>"; };
+		582BBF052B91ADEA00089072 /* CaptionProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionProtocal.swift; sourceTree = "<group>"; };
 		585C69B92A7BBDC300BB945E /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		585C69BC2A7BBDC300BB945E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +111,7 @@
 		5862AAB12B6F3D4900195421 /* FilterProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterProtocal.swift; sourceTree = "<group>"; };
 		5862AAB62B6F71B100195421 /* SequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceView.swift; sourceTree = "<group>"; };
 		5862AABA2B6F888100195421 /* SequenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SequenceView.xib; sourceTree = "<group>"; };
+		5873F4BD2BAC65F100170BE7 /* RectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectView.swift; sourceTree = "<group>"; };
 		588B7E162B63E572005ADA60 /* TimelineCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineCreate.swift; sourceTree = "<group>"; };
 		588B7E182B63E8A7005ADA60 /* PreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreView.swift; sourceTree = "<group>"; };
 		588B7E1A2B63E8B5005ADA60 /* Livewindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Livewindow.xib; sourceTree = "<group>"; };
@@ -115,6 +127,13 @@
 		588B7E782B6A4669005ADA60 /* AssetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCollectionViewCell.swift; sourceTree = "<group>"; };
 		588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetCollectionViewCell.xib; sourceTree = "<group>"; };
 		588B7E7D2B6A49D2005ADA60 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		58B85E912BA9B0BA004C7A96 /* compoundcaption */ = {isa = PBXFileReference; lastKnownFileType = folder; path = compoundcaption; sourceTree = "<group>"; };
+		58B85E942BAA7EB9004C7A96 /* CompoundCaptionGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundCaptionGetter.swift; sourceTree = "<group>"; };
+		58B85E972BAA801A004C7A96 /* CompoundCaptionInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundCaptionInteraction.swift; sourceTree = "<group>"; };
+		58B85E992BAA8092004C7A96 /* CompoundCaptionProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundCaptionProtocal.swift; sourceTree = "<group>"; };
+		58B85E9B2BAA8240004C7A96 /* CompoundCaptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundCaptionView.swift; sourceTree = "<group>"; };
+		58B85EA02BAAAB03004C7A96 /* caption */ = {isa = PBXFileReference; lastKnownFileType = folder; path = caption; sourceTree = "<group>"; };
+		58B85EA92BAAD513004C7A96 /* ModulerCaptionInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulerCaptionInteraction.swift; sourceTree = "<group>"; };
 		58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAssetGetter.swift; sourceTree = "<group>"; };
 		58F4D3412B849C5200334AA9 /* NvSequeceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NvSequeceView.swift; sourceTree = "<group>"; };
 		58F4D3432B84A75700334AA9 /* videotransition */ = {isa = PBXFileReference; lastKnownFileType = folder; path = videotransition; sourceTree = "<group>"; };
@@ -129,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				585C69D62A7CC5D500BB945E /* NvStreamingSdkCore.framework in Frameworks */,
+				58B85E9F2BAA91CA004C7A96 /* LookinServer in Frameworks */,
 				588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				588B7E402B67A3FD005ADA60 /* meishesdk.lic */,
+				58B85EA02BAAAB03004C7A96 /* caption */,
+				58B85E912BA9B0BA004C7A96 /* compoundcaption */,
 				58F4D3432B84A75700334AA9 /* videotransition */,
 				58131F262B6CFFC100FED7FE /* videofx */,
 				588B7E152B63E539005ADA60 /* MyWork */,
@@ -187,6 +209,8 @@
 			children = (
 				5862AAB12B6F3D4900195421 /* FilterProtocal.swift */,
 				58F4D3492B84AB8E00334AA9 /* TransitionProtocal.swift */,
+				58B85E992BAA8092004C7A96 /* CompoundCaptionProtocal.swift */,
+				582BBF052B91ADEA00089072 /* CaptionProtocal.swift */,
 			);
 			path = protocal;
 			sourceTree = "<group>";
@@ -195,6 +219,8 @@
 			isa = PBXGroup;
 			children = (
 				5862AAAD2B6F3BB600195421 /* FilterInteraction.swift */,
+				58B85E972BAA801A004C7A96 /* CompoundCaptionInteraction.swift */,
+				58B85EA92BAAD513004C7A96 /* ModulerCaptionInteraction.swift */,
 				58F4D3472B84AA7D00334AA9 /* TransitionInteraction.swift */,
 			);
 			path = interaction;
@@ -240,11 +266,13 @@
 			children = (
 				588B7E722B6A3D7B005ADA60 /* AssetView.xib */,
 				588B7E742B6A3D92005ADA60 /* AssetView.swift */,
+				58B85E9B2BAA8240004C7A96 /* CompoundCaptionView.swift */,
 				588B7E782B6A4669005ADA60 /* AssetCollectionViewCell.swift */,
 				588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */,
 				58F4D3412B849C5200334AA9 /* NvSequeceView.swift */,
 				5862AAB62B6F71B100195421 /* SequenceView.swift */,
 				5862AABA2B6F888100195421 /* SequenceView.xib */,
+				5873F4BD2BAC65F100170BE7 /* RectView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -254,6 +282,7 @@
 			children = (
 				588B7E7D2B6A49D2005ADA60 /* DataSource.swift */,
 				58C927562B6CDFA600F35362 /* FilterAssetGetter.swift */,
+				58B85E942BAA7EB9004C7A96 /* CompoundCaptionGetter.swift */,
 				58F4D3452B84A7B200334AA9 /* TransitionAssetGetter.swift */,
 			);
 			path = dataSource;
@@ -277,6 +306,9 @@
 				588B7E552B67ACC1005ADA60 /* PBXTargetDependency */,
 			);
 			name = TestApp;
+			packageProductDependencies = (
+				58B85E9E2BAA91CA004C7A96 /* LookinServer */,
+			);
 			productName = TestApp;
 			productReference = 585C69B92A7BBDC300BB945E /* TestApp.app */;
 			productType = "com.apple.product-type.application";
@@ -305,6 +337,9 @@
 				Base,
 			);
 			mainGroup = 585C69B02A7BBDC300BB945E;
+			packageReferences = (
+				58B85E9D2BAA91CA004C7A96 /* XCLocalSwiftPackageReference "LookinServer-1.2.7" */,
+			);
 			productRefGroup = 585C69BA2A7BBDC300BB945E /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -343,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				588B7E412B67A3FD005ADA60 /* meishesdk.lic in Resources */,
+				58B85E922BA9B0BA004C7A96 /* compoundcaption in Resources */,
 				585C69C92A7BBDC400BB945E /* LaunchScreen.storyboard in Resources */,
 				588B7E1B2B63E8B5005ADA60 /* Livewindow.xib in Resources */,
 				585C69C62A7BBDC400BB945E /* Assets.xcassets in Resources */,
@@ -350,6 +386,7 @@
 				588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */,
 				585C69C42A7BBDC300BB945E /* Main.storyboard in Resources */,
 				5862AABB2B6F888100195421 /* SequenceView.xib in Resources */,
+				58B85EA12BAAAB03004C7A96 /* caption in Resources */,
 				588B7E732B6A3D7B005ADA60 /* AssetView.xib in Resources */,
 				58F4D3442B84A75700334AA9 /* videotransition in Resources */,
 			);
@@ -370,6 +407,7 @@
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
 				58C927572B6CDFA600F35362 /* FilterAssetGetter.swift in Sources */,
 				588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */,
+				58B85EAA2BAAD513004C7A96 /* ModulerCaptionInteraction.swift in Sources */,
 				58F4D3482B84AA7D00334AA9 /* TransitionInteraction.swift in Sources */,
 				588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */,
 				588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */,
@@ -379,11 +417,17 @@
 				585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */,
 				585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */,
 				588B7E7A2B6A4669005ADA60 /* AssetCollectionViewCell.swift in Sources */,
+				58B85E9A2BAA8092004C7A96 /* CompoundCaptionProtocal.swift in Sources */,
 				58F4D3462B84A7B200334AA9 /* TransitionAssetGetter.swift in Sources */,
 				58F4D34A2B84AB8E00334AA9 /* TransitionProtocal.swift in Sources */,
+				58B85E952BAA7EB9004C7A96 /* CompoundCaptionGetter.swift in Sources */,
 				58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */,
+				58B85E9C2BAA8240004C7A96 /* CompoundCaptionView.swift in Sources */,
 				585C69BF2A7BBDC300BB945E /* SceneDelegate.swift in Sources */,
+				582BBF062B91ADEA00089072 /* CaptionProtocal.swift in Sources */,
+				58B85E982BAA801A004C7A96 /* CompoundCaptionInteraction.swift in Sources */,
 				588B7E212B64E92E005ADA60 /* Utils.swift in Sources */,
+				5873F4BE2BAC65F100170BE7 /* RectView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +667,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		58B85E9D2BAA91CA004C7A96 /* XCLocalSwiftPackageReference "LookinServer-1.2.7" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "LookinServer-1.2.7";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		58B85E9E2BAA91CA004C7A96 /* LookinServer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LookinServer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 585C69B12A7BBDC300BB945E /* Project object */;
 }
