@@ -24,12 +24,12 @@ class TimelineAction: NSObject {
     var compileProgressChanged:((_ progress: Int32) -> ())? = nil
     let seekFlag = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue)
     init(connect: ConnectEnable) {
+        super.init()
         streamingContext.setColorGainForSDRToHDR(2.0)
-        timeline = createTimeline(width: UInt(720), height: UInt(1280))
+        timeline = createTimeline(width: 720, height: 1280)
         connect.connect(streamingContext: streamingContext, timeline: timeline)
         timeline?.appendVideoTrack()
         streamingContext.seekTimeline(timeline, timestamp: 0, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
-        super.init()
         streamingContext.delegate = self
     }
     
