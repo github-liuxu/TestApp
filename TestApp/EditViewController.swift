@@ -8,13 +8,14 @@
 import UIKit
 import NvStreamingSdkCore
 import Dispatch
+import AVFAudio
 
 class EditViewController: UIViewController {
 
     var albumUtils: OpenAlbumEnable?
     var localIdentifies = [String]()
     var preview: PreView!
-    var timelineAction: TimelineAction?
+    var timelineService: TimelineService?
     @IBOutlet weak var sequenceView: UIView!
     var sequence: SequenceView?
     var filterInteraction: FilterInteraction?
@@ -30,20 +31,20 @@ class EditViewController: UIViewController {
         super.viewDidLoad()
         self.title = getVertionString()
         Subview()
-        timelineAction = TimelineAction(connect: preview)
-        guard let timelineAction = timelineAction else { return }
+        timelineService = TimelineService(connect: preview)
+        guard let timelineService = timelineService else { return }
         
         Listen()
-        timelineAction.addClips(localIds: localIdentifies)
-        sequence?.sequenceInitLoad(videoTrack: timelineAction.timeline.getVideoTrack(by: 0))
+        timelineService.addClips(localIds: localIdentifies)
+        sequence?.sequenceInitLoad(videoTrack: timelineService.timeline.getVideoTrack(by: 0))
         let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
         navigationItem.setRightBarButton(save, animated: true)
         // Do any additional setup after loading the view.
-        
-//        timelineAction.addCaption()
+        timelineService.matting()
+//        timelineService.addCaption()
 //        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 0) + 3, execute: DispatchWorkItem(block: {
-//            timelineAction.streamingContext.setColorGainForSDRToHDR(5.0)
-//            timelineAction.seek(time: 8000000)
+//            timelineService.streamingContext.setColorGainForSDRToHDR(5.0)
+//            timelineService.seek(time: 8000000)
 //        }))
 
     }
@@ -56,12 +57,12 @@ class EditViewController: UIViewController {
             UIView.animate(withDuration: 0.25) {
                 filterView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
             }
-            filterInteraction = FilterInteraction(filterView, filterAction: timelineAction!)
+            filterInteraction = FilterInteraction(filterView, filterAction: timelineService!)
         }
     }
     
     @IBAction func captionClick(_ sender: UIButton) {
-        let captionInteraction = ModulerCaptionInteraction(captionAction: timelineAction!)
+        let captionInteraction = ModulerCaptionInteraction(captionAction: timelineService!)
     }
     
     @IBAction func compoundCaptionClick(_ sender: UIButton) {
@@ -72,11 +73,11 @@ class EditViewController: UIViewController {
         UIView.animate(withDuration: 0.25) {
             compoundCaptionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
         }
-        compoundCaptionInteraction = CompoundCaptionInteraction(compoundCaptionView, compoundCaptionAction: timelineAction!)
+        compoundCaptionInteraction = CompoundCaptionInteraction(compoundCaptionView, compoundCaptionAction: timelineService!)
     }
     
     @objc func saveAction() {
-        timelineAction?.saveAction(nil)
+        timelineService?.saveAction(nil)
     }
     
     func Subview() {
@@ -98,41 +99,41 @@ class EditViewController: UIViewController {
     func Listen() {
         preview.playBackAction = { [weak self] btn in
             guard let weakSelf = self else { return }
-            weakSelf.timelineAction?.playClick(btn)
+            weakSelf.timelineService?.playClick(btn)
         }
         
-        timelineAction?.playStateChanged = { [weak self] isPlay in
+        timelineService?.playStateChanged = { [weak self] isPlay in
             guard let weakSelf = self else { return }
             weakSelf.preview.setPlayState(isPlay: isPlay)
         }
-        timelineAction?.timeValueChanged = { [weak self] currentTime, duration in
+        timelineService?.timeValueChanged = { [weak self] currentTime, duration in
             guard let weakSelf = self else { return }
             weakSelf.preview.currentTime.text = currentTime
             weakSelf.preview.durationTime.text = duration
         }
 
-        timelineAction?.compileProgressChanged = { progress in
+        timelineService?.compileProgressChanged = { progress in
             print(progress)
         }
         
         sequence?.valueChangedAction = { [weak self] value in
             guard let weakSelf = self else { return }
-            weakSelf.timelineAction?.sliderValueChanged(value)
+            weakSelf.timelineService?.sliderValueChanged(value)
         }
         
         sequence?.addAlbmAction = { [weak self] in
             guard let weakSelf = self else { return }
-            let time = weakSelf.timelineAction?.timeline.duration ?? 0
+            let time = weakSelf.timelineService?.timeline.duration ?? 0
             weakSelf.albumUtils?.openAlbum(viewController: weakSelf, { phassets in
-                weakSelf.timelineAction?.addClips(localIds: phassets.map({ phasset in
+                weakSelf.timelineService?.addClips(localIds: phassets.map({ phasset in
                     return phasset.localIdentifier
                 }))
-                weakSelf.sequence?.sequenceInitLoad(videoTrack: weakSelf.timelineAction!.timeline.getVideoTrack(by: 0))
+                weakSelf.sequence?.sequenceInitLoad(videoTrack: weakSelf.timelineService!.timeline.getVideoTrack(by: 0))
                 weakSelf.sequence?.seekValue(time)
             })
         }
         
-        timelineAction?.didPlaybackTimelinePosition = {[weak self] position, progress in
+        timelineService?.didPlaybackTimelinePosition = {[weak self] position, progress in
             guard let weakSelf = self else { return }
             weakSelf.sequence?.seekValue(position)
         }
@@ -149,7 +150,7 @@ extension EditViewController: TransitionCoverViewDelegate {
             UIView.animate(withDuration: 0.25) {
                 transitionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
             }
-            transitionInteraction = TransitionInteraction(transitionView, transitionAction: timelineAction!)
+            transitionInteraction = TransitionInteraction(transitionView, transitionAction: timelineService!)
             transitionInteraction!.transitionIndex = index
         }
     }

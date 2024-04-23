@@ -12,7 +12,7 @@ class CaptureViewController: UIViewController {
 
     @IBOutlet weak var livewindow: NvsLiveWindow!
     let streamingContext = NvsStreamingContext.sharedInstance()!
-    let capture = CaptureAction()
+    let capture = CaptureService()
     var filterAsset = FilterAssetGetter()
     var filterInteraction: FilterInteraction?
     deinit {

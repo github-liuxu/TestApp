@@ -43,8 +43,9 @@ class PreView: UIView {
 extension PreView: ConnectEnable {
     func connect(streamingContext: NvsStreamingContext, timeline: NvsTimeline?) {
         livewindow.fillMode = NvsLiveWindowFillModePreserveAspectFit
-        livewindow.hdrDisplayMode = NvsLiveWindowHDRDisplayMode_Device
+//        livewindow.hdrDisplayMode = NvsLiveWindowHDRDisplayMode_Device
         streamingContext.connect(timeline, with: livewindow)
+//        livewindow.setBackgroundColorWithRed(0, green: 0, blue: 0, alpha: 0);
     }
     
     

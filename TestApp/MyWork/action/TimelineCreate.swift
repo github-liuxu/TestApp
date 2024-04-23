@@ -35,6 +35,8 @@ func createTimeline(width: UInt, height: UInt) -> NvsTimeline? {
     audioEditRes.channelCount = 2
     audioEditRes.sampleFormat = NvsAudSmpFmt_S16
 //    let timeline:NvsTimeline = streamingContext.createTimeline(&videoEditRes, videoFps: &videoFps, audioEditRes: &audioEditRes)
-    let timeline:NvsTimeline = streamingContext.createTimeline(&videoEditRes, videoFps:  &videoFps, audioEditRes: &audioEditRes, bitDepth: NvsVideoResolutionBitDepth_Auto, flags: 0)
+    let timeline:NvsTimeline = streamingContext.createTimeline(&videoEditRes, videoFps:  &videoFps, audioEditRes: &audioEditRes, bitDepth: NvsVideoResolutionBitDepth_8Bit, flags: 0)
+    let res = timeline.videoRes
+    print("timeline width \(res.imageWidth) height \(res.imageHeight)")
     return timeline
 }
