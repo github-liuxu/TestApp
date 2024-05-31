@@ -36,6 +36,19 @@ class AssetView: UIView {
     
     func reload() {
         collectionView.reloadData()
+//        let t1 = Date().timeIntervalSince1970
+//        let scale = UIScreen.main.scale
+//        let size = CGSize(width: self.superview!.bounds.width, height: self.superview!.bounds.height)
+//        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+//        defer { UIGraphicsEndImageContext() }
+//        let context = UIGraphicsGetCurrentContext()
+//        self.superview!.layer.render(in: context!)
+//        let uiImage = UIGraphicsGetImageFromCurrentImageContext()
+//        let t2 = Date().timeIntervalSince1970
+//        print(t2-t1)
+//        uiImage?.cgImage
+//        let image = UIImageView(image: uiImage)
+//        superview!.addSubview(image)
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {

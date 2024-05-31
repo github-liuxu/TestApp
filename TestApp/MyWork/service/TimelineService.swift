@@ -62,6 +62,15 @@ class TimelineService: NSObject {
 //        print(image)
     }
     
+    func addAnimationSticker() {
+        let stickerPath = Bundle.main.path(forResource: "animationSticker/6FF9E1FC-3C2C-49B6-A3A7-BA51B1DA8AE0.1.animatedsticker", ofType: "")
+        let pid = NSMutableString()
+        streamingContext.assetPackageManager.installAssetPackage(stickerPath, license: nil, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        
+        timeline.addAnimatedSticker(0, duration: timeline.duration, animatedStickerPackageId: pid as String)
+        
+    }
+    
     
     func seek(time: Int64) {
         streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)

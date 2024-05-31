@@ -9,6 +9,7 @@ import UIKit
 import NvStreamingSdkCore
 import Dispatch
 import AVFAudio
+import Toast
 
 class EditViewController: UIViewController {
 
@@ -40,8 +41,9 @@ class EditViewController: UIViewController {
         let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
         navigationItem.setRightBarButton(save, animated: true)
         // Do any additional setup after loading the view.
-        timelineService.matting()
+//        timelineService.matting()
 //        timelineService.addCaption()
+        timelineService.addAnimationSticker()
 //        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 0) + 3, execute: DispatchWorkItem(block: {
 //            timelineService.streamingContext.setColorGainForSDRToHDR(5.0)
 //            timelineService.seek(time: 8000000)
@@ -77,6 +79,8 @@ class EditViewController: UIViewController {
     }
     
     @objc func saveAction() {
+        self.view.makeToastActivity(.center)
+//        Toast.showLoading(string: "hskdjfhskdhksdhkdhsldfhl")
         timelineService?.saveAction(nil)
     }
     
