@@ -5,34 +5,34 @@
 //  Created by Mac-Mini on 2023/8/4.
 //
 
-import UIKit
-import NvStreamingSdkCore
-import Dispatch
 import AVFAudio
-import Toast
+import Dispatch
+import NvStreamingSdkCore
+import Toast_Swift
+import UIKit
 
 class EditViewController: UIViewController {
-
     var albumUtils: OpenAlbumEnable?
     var localIdentifies = [String]()
     var preview: PreView!
     var timelineService: TimelineService?
-    @IBOutlet weak var sequenceView: UIView!
+    @IBOutlet var sequenceView: UIView!
     var sequence: SequenceView?
-    var filterInteraction: FilterInteraction?
     var transitionInteraction: TransitionInteraction?
-    var compoundCaptionInteraction: CompoundCaptionInteraction?
+    @IBOutlet var bottomCollectionView: UICollectionView!
+    @IBOutlet var sequenceTop: NSLayoutConstraint!
     
-    @IBOutlet weak var sequenceTop: NSLayoutConstraint!
+    var bottomDataSource = [BottomItem]()
+    
     deinit {
         NvsStreamingContext.destroyInstance()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = getVertionString()
+        title = getVertionString()
         Subview()
-        timelineService = TimelineService(connect: preview)
+        timelineService = TimelineService(livewindow: preview.livewindow)
         guard let timelineService = timelineService else { return }
         
         Listen()
@@ -41,46 +41,10 @@ class EditViewController: UIViewController {
         let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
         navigationItem.setRightBarButton(save, animated: true)
         // Do any additional setup after loading the view.
-//        timelineService.matting()
-//        timelineService.addCaption()
-        timelineService.addAnimationSticker()
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 0) + 3, execute: DispatchWorkItem(block: {
-//            timelineService.streamingContext.setColorGainForSDRToHDR(5.0)
-//            timelineService.seek(time: 8000000)
-//        }))
-
-    }
-
-    @IBAction func fliterClick(_ sender: UIButton) {
-        if let filterView = AssetView.LoadView() {
-            view.addSubview(filterView)
-            let height: CGFloat = 300
-            filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
-            UIView.animate(withDuration: 0.25) {
-                filterView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
-            }
-            filterInteraction = FilterInteraction(filterView, filterAction: timelineService!)
-        }
-    }
-    
-    @IBAction func captionClick(_ sender: UIButton) {
-        let captionInteraction = ModulerCaptionInteraction(captionAction: timelineService!)
-    }
-    
-    @IBAction func compoundCaptionClick(_ sender: UIButton) {
-        let height: CGFloat = 300
-        let compoundCaptionView = CompoundCaptionView.init(frame: CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height))
-        view.addSubview(compoundCaptionView)
-        compoundCaptionView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
-        UIView.animate(withDuration: 0.25) {
-            compoundCaptionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
-        }
-        compoundCaptionInteraction = CompoundCaptionInteraction(compoundCaptionView, compoundCaptionAction: timelineService!)
     }
     
     @objc func saveAction() {
-        self.view.makeToastActivity(.center)
-//        Toast.showLoading(string: "hskdjfhskdhksdhkdhsldfhl")
+        view.makeToastActivity(.center)
         timelineService?.saveAction(nil)
     }
     
@@ -98,6 +62,19 @@ class EditViewController: UIViewController {
         sequenceView.addSubview(seq)
         sequenceTop.constant = CGRectGetMaxY(livewidow.bounds)
         sequence?.transitionCoverDelegate = self
+        bottomDataSource.append(BottomItem(viewClass: AssetView.self, title: "Filter"))
+        bottomDataSource.append(BottomItem(viewClass: CaptionView.self, title: "Caption"))
+        bottomDataSource.append(BottomItem(viewClass: StickerView.self, title: "Sticker"))
+        bottomDataSource.append(BottomItem(viewClass: CompoundCaptionView.self, title: "CompoundCaption"))
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 88, height: 74)
+        layout.minimumLineSpacing = 0
+        bottomCollectionView.collectionViewLayout = layout
+        bottomCollectionView.delegate = self
+        bottomCollectionView.dataSource = self
+        let nib = UINib(nibName: "BottomCollectionViewCell", bundle: Bundle(for: BottomCollectionViewCell.self))
+        bottomCollectionView.register(nib, forCellWithReuseIdentifier: "BottomCollectionViewCell")
     }
     
     func Listen() {
@@ -128,36 +105,76 @@ class EditViewController: UIViewController {
         sequence?.addAlbmAction = { [weak self] in
             guard let weakSelf = self else { return }
             let time = weakSelf.timelineService?.timeline.duration ?? 0
-            weakSelf.albumUtils?.openAlbum(viewController: weakSelf, { phassets in
-                weakSelf.timelineService?.addClips(localIds: phassets.map({ phasset in
-                    return phasset.localIdentifier
-                }))
+            weakSelf.albumUtils?.openAlbum(viewController: weakSelf) { phassets in
+                weakSelf.timelineService?.addClips(localIds: phassets.map { phasset in
+                    phasset.localIdentifier
+                })
                 weakSelf.sequence?.sequenceInitLoad(videoTrack: weakSelf.timelineService!.timeline.getVideoTrack(by: 0))
                 weakSelf.sequence?.seekValue(time)
-            })
+            }
         }
         
-        timelineService?.didPlaybackTimelinePosition = {[weak self] position, progress in
+        timelineService?.didPlaybackTimelinePosition = { [weak self] position, _ in
             guard let weakSelf = self else { return }
             weakSelf.sequence?.seekValue(position)
         }
-        
     }
 }
 
 extension EditViewController: TransitionCoverViewDelegate {
     func didSelectIndex(index: Int) {
-        if let transitionView = AssetView.LoadView() {
-            view.addSubview(transitionView)
-            let height: CGFloat = 300
-            transitionView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
-            UIView.animate(withDuration: 0.25) {
-                transitionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
-            }
-            transitionInteraction = TransitionInteraction(transitionView, transitionAction: timelineService!)
-            transitionInteraction!.transitionIndex = index
+        let transitionView = AssetView.newInstance() as! AssetView
+        view.addSubview(transitionView)
+        let height: CGFloat = 300
+        transitionView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
+        UIView.animate(withDuration: 0.25) {
+            transitionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
         }
+//        transitionInteraction = TransitionInteraction(transitionView, transitionAction: timelineService!)
+//        transitionInteraction!.transitionIndex = index
+    }
+}
+
+extension EditViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        bottomDataSource.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BottomCollectionViewCell", for: indexPath) as! BottomCollectionViewCell
+        cell.title.text = bottomDataSource[indexPath.item].title
+        return cell
+    }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = bottomDataSource[indexPath.item]
+        let subview = item.viewClass.newInstance()
+        view.addSubview(subview)
+        subview.show()
+        if item.title == "Filter" {
+            if let sub = subview as? AssetView {
+                sub.filterService = timelineService?.filterService
+            }
+        }
+        if item.title == "Caption" {
+            if let sub = subview as? CaptionView {
+                preview.rectView.moveable = timelineService?.captionService
+                timelineService?.captionService.rectable = preview.rectView
+                sub.captionService = timelineService?.captionService
+                _ = timelineService?.captionService.addCaption(text: "请输入字幕")
+            }
+        }
+        if item.title == "CompoundCaption" {
+            if let sub = subview as? CompoundCaptionView {
+                sub.comCaptionService = timelineService?.comCaptionService
+            }
+        }
+        if item.title == "Sticker" {
+            if let sub = subview as? StickerView {
+                preview.rectView.moveable = timelineService?.stickerService
+                timelineService?.stickerService.rectable = preview.rectView
+                sub.stickerService = timelineService?.stickerService
+            }
+        }
+    }
 }

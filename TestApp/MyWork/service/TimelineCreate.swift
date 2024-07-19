@@ -21,13 +21,8 @@ func createTimeline(width: UInt, height: UInt) -> NvsTimeline? {
         return nil
     }
     var videoEditRes : NvsVideoResolution = NvsVideoResolution ()
-    @AlignWrapper(align: 4) var _width: UInt
-    @AlignWrapper(align: 2) var _height: UInt
-    _width = width
-    _height = height
-    let size = CGSize(width: Int(_width), height: Int(_height))
-    videoEditRes.imageWidth = UInt32(size.width)
-    videoEditRes.imageHeight = UInt32(size.height)
+    videoEditRes.imageWidth = UInt32(width)
+    videoEditRes.imageHeight = UInt32(height)
     videoEditRes.imagePAR = NvsRational.init(num: 1, den: 1)
     var videoFps : NvsRational = NvsRational.init(num: 30, den: 1)
     var audioEditRes : NvsAudioResolution = NvsAudioResolution()

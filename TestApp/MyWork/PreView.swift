@@ -8,10 +8,6 @@
 import UIKit
 import NvStreamingSdkCore
 
-protocol ConnectEnable {
-    func connect(streamingContext: NvsStreamingContext, timeline: NvsTimeline?)
-}
-
 class PreView: UIView {
 
     @IBOutlet weak var livewindow: NvsLiveWindow!
@@ -21,6 +17,20 @@ class PreView: UIView {
     @IBOutlet weak var durationTime: UILabel!
     @IBOutlet weak var currentTime: UILabel!
     var playBackAction: ((_ btn: UIButton)->())? = nil
+    var rectView = RectView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        addSubview(rectView)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        rectView.frame = livewindow.frame
+    }
     
     @IBAction func playClick(_ sender: UIButton) {
         playBackAction?(sender);
@@ -36,18 +46,7 @@ class PreView: UIView {
     
     static func loadView() -> Self? {
         let nib = UINib(nibName: "Livewindow", bundle: Bundle.main)
-        return nib.instantiate(withOwner: self).first as? Self
+        let view =  nib.instantiate(withOwner: self).first as? Self
+        return view
     }
-}
-
-extension PreView: ConnectEnable {
-    func connect(streamingContext: NvsStreamingContext, timeline: NvsTimeline?) {
-        livewindow.backgroundColor = .clear
-        livewindow.fillMode = NvsLiveWindowFillModePreserveAspectFit
-//        livewindow.hdrDisplayMode = NvsLiveWindowHDRDisplayMode_Device
-        streamingContext.connect(timeline, with: livewindow)
-//        livewindow.setBackgroundColorWithRed(0, green: 0, blue: 0, alpha: 0);
-    }
-    
-    
 }

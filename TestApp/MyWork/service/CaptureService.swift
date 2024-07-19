@@ -13,20 +13,22 @@ class CaptureService: NSObject {
     var cameraIndex: UInt32 = 0
     var filterFx: NvsCaptureVideoFx?
     override init() {
+        super.init()
         NvsStreamingContext.setSpecialCameraDeviceType("AVCaptureDeviceTypeBuiltInUltraWideCamera")
         ARService().initAR()
     }
-    func startPreview(connect: ConnectEnable) {
-        connect.connect(streamingContext: streamingContext, timeline: nil)
+    func startPreview(livewindow: NvsLiveWindow) {
+        streamingContext.connectCapturePreview(with: livewindow)
         streamingContext.delegate = self
         let aspectRatio = NvsRational(num: 9, den: 16)
         let ratio = withUnsafePointer(to: aspectRatio, { $0 })
-        streamingContext.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: ratio)
+        streamingContext.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: Int32(NvsStreamingEngineCaptureFlag_StrictPreviewVideoSize.rawValue|NvsStreamingEngineCaptureFlag_CaptureBuddyHostVideoFrame.rawValue), aspectRatio: ratio)
     }
     
     func startRecording() {
         let recordingPath = Documents + currentDateAndTime() + ".mov"
-        streamingContext.startRecording(withFx: recordingPath, withFlags: 0, withRecordConfigurations: nil)
+        let result = streamingContext.startRecording(withFx: recordingPath, withFlags: 0, withRecordConfigurations: nil)
+        print(result ? "record success" : "record error")
     }
     
     func stopRecording() {
@@ -41,7 +43,7 @@ class CaptureService: NSObject {
         } else {
             cameraIndex = 0
         }
-        streamingContext.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: 0, aspectRatio: nil)
+        streamingContext.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: Int32(NvsStreamingEngineCaptureFlag_StrictPreviewVideoSize.rawValue|NvsStreamingEngineCaptureFlag_CaptureBuddyHostVideoFrame.rawValue), aspectRatio: nil)
     }
     
     func zoomFactor(zoom: Float) {

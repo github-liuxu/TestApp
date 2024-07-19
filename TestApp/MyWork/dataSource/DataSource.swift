@@ -8,7 +8,9 @@
 import UIKit
 
 protocol AssetGetter {
-    func didLoadAsset(_ block: ([DataSourceItem]) -> Void)
+    init(_ assetDir: String, typeString: String)
+    func loadAsset() -> [DataSourceItem]
+    func loadAsset(path: String, typeString: String) -> [DataSourceItem]
 }
 
 struct DataSourceItem {
@@ -17,32 +19,39 @@ struct DataSourceItem {
     var licPath = ""
     var imagePath = ""
     var name = ""
+    var type = ""
 }
 
-class DataSource: NSObject {
-    var assetDir: String?
-    override init() {
-        fatalError("init method error!")
+struct DataSource: AssetGetter {
+    var assetDir: String!
+    var typeString: String!
+    init() {
+        assetDir = ""
+        typeString = ""
     }
-    init(_ assetDir: String) {
-        self.assetDir = assetDir;
-        super.init()
+    init(_ assetDir: String, typeString: String) {
+        self.assetDir = assetDir
+        self.typeString = typeString
     }
-}
-
-extension DataSource: AssetGetter {
-    func didLoadAsset(_ block: ([DataSourceItem]) -> Void) {
+    
+    func loadAsset() -> [DataSourceItem] {
+        return loadAsset(path: assetDir, typeString: typeString)
+    }
+    
+    func loadAsset(path: String, typeString: String) -> [DataSourceItem] {
         let fm = FileManager.default
         var array = [DataSourceItem]()
         var item = DataSourceItem()
         item.packagePath = ""
         item.imagePath = ""
         item.name = "无"
+        item.type = typeString
         array.append(item)
-        guard let assetDir = assetDir else { return block([]) }
+        guard let assetDir = assetDir else { return [] }
         fm.subpaths(atPath: assetDir)?.forEach({ name in
-            if name.hasSuffix((assetDir as NSString).lastPathComponent) {
+            if name.hasSuffix(typeString) {
                 var item = DataSourceItem()
+                item.type = typeString
                 item.packagePath = assetDir + "/" + name
                 item.imagePath = assetDir + "/" + name.split(separator: ".").first! as String + ".png"
                 if !fm.fileExists(atPath: item.imagePath) {
@@ -58,6 +67,6 @@ extension DataSource: AssetGetter {
                 array.append(item)
             }
         })
-        block(array)
+        return array
     }
 }
