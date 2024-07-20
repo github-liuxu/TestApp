@@ -47,15 +47,22 @@ class TimelineService: NSObject, TimelineFxService {
 //        streamingContext.setColorGainForSDRToHDR(2.0)
         timeline = createTimeline(width: 1920, height: 1080)
         captionService.timeline = timeline
+        captionService.livewindow = livewindow
         filterService.timeline = timeline
         comCaptionService.timeline = timeline
+        comCaptionService.livewindow = livewindow
         stickerService.livewindow = livewindow
         stickerService.timeline = timeline
-        captionService.livewindow = livewindow
         streamingContext.connect(timeline, with: livewindow)
         timeline?.appendVideoTrack()
         streamingContext.seekTimeline(timeline, timestamp: 0, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
         streamingContext.delegate = self
+    }
+    
+    func clear() {
+        if let timeline = timeline {
+            streamingContext.remove(timeline)
+        }
     }
     
     func addClips(localIds: Array<String>) {

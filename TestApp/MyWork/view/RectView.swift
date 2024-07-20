@@ -9,6 +9,7 @@ import UIKit
 
 protocol Rectable: NSObjectProtocol {
     func setPoints(_ points: [CGPoint])
+    func setSubPoints(_ points: [[CGPoint]])
 }
 
 class RectView: UIView, Rectable {
@@ -17,8 +18,8 @@ class RectView: UIView, Rectable {
     var rotateGesture: UIRotationGestureRecognizer!
     var pinchGesture: UIPinchGestureRecognizer!
     private var points: [CGPoint] = []
+    private var subPoints: [[CGPoint]] = []
     var moveable: Moveable?
-//    var operable: Operable?
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -80,12 +81,17 @@ class RectView: UIView, Rectable {
     
     // 设置点并触发重绘
     func setPoints(_ points: [CGPoint]) {
+        self.subPoints = []
         self.points = points
         setNeedsDisplay() // 触发重绘
     }
-
-    // 绘制方法
-    override func draw(_ rect: CGRect) {
+    
+    func setSubPoints(_ points: [[CGPoint]]) {
+        self.subPoints = points
+        setNeedsDisplay() // 触发重绘
+    }
+    
+    func drawPoints(points: [CGPoint]) {
         guard points.count == 4 else { return } // 确保有4个点
         
         // 创建路径
@@ -103,6 +109,14 @@ class RectView: UIView, Rectable {
         
         // 绘制路径
         path.stroke()
+    }
+    
+    // 绘制方法
+    override func draw(_ rect: CGRect) {
+        drawPoints(points: points)
+        for points in subPoints {
+            drawPoints(points: points)
+        }
     }
 }
 

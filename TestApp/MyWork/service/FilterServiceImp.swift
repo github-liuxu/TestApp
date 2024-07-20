@@ -18,14 +18,13 @@ protocol FilterService {
 
 class FilterServiceImp: NSObject, FilterService {
     var dataSources = [DataSourceItem]()
-    let filterAssetGetter = DataSource()
+    let filterAssetGetter = DataSource(Bundle.main.bundlePath + "/videofx", typeString: "videofx")
     var filterFx: NvsTimelineVideoFx?
     var timeline: NvsTimeline!
     var streamingContext = NvsStreamingContext.sharedInstance()!
     override init() {
         super.init()
-        let filterDir = Bundle.main.bundlePath + "/videofx"
-        dataSources = filterAssetGetter.loadAsset(path: filterDir, typeString: "videofx")
+        dataSources = filterAssetGetter.loadAsset()
     }
     func setFilterStrength(value: Float) {
         guard let filterFx = filterFx else { return }

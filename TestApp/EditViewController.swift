@@ -25,6 +25,7 @@ class EditViewController: UIViewController {
     var bottomDataSource = [BottomItem]()
     
     deinit {
+        timelineService?.clear()
         NvsStreamingContext.destroyInstance()
     }
     
@@ -172,7 +173,6 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
         if item.title == "CompoundCaption" {
             if let sub = subview as? CompoundCaptionView {
                 preview.rectView.moveable = timelineService?.comCaptionService
-                sub.comCaptionService = timelineService?.comCaptionService
                 timelineService?.comCaptionService.rectable = preview.rectView
                 sub.comCaptionService = timelineService?.comCaptionService
             }

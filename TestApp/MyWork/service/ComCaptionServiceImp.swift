@@ -16,16 +16,17 @@ protocol ComCaptionService {
 
 class ComCaptionServiceImp: NSObject {
     var dataSources: [DataSourceItem] = []
-    let comCaptionAssetGetter = DataSource()
+    let comCaptionAssetGetter: DataSource!
     var comCaption: NvsCompoundCaption?
     var timeline: NvsTimeline!
     var livewindow: NvsLiveWindow?
     var streamingContext = NvsStreamingContext.sharedInstance()!
     weak var rectable: Rectable?
     override init() {
-        super.init()
         let captionDir = Bundle.main.bundlePath + "/compoundcaption"
-        dataSources = comCaptionAssetGetter.loadAsset(path: captionDir, typeString: "compoundcaption")
+        comCaptionAssetGetter = DataSource(captionDir, typeString: "compoundcaption")
+        dataSources = comCaptionAssetGetter.loadAsset()
+        super.init()
     }
 }
 
@@ -46,6 +47,7 @@ extension ComCaptionServiceImp: ComCaptionService {
         if pid.count > 0 {
             comCaption = timeline.addCompoundCaption(0, duration: timeline.duration, compoundCaptionPackageId: pid)
         }
+        drawRects()
         seek(timeline: timeline)
     }
 }
@@ -81,13 +83,12 @@ extension ComCaptionServiceImp: Moveable {
         let p1 = livewindow.mapView(toCanonical: point)
         guard let timeline = timeline else { return }
         let position = streamingContext.getTimelineCurrentPosition(timeline)
-        let comCaptions = timeline.getCaptionsByTimelinePosition(position)
+        let comCaptions = timeline.getCompoundCaptions(byTimelinePosition: position)
         comCaption = nil
         comCaptions?.forEach({ comCaption in
-            let comCap = comCaption as! NvsCompoundCaption
-            let vertices = comCap.getCompoundBoundingVertices(NvsBoundingType_Frame) as NSArray
+            let vertices = comCaption.getCompoundBoundingVertices(NvsBoundingType_Frame) as NSArray
             if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
-                self.comCaption = comCap
+                self.comCaption = comCaption
                 return
             }
         })
@@ -109,5 +110,21 @@ extension ComCaptionServiceImp: Moveable {
             points.append(p)
         }
         rectable?.setPoints(points)
+        if comCaption.captionCount == 1 {
+            return
+        }
+        var subPoints: [[CGPoint]] = []
+        if let _comCaption = comCaption as? NvsTimelineCompoundCaption {
+            (0..<_comCaption.captionCount).forEach { index in
+                let vertices = _comCaption.getBoundingVertices(index, boundingType: NvsBoundingType_Text) as NSArray
+                var points = [CGPoint]()
+                for point in vertices {
+                    let p = livewindow.mapCanonical(toView: point as! CGPoint)
+                    points.append(p)
+                }
+                subPoints.append(points)
+            }
+            rectable?.setSubPoints(subPoints)
+        }
     }
 }

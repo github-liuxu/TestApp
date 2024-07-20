@@ -47,8 +47,7 @@ struct DataSource: AssetGetter {
         item.name = "无"
         item.type = typeString
         array.append(item)
-        guard let assetDir = assetDir else { return [] }
-        fm.subpaths(atPath: assetDir)?.forEach({ name in
+        fm.subpaths(atPath: path)?.forEach({ name in
             if name.hasSuffix(typeString) {
                 var item = DataSourceItem()
                 item.type = typeString
