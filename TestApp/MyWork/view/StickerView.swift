@@ -21,7 +21,7 @@ class StickerView: UIView, BottomViewService {
     var segmentedView: JXSegmentedView!
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
-    
+    var didViewClose: (() -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         // 初始化并配置 JXSegmentedView
@@ -78,6 +78,7 @@ class StickerView: UIView, BottomViewService {
         } completion: { finish in
             self.removeFromSuperview()
         }
+        didViewClose?()
     }
     
     @IBAction func closeClick(_ sender: Any) {

@@ -21,7 +21,7 @@ class EditViewController: UIViewController {
     var transitionInteraction: TransitionInteraction?
     @IBOutlet var bottomCollectionView: UICollectionView!
     @IBOutlet var sequenceTop: NSLayoutConstraint!
-    
+    let operate = RectMoveableImp()
     var bottomDataSource = [BottomItem]()
     
     deinit {
@@ -34,10 +34,12 @@ class EditViewController: UIViewController {
         Subview()
         timelineService = TimelineService(livewindow: preview.livewindow)
         guard let timelineService = timelineService else { return }
-        
+        operate.livewindow = preview.livewindow
+        operate.timelineService = timelineService
+        preview.rectView.moveable = operate
         Listen()
         timelineService.addClips(localIds: localIdentifies)
-        sequence?.sequenceInitLoad(videoTrack: timelineService.timeline.getVideoTrack(by: 0))
+        sequence?.sequenceInitLoad(videoTrack: timelineService.timeline!.getVideoTrack(by: 0))
         let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
         navigationItem.setRightBarButton(save, animated: true)
         // Do any additional setup after loading the view.
@@ -104,12 +106,12 @@ class EditViewController: UIViewController {
         
         sequence?.addAlbmAction = { [weak self] in
             guard let weakSelf = self else { return }
-            let time = weakSelf.timelineService?.timeline.duration ?? 0
+            let time = weakSelf.timelineService?.timeline?.duration ?? 0
             weakSelf.albumUtils?.openAlbum(viewController: weakSelf) { phassets in
                 weakSelf.timelineService?.addClips(localIds: phassets.map { phasset in
                     phasset.localIdentifier
                 })
-                weakSelf.sequence?.sequenceInitLoad(videoTrack: weakSelf.timelineService!.timeline.getVideoTrack(by: 0))
+                weakSelf.sequence?.sequenceInitLoad(videoTrack: weakSelf.timelineService!.timeline!.getVideoTrack(by: 0))
                 weakSelf.sequence?.seekValue(time)
             }
         }
@@ -151,6 +153,9 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
         let subview = item.viewClass.newInstance()
         view.addSubview(subview)
         subview.show()
+        subview.didViewClose = { [weak self] in
+            self?.preview.rectView.moveable = self?.operate
+        }
         if item.title == "Filter" {
             if let sub = subview as? AssetView {
                 sub.filterService = timelineService?.filterService
@@ -166,6 +171,9 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         if item.title == "CompoundCaption" {
             if let sub = subview as? CompoundCaptionView {
+                preview.rectView.moveable = timelineService?.comCaptionService
+                sub.comCaptionService = timelineService?.comCaptionService
+                timelineService?.comCaptionService.rectable = preview.rectView
                 sub.comCaptionService = timelineService?.comCaptionService
             }
         }

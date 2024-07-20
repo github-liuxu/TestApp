@@ -17,14 +17,21 @@ func seek(timeline: NvsTimeline?, timestamp: Int64 = -1, flags: Int32 = Int32(Nv
     NvsStreamingContext.sharedInstance().seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: flags)
 }
 
-class TimelineService: NSObject {
-    var livewindow: NvsLiveWindow!
-    var timeline: NvsTimeline!
+protocol TimelineFxService {
+    var captionService: CaptionServiceImp { get set }
+    var stickerService: StickerServiceImp { get  set }
+    var comCaptionService: ComCaptionServiceImp { get set }
+    var timeline: NvsTimeline? { get set }
+}
+
+class TimelineService: NSObject, TimelineFxService {
+    var livewindow: NvsLiveWindow
+    var timeline: NvsTimeline?
     let streamingContext = NvsStreamingContext.sharedInstance()!
-    var captionService = CaptionServiceImp()
-    var stickerService = StickerServiceImp()
+    var captionService: CaptionServiceImp = CaptionServiceImp()
+    var stickerService: StickerServiceImp = StickerServiceImp()
     var filterService = FilterServiceImp()
-    var comCaptionService = ComCaptionServiceImp()
+    var comCaptionService: ComCaptionServiceImp = ComCaptionServiceImp()
     var videoTransitionFx: NvsVideoTransition?
     var caption: NvsTimelineCaption?
     
@@ -34,6 +41,7 @@ class TimelineService: NSObject {
     var compileProgressChanged:((_ progress: Int32) -> ())? = nil
     let seekFlag = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue|NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)
     init(livewindow: NvsLiveWindow) {
+        self.livewindow = livewindow
         super.init()
         ARService().initAR()
 //        streamingContext.setColorGainForSDRToHDR(2.0)
@@ -51,6 +59,7 @@ class TimelineService: NSObject {
     }
     
     func addClips(localIds: Array<String>) {
+        guard let timeline = timeline else { return }
         let currentTime = streamingContext.getTimelineCurrentPosition(timeline)
         let videoTrack = timeline.getVideoTrack(by: 0)
         localIds.forEach { localId in
@@ -61,6 +70,7 @@ class TimelineService: NSObject {
     }
     
     func playClick(_ sender: UIButton) {
+        guard let timeline = timeline else { return }
         if streamingContext.getStreamingEngineState() != NvsStreamingEngineState_Playback {
             streamingContext.playbackTimeline(timeline, startTime: streamingContext.getTimelineCurrentPosition(timeline), endTime: timeline.duration, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, preload: true, flags: Int32(NvsStreamingEnginePlaybackFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEnginePlaybackFlag_BuddyOriginHostVideoFrame.rawValue))
         } else {
@@ -79,6 +89,7 @@ class TimelineService: NSObject {
     }
     
     func addAnimationSticker() {
+        guard let timeline = timeline else { return }
         let stickerPath = Bundle.main.path(forResource: "animationSticker/6FF9E1FC-3C2C-49B6-A3A7-BA51B1DA8AE0.1.animatedsticker", ofType: "")
         let path = Bundle.main.path(forResource: "9DD65EAD-DA38-4C19-AF17-621265A6B010.3", ofType: "captioninanimation")
         
@@ -99,6 +110,7 @@ class TimelineService: NSObject {
     }
     
     func saveAction(_ path: String?) {
+        guard let timeline = timeline else { return }
         var compilePath = path
         if path == nil {
             compilePath = NSHomeDirectory() + "/Documents/" + currentDateAndTime() + ".mp4"
@@ -108,6 +120,7 @@ class TimelineService: NSObject {
     }
     
     func sliderValueChanged(_ value: Int64) {
+        guard let timeline = timeline else { return }
         var time = value
         if value < 0 {
             time = 0
@@ -123,6 +136,7 @@ class TimelineService: NSObject {
 
 extension TimelineService: CompoundCaptionProtocal {
     func applyCompoundCaption(item: DataSourceItem) {
+        guard let timeline = timeline else { return }
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
         let ccc = timeline.addCompoundCaption(0, duration: timeline.duration, compoundCaptionPackageId: pid as String)
@@ -131,8 +145,9 @@ extension TimelineService: CompoundCaptionProtocal {
     }
     
     func applyCrop() {
+        guard let timeline = timeline else { return }
         let clip = timeline.getVideoTrack(by: 0).getClipWith(0)
-        clip?.enableRawSourceMode(true)
+//        clip?.enableRawSourceMode(true)
         let transFx = clip?.appendRawBuiltinFx("Transform 2D")
         transFx?.setBooleanVal("Is Normalized Coord", val: true)
         transFx?.setBooleanVal("Force Identical Position", val: true)
@@ -186,6 +201,7 @@ extension TimelineService: NvsStreamingContextDelegate {
 
 extension TimelineService: TransitionProtocal {
     func applyTransition(item: DataSourceItem, index: UInt32) {
+        guard let timeline = timeline else { return }
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoTransition, sync: true, assetPackageId: pid)
         if videoTransitionFx?.videoTransitionType == NvsVideoTransitionType_Builtin {

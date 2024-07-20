@@ -26,7 +26,7 @@ class CaptionView: UIView, BottomViewService {
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
     @IBOutlet weak var textField: UITextField!
-    
+    var didViewClose: (() -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         textField.delegate = self
@@ -128,6 +128,7 @@ class CaptionView: UIView, BottomViewService {
         } completion: { finish in
             self.removeFromSuperview()
         }
+        didViewClose?()
     }
     
     @IBAction func closeDelete(_ sender: Any) {

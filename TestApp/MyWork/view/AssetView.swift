@@ -8,6 +8,7 @@
 import UIKit
 
 class AssetView: UIView, BottomViewService {
+    var didViewClose: (() -> Void)?
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var collectionView: UICollectionView!
     var filterService: FilterService!
@@ -44,6 +45,7 @@ class AssetView: UIView, BottomViewService {
         } completion: { finish in
             self.removeFromSuperview()
         }
+        didViewClose?()
     }
     
     func reload() {

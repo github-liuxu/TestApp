@@ -10,6 +10,7 @@ import UIKit
 class CompoundCaptionView: UIView, BottomViewService {
     @IBOutlet weak var collectionView: UICollectionView!
     var comCaptionService: ComCaptionService!
+    var didViewClose: (() -> Void)?
     override func awakeFromNib() {
         setup()
         super.awakeFromNib()
@@ -42,6 +43,7 @@ class CompoundCaptionView: UIView, BottomViewService {
         } completion: { finish in
             self.removeFromSuperview()
         }
+        didViewClose?()
     }
 }
 extension CompoundCaptionView: UICollectionViewDelegate, UICollectionViewDataSource {

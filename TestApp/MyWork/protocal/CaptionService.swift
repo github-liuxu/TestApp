@@ -19,9 +19,10 @@ protocol CaptionService {
     var assetGetter: DataSource? { get set }
 }
 
-protocol Moveable: NSObjectProtocol {
+protocol Moveable {
     func translate(prePoint: CGPoint, curPoint: CGPoint)
     func scale(scale: Float)
     func rotate(rotate: Float)
     func tap(point: CGPoint)
+    func drawRects()
 }

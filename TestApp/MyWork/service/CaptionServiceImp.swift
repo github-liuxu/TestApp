@@ -22,21 +22,6 @@ class CaptionServiceImp: NSObject {
         assetGetter = DataSource(captionDir, typeString: "captionrenderer")
     }
     
-    func drawRects() {
-        if caption == nil {
-            rectable?.setPoints([])
-            return
-        }
-        guard let livewindow = livewindow else { return }
-        guard let caption = caption else { return }
-        let vertices = caption.getBoundingVertices(NvsBoundingType_Frame) as NSArray
-        var points = [CGPoint]()
-        for point in vertices {
-            let p = livewindow.mapCanonical(toView: point as! CGPoint)
-            points.append(p)
-        }
-        rectable?.setPoints(points)
-    }
 }
 
 extension CaptionServiceImp: CaptionService {
@@ -141,5 +126,21 @@ extension CaptionServiceImp: Moveable {
         })
         drawRects()
         seek(timeline: timeline)
+    }
+    
+    func drawRects() {
+        if caption == nil {
+            rectable?.setPoints([])
+            return
+        }
+        guard let livewindow = livewindow else { return }
+        guard let caption = caption else { return }
+        let vertices = caption.getBoundingVertices(NvsBoundingType_Frame) as NSArray
+        var points = [CGPoint]()
+        for point in vertices {
+            let p = livewindow.mapCanonical(toView: point as! CGPoint)
+            points.append(p)
+        }
+        rectable?.setPoints(points)
     }
 }

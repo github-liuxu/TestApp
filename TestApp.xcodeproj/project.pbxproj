@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CE9447A2C4ACF3A00C0B23A /* RectMoveableImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */; };
 		1C26F95D2EE3D98E23860605 /* Pods_TestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2CBE4C76110D3120817AC9 /* Pods_TestApp.framework */; };
 		5806CB792BCE136B00AD93EF /* other in Resources */ = {isa = PBXBuildFile; fileRef = 5806CB782BCE136B00AD93EF /* other */; };
 		5806CB7B2BCE211A00AD93EF /* CaptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5806CB7A2BCE211A00AD93EF /* CaptionView.xib */; };
@@ -116,6 +117,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectMoveableImp.swift; sourceTree = "<group>"; };
 		4BB314A834B6D9C7E647DA03 /* Pods-TestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.release.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.release.xcconfig"; sourceTree = "<group>"; };
 		5428F8C0F86EAB50C36A307F /* Pods-TestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.debug.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5806CB782BCE136B00AD93EF /* other */ = {isa = PBXFileReference; lastKnownFileType = folder; path = other; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				58C6FAD82C4906E4008277FB /* StickerServiceImp.swift */,
 				58FB6FE12C4768C4003FC269 /* ComCaptionServiceImp.swift */,
 				587725BF2C47FEBD00ED78CC /* LiveWindowServiceImp.swift */,
+				0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				5845848D2BD7B96D007F7247 /* ARService.swift in Sources */,
 				588B7E612B68DBB3005ADA60 /* AlbumUtils.swift in Sources */,
 				5873F4C12BAC673300170BE7 /* AlignProperty.swift in Sources */,
+				0CE9447A2C4ACF3A00C0B23A /* RectMoveableImp.swift in Sources */,
 				588B7E1F2B63F1B6005ADA60 /* TimelineService.swift in Sources */,
 				585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */,
 				58FB6FDC2C4695E4003FC269 /* BottomCollectionViewCell.swift in Sources */,

@@ -26,21 +26,6 @@ class StickerServiceImp: NSObject {
         let path = Bundle.main.bundlePath + "/animationsticker"
         assetGetter = DataSource(path, typeString: "animatedsticker")
     }
-    func drawRects() {
-        if sticker == nil {
-            rectable?.setPoints([])
-            return
-        }
-        guard let livewindow = livewindow else { return }
-        guard let sticker = sticker else { return }
-        let vertices = sticker.getBoundingRectangleVertices() as NSArray
-        var points = [CGPoint]()
-        for point in vertices {
-            let p = livewindow.mapCanonical(toView: point as! CGPoint)
-            points.append(p)
-        }
-        rectable?.setPoints(points)
-    }
     
     func getAnchorPoint(sticker: NvsAnimatedSticker?) -> CGPoint {
         guard let sticker = sticker else { return .zero }
@@ -95,6 +80,22 @@ extension StickerServiceImp: Moveable {
         })
         drawRects()
         seek(timeline: timeline)
+    }
+    
+    func drawRects() {
+        if sticker == nil {
+            rectable?.setPoints([])
+            return
+        }
+        guard let livewindow = livewindow else { return }
+        guard let sticker = sticker else { return }
+        let vertices = sticker.getBoundingRectangleVertices() as NSArray
+        var points = [CGPoint]()
+        for point in vertices {
+            let p = livewindow.mapCanonical(toView: point as! CGPoint)
+            points.append(p)
+        }
+        rectable?.setPoints(points)
     }
 }
 

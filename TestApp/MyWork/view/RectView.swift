@@ -17,7 +17,8 @@ class RectView: UIView, Rectable {
     var rotateGesture: UIRotationGestureRecognizer!
     var pinchGesture: UIPinchGestureRecognizer!
     private var points: [CGPoint] = []
-    weak var moveable: Moveable?
+    var moveable: Moveable?
+//    var operable: Operable?
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear

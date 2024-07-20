@@ -11,6 +11,7 @@ import UIKit
 protocol BottomViewService: UIView {
     static func newInstance() -> BottomViewService
     func show()
+    var didViewClose: (() -> Void)? { get set }
 }
 
 struct BottomItem {
