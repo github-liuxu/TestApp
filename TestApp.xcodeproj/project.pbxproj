@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0CE9447A2C4ACF3A00C0B23A /* RectMoveableImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */; };
+		0CE944802C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */; };
 		1C26F95D2EE3D98E23860605 /* Pods_TestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2CBE4C76110D3120817AC9 /* Pods_TestApp.framework */; };
 		5806CB792BCE136B00AD93EF /* other in Resources */ = {isa = PBXBuildFile; fileRef = 5806CB782BCE136B00AD93EF /* other */; };
 		5806CB7B2BCE211A00AD93EF /* CaptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5806CB7A2BCE211A00AD93EF /* CaptionView.xib */; };
@@ -118,6 +119,7 @@
 
 /* Begin PBXFileReference section */
 		0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectMoveableImp.swift; sourceTree = "<group>"; };
+		0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCaptionServiceImp.swift; sourceTree = "<group>"; };
 		4BB314A834B6D9C7E647DA03 /* Pods-TestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.release.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.release.xcconfig"; sourceTree = "<group>"; };
 		5428F8C0F86EAB50C36A307F /* Pods-TestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.debug.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5806CB782BCE136B00AD93EF /* other */ = {isa = PBXFileReference; lastKnownFileType = folder; path = other; sourceTree = "<group>"; };
@@ -320,10 +322,11 @@
 		588B7E6A2B690262005ADA60 /* service */ = {
 			isa = PBXGroup;
 			children = (
+				588B7E672B68EE04005ADA60 /* CaptureService.swift */,
+				0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */,
 				588B7E162B63E572005ADA60 /* TimelineCreate.swift */,
 				5845848C2BD7B96D007F7247 /* ARService.swift */,
 				588B7E1E2B63F1B6005ADA60 /* TimelineService.swift */,
-				588B7E672B68EE04005ADA60 /* CaptureService.swift */,
 				58FB6FDD2C469DD4003FC269 /* FilterServiceImp.swift */,
 				582B4F932BE08DE3000D26CC /* CaptionServiceImp.swift */,
 				58C6FAD82C4906E4008277FB /* StickerServiceImp.swift */,
@@ -572,6 +575,7 @@
 				587725C02C47FEBD00ED78CC /* LiveWindowServiceImp.swift in Sources */,
 				587725C72C49013E00ED78CC /* StickerView.swift in Sources */,
 				58F4D34A2B84AB8E00334AA9 /* TransitionProtocal.swift in Sources */,
+				0CE944802C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift in Sources */,
 				58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */,
 				58B85E9C2BAA8240004C7A96 /* CompoundCaptionView.swift in Sources */,
 				58FB6FE62C478898003FC269 /* PackageList.swift in Sources */,

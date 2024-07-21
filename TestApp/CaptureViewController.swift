@@ -10,16 +10,20 @@ import UIKit
 
 class CaptureViewController: UIViewController {
     @IBOutlet var livewindow: NvsLiveWindow!
+    @IBOutlet weak var rectView: RectView!
     let streamingContext = NvsStreamingContext.sharedInstance()!
-    let capture = CaptureService()
+    var capture: CaptureService?
     deinit {
-        streamingContext.stopRecording()
+        capture?.clear()
+        capture = nil
+        streamingContext.stop()
         NvsStreamingContext.destroyInstance()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        capture.startPreview(livewindow: livewindow)
+        capture = CaptureService()
+        capture?.startPreview(livewindow: livewindow)
 
         // Do any additional setup after loading the view.
     }
@@ -27,10 +31,10 @@ class CaptureViewController: UIViewController {
     @IBAction func recordClick(_ sender: UIButton) {
         var text = ""
         if sender.isSelected {
-            capture.stopRecording()
+            capture?.stopRecording()
             text = "Record"
         } else {
-            capture.startRecording()
+            capture?.startRecording()
             text = "Stop"
         }
         sender.isSelected = !sender.isSelected
@@ -47,6 +51,30 @@ class CaptureViewController: UIViewController {
     }
 
     @IBAction func switchCamera(_ sender: UISwitch) {
-        capture.switchCamera()
+        capture?.switchCamera()
     }
+    
+    @IBAction func captionClick(_ sender: Any) {
+        guard let capture = capture else { return }
+        let captionView = CaptionView.newInstance() as! CaptionView
+        view.addSubview(captionView)
+        captionView.show()
+        
+        rectView.moveable = capture.captionService
+        capture.captionService.rectable = rectView
+        captionView.captionService = capture.captionService
+        _ = capture.captionService.addCaption(text: "请输入字幕")
+        
+        captionView.didViewClose = { [weak self] in
+            self?.rectView.moveable = nil
+        }
+    }
+    
+    @IBAction func sticker(_ sender: Any) {
+    }
+    
+    @IBAction func comCaption(_ sender: Any) {
+    }
+    
+    
 }

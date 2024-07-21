@@ -9,6 +9,7 @@ import Foundation
 import NvStreamingSdkCore
 
 func seek(timeline: NvsTimeline?, timestamp: Int64 = -1, flags: Int32 = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue|NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)) {
+    guard let timeline = timeline else { return }
     let streamingContext = NvsStreamingContext.sharedInstance()
     var time = timestamp
     if timestamp == -1 {

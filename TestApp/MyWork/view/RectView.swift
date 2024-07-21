@@ -36,7 +36,18 @@ class RectView: UIView, Rectable {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = .clear
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan(gesture:)))
+        addGestureRecognizer(panGesture)
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
+        addGestureRecognizer(tapGesture)
+        rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(rotate(gesture:)))
+        rotateGesture.delegate = self
+        addGestureRecognizer(rotateGesture)
+        pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
+        pinchGesture.delegate = self
+        addGestureRecognizer(pinchGesture)
     }
     
     @objc func pan(gesture: UIPanGestureRecognizer) {

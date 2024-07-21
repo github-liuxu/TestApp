@@ -12,12 +12,14 @@ class CaptureService: NSObject {
     var streamingContext = NvsStreamingContext.sharedInstance()!
     var cameraIndex: UInt32 = 0
     var filterFx: NvsCaptureVideoFx?
+    let captionService: CaptureCaptionServiceImp = CaptureCaptionServiceImp()
     override init() {
         super.init()
         NvsStreamingContext.setSpecialCameraDeviceType("AVCaptureDeviceTypeBuiltInUltraWideCamera")
         ARService().initAR()
     }
     func startPreview(livewindow: NvsLiveWindow) {
+        captionService.livewindow = livewindow
         streamingContext.connectCapturePreview(with: livewindow)
         streamingContext.delegate = self
         let aspectRatio = NvsRational(num: 9, den: 16)
@@ -48,6 +50,11 @@ class CaptureService: NSObject {
     
     func zoomFactor(zoom: Float) {
         streamingContext.setZoomFactor(zoom)
+    }
+    
+    func clear() {
+        captionService.clear()
+        streamingContext.removeAllCaptureVideoFx()
     }
     
 }

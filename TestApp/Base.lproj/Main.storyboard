@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QrP-tm-gIP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QrP-tm-gIP">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -149,6 +149,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uzF-uD-gNM" customClass="NvsLiveWindow">
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5m2-Eb-Gtj" customClass="RectView" customModule="TestApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVJ-3G-dHc">
                                         <rect key="frame" x="159" y="586" width="75" height="75"/>
                                         <constraints>
@@ -179,13 +183,47 @@
                                             <action selector="filterClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="cA2-gt-Tub"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uI-cv-fdx">
+                                        <rect key="frame" x="296" y="162" width="81" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="caption"/>
+                                        <connections>
+                                            <action selector="captionClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="qAG-mH-5M8"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfE-2v-Ygp">
+                                        <rect key="frame" x="302" y="217" width="75" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="sticker"/>
+                                        <connections>
+                                            <action selector="sticker:" destination="f8K-7J-gie" eventType="touchUpInside" id="eFH-Dg-WBb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgm-Q7-ua4">
+                                        <rect key="frame" x="260" y="272" width="117" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="comCaption"/>
+                                        <connections>
+                                            <action selector="comCaption:" destination="f8K-7J-gie" eventType="touchUpInside" id="cZB-i0-Ue3"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="UKx-Eu-l1x" secondAttribute="trailing" constant="42" id="1oE-bJ-q5Z"/>
+                                    <constraint firstItem="qfE-2v-Ygp" firstAttribute="top" secondItem="2uI-cv-fdx" secondAttribute="bottom" constant="20" id="3q9-u8-x8l"/>
                                     <constraint firstAttribute="trailing" secondItem="vSa-i7-0zg" secondAttribute="trailing" constant="28" id="9Sq-Rp-U3r"/>
+                                    <constraint firstAttribute="trailing" secondItem="dgm-Q7-ua4" secondAttribute="trailing" constant="16" id="D4f-aj-vgp"/>
                                     <constraint firstAttribute="bottom" secondItem="OVJ-3G-dHc" secondAttribute="bottom" constant="54" id="DZY-97-NkK"/>
+                                    <constraint firstAttribute="trailing" secondItem="qfE-2v-Ygp" secondAttribute="trailing" constant="16" id="GXP-5a-Pis"/>
                                     <constraint firstItem="OVJ-3G-dHc" firstAttribute="centerX" secondItem="uzF-uD-gNM" secondAttribute="centerX" id="HGM-d6-J0G"/>
+                                    <constraint firstItem="2uI-cv-fdx" firstAttribute="top" secondItem="vSa-i7-0zg" secondAttribute="bottom" constant="19" id="HPL-o5-mo9"/>
+                                    <constraint firstAttribute="trailing" secondItem="2uI-cv-fdx" secondAttribute="trailing" constant="16" id="Htm-Hg-1nO"/>
+                                    <constraint firstItem="dgm-Q7-ua4" firstAttribute="top" secondItem="qfE-2v-Ygp" secondAttribute="bottom" constant="20" id="Q1d-DQ-xAl"/>
+                                    <constraint firstAttribute="bottom" secondItem="5m2-Eb-Gtj" secondAttribute="bottom" id="Riq-QQ-Djv"/>
+                                    <constraint firstItem="5m2-Eb-Gtj" firstAttribute="leading" secondItem="uzF-uD-gNM" secondAttribute="leading" id="c3B-ca-FbL"/>
+                                    <constraint firstItem="5m2-Eb-Gtj" firstAttribute="top" secondItem="uzF-uD-gNM" secondAttribute="top" id="dtj-FK-gnj"/>
+                                    <constraint firstAttribute="trailing" secondItem="5m2-Eb-Gtj" secondAttribute="trailing" id="h1z-39-9Y6"/>
                                     <constraint firstItem="UKx-Eu-l1x" firstAttribute="top" secondItem="uzF-uD-gNM" secondAttribute="top" constant="32" id="vTn-M7-CG1"/>
                                     <constraint firstItem="vSa-i7-0zg" firstAttribute="top" secondItem="UKx-Eu-l1x" secondAttribute="bottom" constant="45" id="zQl-l3-Zdi"/>
                                 </constraints>
@@ -203,6 +241,7 @@
                     <navigationItem key="navigationItem" id="5AY-6g-OoC"/>
                     <connections>
                         <outlet property="livewindow" destination="uzF-uD-gNM" id="tVe-w3-Nf0"/>
+                        <outlet property="rectView" destination="5m2-Eb-Gtj" id="24n-y7-Vkt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Sx-Jt-ZK6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
