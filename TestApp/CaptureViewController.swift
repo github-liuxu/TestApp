@@ -24,7 +24,6 @@ class CaptureViewController: UIViewController {
         super.viewDidLoad()
         capture = CaptureService()
         capture?.startPreview(livewindow: livewindow)
-
         // Do any additional setup after loading the view.
     }
 
@@ -44,6 +43,7 @@ class CaptureViewController: UIViewController {
     @IBAction func filterClick(_ sender: UIButton) {
         let filterView = AssetView.newInstance() as! AssetView
         view.addSubview(filterView)
+        filterView.filterService = capture?.filterService
         filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 300)
         UIView.animate(withDuration: 0.25) {
             filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
@@ -71,10 +71,23 @@ class CaptureViewController: UIViewController {
     }
     
     @IBAction func sticker(_ sender: Any) {
+        
     }
     
     @IBAction func comCaption(_ sender: Any) {
+        
     }
     
+    @IBAction func props(_ sender: Any) {
+        guard let capture = capture else { return }
+        let propView = PropView.newInstance() as! PropView
+        view.addSubview(propView)
+        propView.show()
+        
+        rectView.moveable = capture.captionService
+        capture.captionService.rectable = rectView
+        propView.arsceneService = capture.arsceneService
+
+    }
     
 }

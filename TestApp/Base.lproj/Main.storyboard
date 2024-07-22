@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QrP-tm-gIP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QrP-tm-gIP">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -178,7 +178,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSa-i7-0zg">
                                         <rect key="frame" x="306" y="108" width="59" height="35"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="filter"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="filter">
+                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="filterClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="cA2-gt-Tub"/>
                                         </connections>
@@ -186,7 +188,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uI-cv-fdx">
                                         <rect key="frame" x="296" y="162" width="81" height="35"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="caption"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="caption">
+                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="captionClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="qAG-mH-5M8"/>
                                         </connections>
@@ -194,7 +198,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfE-2v-Ygp">
                                         <rect key="frame" x="302" y="217" width="75" height="35"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="sticker"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="sticker">
+                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="sticker:" destination="f8K-7J-gie" eventType="touchUpInside" id="eFH-Dg-WBb"/>
                                         </connections>
@@ -202,9 +208,21 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgm-Q7-ua4">
                                         <rect key="frame" x="260" y="272" width="117" height="35"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="comCaption"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="comCaption">
+                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="comCaption:" destination="f8K-7J-gie" eventType="touchUpInside" id="cZB-i0-Ue3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iBu-q9-De7">
+                                        <rect key="frame" x="308" y="327" width="69" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Props">
+                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="props:" destination="f8K-7J-gie" eventType="touchUpInside" id="U0X-K3-ZdT"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -212,6 +230,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="UKx-Eu-l1x" secondAttribute="trailing" constant="42" id="1oE-bJ-q5Z"/>
                                     <constraint firstItem="qfE-2v-Ygp" firstAttribute="top" secondItem="2uI-cv-fdx" secondAttribute="bottom" constant="20" id="3q9-u8-x8l"/>
+                                    <constraint firstAttribute="trailing" secondItem="iBu-q9-De7" secondAttribute="trailing" constant="16" id="4ed-9K-fWW"/>
                                     <constraint firstAttribute="trailing" secondItem="vSa-i7-0zg" secondAttribute="trailing" constant="28" id="9Sq-Rp-U3r"/>
                                     <constraint firstAttribute="trailing" secondItem="dgm-Q7-ua4" secondAttribute="trailing" constant="16" id="D4f-aj-vgp"/>
                                     <constraint firstAttribute="bottom" secondItem="OVJ-3G-dHc" secondAttribute="bottom" constant="54" id="DZY-97-NkK"/>
@@ -219,6 +238,7 @@
                                     <constraint firstItem="OVJ-3G-dHc" firstAttribute="centerX" secondItem="uzF-uD-gNM" secondAttribute="centerX" id="HGM-d6-J0G"/>
                                     <constraint firstItem="2uI-cv-fdx" firstAttribute="top" secondItem="vSa-i7-0zg" secondAttribute="bottom" constant="19" id="HPL-o5-mo9"/>
                                     <constraint firstAttribute="trailing" secondItem="2uI-cv-fdx" secondAttribute="trailing" constant="16" id="Htm-Hg-1nO"/>
+                                    <constraint firstItem="iBu-q9-De7" firstAttribute="top" secondItem="dgm-Q7-ua4" secondAttribute="bottom" constant="20" id="Ii7-Tf-yXS"/>
                                     <constraint firstItem="dgm-Q7-ua4" firstAttribute="top" secondItem="qfE-2v-Ygp" secondAttribute="bottom" constant="20" id="Q1d-DQ-xAl"/>
                                     <constraint firstAttribute="bottom" secondItem="5m2-Eb-Gtj" secondAttribute="bottom" id="Riq-QQ-Djv"/>
                                     <constraint firstItem="5m2-Eb-Gtj" firstAttribute="leading" secondItem="uzF-uD-gNM" secondAttribute="leading" id="c3B-ca-FbL"/>

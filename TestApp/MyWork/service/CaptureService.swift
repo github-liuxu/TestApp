@@ -11,13 +11,28 @@ import NvStreamingSdkCore
 class CaptureService: NSObject {
     var streamingContext = NvsStreamingContext.sharedInstance()!
     var cameraIndex: UInt32 = 0
-    var filterFx: NvsCaptureVideoFx?
-    let captionService: CaptureCaptionServiceImp = CaptureCaptionServiceImp()
+    let captionService = CaptureCaptionServiceImp()
+    let filterService = CaptureFilterService()
+    let arsceneService = CaptureARSceneServiceImp()
+    var arsceneFx: NvsCaptureVideoFx?
     override init() {
         super.init()
         NvsStreamingContext.setSpecialCameraDeviceType("AVCaptureDeviceTypeBuiltInUltraWideCamera")
-        ARService().initAR()
+        initAR()
+        arsceneFx = streamingContext.appendBuiltinCaptureVideoFx("AR Scene")
+        arsceneFx?.setBooleanVal("Max Faces Respect Min", val: true)
+        arsceneFx?.setBooleanVal("Use Face Extra Info", val: true)
+        arsceneService.arsceneFx = arsceneFx
     }
+    func initAR() {
+        let licPath = Bundle.main.bundlePath + "/ms/meishesdk.lic"
+        let ms_face240ModelPath = Bundle.main.bundlePath + "/ms/ms_face240_v2.0.8.model"
+        let humanSegModelPath = Bundle.main.bundlePath + "/ms/ms_humanseg_v1.0.15.model"
+        var sss = NvsStreamingContext.initHumanDetection(ms_face240ModelPath, licenseFilePath: licPath, features: Int32(NvsHumanDetectionFeature_FaceLandmark.rawValue|NvsHumanDetectionFeature_FaceAction.rawValue | NvsHumanDetectionFeature_SemiImageMode.rawValue))
+        sss = NvsStreamingContext.initHumanDetectionExt(humanSegModelPath, licenseFilePath: licPath, features: Int32(NvsEffectSdkHumanDetectionFeature_Background.rawValue))
+        print("加载模型: \(sss)")
+    }
+    
     func startPreview(livewindow: NvsLiveWindow) {
         captionService.livewindow = livewindow
         streamingContext.connectCapturePreview(with: livewindow)
@@ -55,6 +70,7 @@ class CaptureService: NSObject {
     func clear() {
         captionService.clear()
         streamingContext.removeAllCaptureVideoFx()
+        streamingContext.removeAllCaptureAudioFx()
     }
     
 }
@@ -63,37 +79,5 @@ extension CaptureService: NvsStreamingContextDelegate {
     func didCaptureDeviceCapsReady(_ captureDeviceIndex: UInt32) {
         let cap = streamingContext.getCaptureDeviceCapability(captureDeviceIndex);
         print(cap?.maxZoomFactor)
-    }
-}
-
-extension CaptureService: FilterProtocal {
-    func applyFilter(item: DataSourceItem) {
-        let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
-        if filterFx?.captureVideoFxType == NvsCaptureVideoFxType_Builtin {
-            if filterFx?.bultinCaptureVideoFxName == item.bultinName {
-                return
-            }
-        } else {
-            if filterFx?.captureVideoFxPackageId == pid as String {
-                return
-            }
-        }
-        
-        if let filterFx = filterFx {
-            streamingContext.removeCaptureVideoFx(filterFx.index)
-        }
-        if pid.length > 0 {
-            filterFx = streamingContext.appendPackagedCaptureVideoFx(pid as String)
-        }
-    }
-    
-    func setFilterStrength(value: Float) {
-        guard let filterFx = filterFx else { return }
-        filterFx.setFilterIntensity(value)
-    }
-    
-    func getFilterStrength() -> Float {
-        return filterFx?.getFilterIntensity() ?? 0
     }
 }

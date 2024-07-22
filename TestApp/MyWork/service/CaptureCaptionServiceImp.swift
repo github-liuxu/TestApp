@@ -30,7 +30,7 @@ class CaptureCaptionServiceImp: NSObject {
 extension CaptureCaptionServiceImp: CaptionService {
     func addCaption(text: String) -> NvsCaption {
         let streamingContext = NvsStreamingContext.sharedInstance()!
-        caption = streamingContext.appendCaptureModularCaption(text, offsetTime: 0, duration: 10000000000)
+        caption = streamingContext.appendCaptureModularCaption(text, offsetTime: 0, duration: 1000000000)
         didCaptionTextChanged?(caption?.getText())
         drawRects()
         return caption!
