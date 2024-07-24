@@ -8,12 +8,12 @@
 import UIKit
 import NvStreamingSdkCore
 
-class CaptureCaptionServiceImp: NSObject {
+class CaptureCaptionServiceImp: NSObject, DataSourceService {
     weak var rectable: Rectable?
     var didCaptionTextChanged: ((String?) -> Void)?
     var caption: NvsCaption?
     var livewindow: NvsLiveWindow?
-    var assetGetter: DataSource?
+    var assetGetter: (any AssetGetter)?
     override init() {
         super.init()
         let captionDir = Bundle.main.bundlePath + "/captionrenderer"

@@ -8,6 +8,16 @@
 import Foundation
 import NvStreamingSdkCore
 
+protocol CaptionService {
+    func addCaption(text: String) -> NvsCaption
+    func deleteCaption()
+    func getAllCaption() -> [NvsCaption]
+    func setCaptionText(text: String)
+    func setCaptionTextColor(text: String)
+    func applyCaptionPackage(packagePath: String, licPath: String, type: String)
+    var didCaptionTextChanged: ((String?) -> Void)? { get set }
+}
+
 class CaptionServiceImp: NSObject {
     weak var rectable: Rectable?
     var didCaptionTextChanged: ((String?) -> Void)?

@@ -7,13 +7,28 @@
 
 import UIKit
 
-protocol AssetGetter {
-    init(_ assetDir: String, typeString: String)
-    func loadAsset() -> [DataSourceItem]
-    func loadAsset(path: String, typeString: String) -> [DataSourceItem]
+protocol DataSourceService {
+    var assetGetter: AssetGetter? { get set }
 }
 
-struct DataSourceItem {
+protocol DataSourceItemProtocol {
+    var bultinName: String { get set }
+    var packagePath: String { get set }
+    var licPath: String { get set }
+    var imagePath: String { get set }
+    var name: String { get set }
+    var type: String { get set }
+}
+
+protocol AssetGetter {
+    init(_ assetDir: String, typeString: String)
+    var dataSource: [DataSourceItemProtocol] { get set }
+    mutating func fetchData()
+    var didFetchSuccess: ((_ dataSource: [DataSourceItemProtocol]) -> Void)? { get set }
+    var didFetchError: ((Error) -> Void)? { get set }
+}
+
+struct DataSourceItem: DataSourceItemProtocol {
     var bultinName = ""
     var packagePath = ""
     var licPath = ""
@@ -23,22 +38,32 @@ struct DataSourceItem {
 }
 
 struct DataSource: AssetGetter {
+    var didFetchError: ((any Error) -> Void)?
+    var didFetchSuccess: ((_ dataSource: [DataSourceItemProtocol]) -> Void)?
+    var dataSource: [DataSourceItemProtocol]
     var assetDir: String!
     var typeString: String!
     init() {
         assetDir = ""
         typeString = ""
+        dataSource = [DataSourceItemProtocol]()
     }
     init(_ assetDir: String, typeString: String) {
         self.assetDir = assetDir
         self.typeString = typeString
+        dataSource = [DataSourceItemProtocol]()
     }
     
-    func loadAsset() -> [DataSourceItem] {
+    mutating func fetchData() {
+        dataSource = loadAsset()
+        didFetchSuccess?(dataSource)
+    }
+    
+    func loadAsset() -> [DataSourceItemProtocol] {
         return loadAsset(path: assetDir, typeString: typeString)
     }
     
-    func loadAsset(path: String, typeString: String) -> [DataSourceItem] {
+    func loadAsset(path: String, typeString: String) -> [DataSourceItemProtocol] {
         let fm = FileManager.default
         var array = [DataSourceItem]()
         var item = DataSourceItem()

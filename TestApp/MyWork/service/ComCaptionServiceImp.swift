@@ -9,30 +9,23 @@ import UIKit
 import NvStreamingSdkCore
 
 protocol ComCaptionService {
-    var dataSources: [DataSourceItem] { get set }
-    func applyComCaptionIndex(index: Int)
+    func applyComCaptionPackage(item: DataSourceItemProtocol)
     func applyComCaption(packageId: String)
 }
 
 class ComCaptionServiceImp: NSObject {
-    var dataSources: [DataSourceItem] = []
-    let comCaptionAssetGetter: DataSource!
     var comCaption: NvsCompoundCaption?
     var timeline: NvsTimeline!
     var livewindow: NvsLiveWindow?
     var streamingContext = NvsStreamingContext.sharedInstance()!
     weak var rectable: Rectable?
     override init() {
-        let captionDir = Bundle.main.bundlePath + "/compoundcaption"
-        comCaptionAssetGetter = DataSource(captionDir, typeString: "compoundcaption")
-        dataSources = comCaptionAssetGetter.loadAsset()
         super.init()
     }
 }
 
 extension ComCaptionServiceImp: ComCaptionService {
-    func applyComCaptionIndex(index: Int) {
-        let item = dataSources[index]
+    func applyComCaptionPackage(item: any DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
         applyComCaption(packageId: pid as String)

@@ -11,7 +11,6 @@ import NvStreamingSdkCore
 protocol StickerService: NSObjectProtocol {
     func deleteSticker()
     func applyPackage(packagePath: String, licPath: String)
-    var assetGetter: DataSource { get set }
 }
 
 class StickerServiceImp: NSObject {
@@ -20,11 +19,8 @@ class StickerServiceImp: NSObject {
     var timeline: NvsTimeline?
     var sticker: NvsAnimatedSticker?
     var livewindow: NvsLiveWindow?
-    private var _assetGetter: DataSource!
     override init() {
         super.init()
-        let path = Bundle.main.bundlePath + "/animationsticker"
-        assetGetter = DataSource(path, typeString: "animatedsticker")
     }
     
     func getAnchorPoint(sticker: NvsAnimatedSticker?) -> CGPoint {
@@ -100,15 +96,6 @@ extension StickerServiceImp: Moveable {
 }
 
 extension StickerServiceImp: StickerService {
-    var assetGetter: DataSource {
-        get {
-            _assetGetter
-        }
-        set {
-            _assetGetter = newValue
-        }
-    }
-    
     func applyPackage(packagePath: String, licPath: String) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)

@@ -44,7 +44,6 @@ class TimelineService: NSObject, TimelineFxService {
     init(livewindow: NvsLiveWindow) {
         self.livewindow = livewindow
         super.init()
-        ARService().initAR()
 //        streamingContext.setColorGainForSDRToHDR(2.0)
         timeline = createTimeline(width: 1920, height: 1080)
         captionService.timeline = timeline
@@ -142,33 +141,33 @@ class TimelineService: NSObject, TimelineFxService {
     
 }
 
-extension TimelineService: CompoundCaptionProtocal {
-    func applyCompoundCaption(item: DataSourceItem) {
-        guard let timeline = timeline else { return }
-        let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
-        let ccc = timeline.addCompoundCaption(0, duration: timeline.duration, compoundCaptionPackageId: pid as String)
-        let text = ccc?.getText(0)
-        print(text)
-    }
-    
-    func applyCrop() {
-        guard let timeline = timeline else { return }
-        let clip = timeline.getVideoTrack(by: 0).getClipWith(0)
-//        clip?.enableRawSourceMode(true)
-        let transFx = clip?.appendRawBuiltinFx("Transform 2D")
-        transFx?.setBooleanVal("Is Normalized Coord", val: true)
-        transFx?.setBooleanVal("Force Identical Position", val: true)
-        transFx?.setFloatVal("Trans X", val: 1)
-        transFx?.setFloatVal("Trans Y", val: 0)
-        let fx = clip?.appendRawBuiltinFx("Crop")
-        fx?.setFilterMask(false)
-        fx?.setFloatVal("Bounding Left", val: -2160)
-        fx?.setFloatVal("Bounding Right", val: 0)
-        fx?.setFloatVal("Bounding Top", val: 1152)
-        fx?.setFloatVal("Bounding Bottom",val: -1152)
-    }
-}
+//extension TimelineService: CompoundCaptionProtocal {
+//    func applyCompoundCaption(item: DataSourceItem) {
+//        guard let timeline = timeline else { return }
+//        let pid = NSMutableString()
+//        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
+//        let ccc = timeline.addCompoundCaption(0, duration: timeline.duration, compoundCaptionPackageId: pid as String)
+//        let text = ccc?.getText(0)
+//        print(text)
+//    }
+//    
+//    func applyCrop() {
+//        guard let timeline = timeline else { return }
+//        let clip = timeline.getVideoTrack(by: 0).getClipWith(0)
+////        clip?.enableRawSourceMode(true)
+//        let transFx = clip?.appendRawBuiltinFx("Transform 2D")
+//        transFx?.setBooleanVal("Is Normalized Coord", val: true)
+//        transFx?.setBooleanVal("Force Identical Position", val: true)
+//        transFx?.setFloatVal("Trans X", val: 1)
+//        transFx?.setFloatVal("Trans Y", val: 0)
+//        let fx = clip?.appendRawBuiltinFx("Crop")
+//        fx?.setFilterMask(false)
+//        fx?.setFloatVal("Bounding Left", val: -2160)
+//        fx?.setFloatVal("Bounding Right", val: 0)
+//        fx?.setFloatVal("Bounding Top", val: 1152)
+//        fx?.setFloatVal("Bounding Bottom",val: -1152)
+//    }
+//}
 
 extension TimelineService: NvsStreamingContextDelegate {
     func didStreamingEngineStateChanged(_ state: NvsStreamingEngineState) {

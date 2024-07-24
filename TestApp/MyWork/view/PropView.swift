@@ -10,15 +10,7 @@ import JXSegmentedView
 import NvStreamingSdkCore
 
 class PropView: UIView, BottomViewService {
-    var arsceneService: CaptureARSceneService? {
-        didSet {
-            for (index, _) in segmentedDataSource.titles.enumerated() {
-                if let listVC = listContainerView.validListDict[index] as? ListViewController {
-                    listVC.packageList.dataSource = arsceneService?.assetGetter?.loadAsset()
-                }
-            }
-        }
-    }
+    var arsceneService: CaptureARSceneService?
     var segmentedView: JXSegmentedView!
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!

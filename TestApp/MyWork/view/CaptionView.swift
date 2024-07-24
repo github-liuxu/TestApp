@@ -10,18 +10,7 @@ import JXSegmentedView
 import NvStreamingSdkCore
 
 class CaptionView: UIView, BottomViewService {
-    var captionService: CaptionService? {
-        didSet {
-            for (index, _) in segmentedDataSource.titles.enumerated() {
-                if let listVC = listContainerView.validListDict[index] as? ListViewController {
-                    listVC.packageList.dataSource = captionService?.assetGetter?.loadAsset()
-                }
-            }
-            captionService?.didCaptionTextChanged = { [weak self] text in
-                self?.textField.text = text
-            }
-        }
-    }
+    var captionService: CaptionService?
     var segmentedView: JXSegmentedView!
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
@@ -154,19 +143,19 @@ extension CaptionView: JXSegmentedListContainerViewDataSource {
             self?.captionService?.applyCaptionPackage(packagePath: packagePath, licPath: licPath, type: type)
         }
         if index == 0 {
-            let captionDir = Bundle.main.bundlePath + "/captionrenderer"
+            let captionDir = Bundle.main.bundlePath + "/captions/captionrenderer"
             list.assetGetter = DataSource(captionDir, typeString: "captionrenderer")
         } else if index == 1 {
-            let captionDir = Bundle.main.bundlePath + "/captioncontext"
+            let captionDir = Bundle.main.bundlePath + "/captions/captioncontext"
             list.assetGetter = DataSource(captionDir, typeString: "captioncontext")
         } else if index == 2 {
-            let captionDir = Bundle.main.bundlePath + "/captionanimation"
+            let captionDir = Bundle.main.bundlePath + "/captions/captionanimation"
             list.assetGetter = DataSource(captionDir, typeString: "captionanimation")
         } else if index == 3 {
-            let captionDir = Bundle.main.bundlePath + "/captioninanimation"
+            let captionDir = Bundle.main.bundlePath + "/captions/captioninanimation"
             list.assetGetter = DataSource(captionDir, typeString: "captioninanimation")
         } else if index == 4 {
-            let captionDir = Bundle.main.bundlePath + "/captionoutanimation"
+            let captionDir = Bundle.main.bundlePath + "/captions/captionoutanimation"
             list.assetGetter = DataSource(captionDir, typeString: "captionoutanimation")
         }
         return list
@@ -187,7 +176,10 @@ class ListViewController: UIViewController, JXSegmentedListContainerViewListDele
             packageList.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             packageList.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        packageList.dataSource = assetGetter?.loadAsset()
+        assetGetter?.fetchData()
+        assetGetter?.didFetchSuccess = { [weak self] dataSource in
+            self?.packageList.dataSource = dataSource
+        }
     }
 
     func listView() -> UIView {

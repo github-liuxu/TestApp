@@ -149,18 +149,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uzF-uD-gNM" customClass="NvsLiveWindow">
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5m2-Eb-Gtj" customClass="RectView" customModule="TestApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVJ-3G-dHc">
-                                        <rect key="frame" x="159" y="586" width="75" height="75"/>
+                                        <rect key="frame" x="159" y="587" width="75" height="73.666666666666742"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="75" id="lQx-3B-xvM"/>
                                             <constraint firstAttribute="width" constant="75" id="ohY-jh-3cL"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="record"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" backgroundImage="record.circle" catalog="system"/>
+                                        <state key="selected" backgroundImage="stop.circle" catalog="system"/>
                                         <connections>
                                             <action selector="recordClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="o1p-EL-Mdl"/>
                                         </connections>
@@ -175,77 +172,60 @@
                                             <action selector="switchCamera:" destination="f8K-7J-gie" eventType="valueChanged" id="xiW-Qs-cHW"/>
                                         </connections>
                                     </switch>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSa-i7-0zg">
-                                        <rect key="frame" x="306" y="108" width="59" height="35"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="filter">
-                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="filterClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="cA2-gt-Tub"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uI-cv-fdx">
-                                        <rect key="frame" x="296" y="162" width="81" height="35"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="caption">
-                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="captionClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="qAG-mH-5M8"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfE-2v-Ygp">
-                                        <rect key="frame" x="302" y="217" width="75" height="35"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="sticker">
-                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="sticker:" destination="f8K-7J-gie" eventType="touchUpInside" id="eFH-Dg-WBb"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgm-Q7-ua4">
-                                        <rect key="frame" x="260" y="272" width="117" height="35"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="comCaption">
-                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="comCaption:" destination="f8K-7J-gie" eventType="touchUpInside" id="cZB-i0-Ue3"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iBu-q9-De7">
-                                        <rect key="frame" x="308" y="327" width="69" height="35"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Props">
-                                            <color key="baseForegroundColor" red="1" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="props:" destination="f8K-7J-gie" eventType="touchUpInside" id="U0X-K3-ZdT"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LHc-Az-xdZ">
+                                        <rect key="frame" x="264.66666666666669" y="102.99999999999999" width="116.33333333333331" height="251.66666666666663"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mz6-eq-8j7">
+                                                <rect key="frame" x="58" y="0.0" width="58.333333333333343" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="filter"/>
+                                                <connections>
+                                                    <action selector="filterClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="Y23-lF-V8g"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EGk-GT-A9U">
+                                                <rect key="frame" x="35.666666666666636" y="54.333333333333314" width="80.666666666666686" height="34.333333333333343"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="caption"/>
+                                                <connections>
+                                                    <action selector="captionClick:" destination="f8K-7J-gie" eventType="touchUpInside" id="XkW-70-xWU"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKF-6O-qXj">
+                                                <rect key="frame" x="41.333333333333314" y="108.66666666666669" width="75" height="34.333333333333343"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="sticker"/>
+                                                <connections>
+                                                    <action selector="sticker:" destination="f8K-7J-gie" eventType="touchUpInside" id="PbP-K2-In5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTc-zy-WgA">
+                                                <rect key="frame" x="0.0" y="163" width="116.33333333333333" height="34.333333333333343"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="comCaption"/>
+                                                <connections>
+                                                    <action selector="comCaption:" destination="f8K-7J-gie" eventType="touchUpInside" id="gAE-D5-6VB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pcO-PP-wQw">
+                                                <rect key="frame" x="48.333333333333314" y="217.33333333333331" width="68" height="34.333333333333343"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="props"/>
+                                                <connections>
+                                                    <action selector="props:" destination="f8K-7J-gie" eventType="touchUpInside" id="g7f-ac-omv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="UKx-Eu-l1x" secondAttribute="trailing" constant="42" id="1oE-bJ-q5Z"/>
-                                    <constraint firstItem="qfE-2v-Ygp" firstAttribute="top" secondItem="2uI-cv-fdx" secondAttribute="bottom" constant="20" id="3q9-u8-x8l"/>
-                                    <constraint firstAttribute="trailing" secondItem="iBu-q9-De7" secondAttribute="trailing" constant="16" id="4ed-9K-fWW"/>
-                                    <constraint firstAttribute="trailing" secondItem="vSa-i7-0zg" secondAttribute="trailing" constant="28" id="9Sq-Rp-U3r"/>
-                                    <constraint firstAttribute="trailing" secondItem="dgm-Q7-ua4" secondAttribute="trailing" constant="16" id="D4f-aj-vgp"/>
                                     <constraint firstAttribute="bottom" secondItem="OVJ-3G-dHc" secondAttribute="bottom" constant="54" id="DZY-97-NkK"/>
-                                    <constraint firstAttribute="trailing" secondItem="qfE-2v-Ygp" secondAttribute="trailing" constant="16" id="GXP-5a-Pis"/>
                                     <constraint firstItem="OVJ-3G-dHc" firstAttribute="centerX" secondItem="uzF-uD-gNM" secondAttribute="centerX" id="HGM-d6-J0G"/>
-                                    <constraint firstItem="2uI-cv-fdx" firstAttribute="top" secondItem="vSa-i7-0zg" secondAttribute="bottom" constant="19" id="HPL-o5-mo9"/>
-                                    <constraint firstAttribute="trailing" secondItem="2uI-cv-fdx" secondAttribute="trailing" constant="16" id="Htm-Hg-1nO"/>
-                                    <constraint firstItem="iBu-q9-De7" firstAttribute="top" secondItem="dgm-Q7-ua4" secondAttribute="bottom" constant="20" id="Ii7-Tf-yXS"/>
-                                    <constraint firstItem="dgm-Q7-ua4" firstAttribute="top" secondItem="qfE-2v-Ygp" secondAttribute="bottom" constant="20" id="Q1d-DQ-xAl"/>
-                                    <constraint firstAttribute="bottom" secondItem="5m2-Eb-Gtj" secondAttribute="bottom" id="Riq-QQ-Djv"/>
-                                    <constraint firstItem="5m2-Eb-Gtj" firstAttribute="leading" secondItem="uzF-uD-gNM" secondAttribute="leading" id="c3B-ca-FbL"/>
-                                    <constraint firstItem="5m2-Eb-Gtj" firstAttribute="top" secondItem="uzF-uD-gNM" secondAttribute="top" id="dtj-FK-gnj"/>
-                                    <constraint firstAttribute="trailing" secondItem="5m2-Eb-Gtj" secondAttribute="trailing" id="h1z-39-9Y6"/>
+                                    <constraint firstItem="LHc-Az-xdZ" firstAttribute="top" secondItem="UKx-Eu-l1x" secondAttribute="bottom" constant="40" id="VDy-QC-4Ra"/>
+                                    <constraint firstAttribute="trailing" secondItem="LHc-Az-xdZ" secondAttribute="trailing" constant="12" id="cAA-9I-Twi"/>
                                     <constraint firstItem="UKx-Eu-l1x" firstAttribute="top" secondItem="uzF-uD-gNM" secondAttribute="top" constant="32" id="vTn-M7-CG1"/>
-                                    <constraint firstItem="vSa-i7-0zg" firstAttribute="top" secondItem="UKx-Eu-l1x" secondAttribute="bottom" constant="45" id="zQl-l3-Zdi"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -261,7 +241,7 @@
                     <navigationItem key="navigationItem" id="5AY-6g-OoC"/>
                     <connections>
                         <outlet property="livewindow" destination="uzF-uD-gNM" id="tVe-w3-Nf0"/>
-                        <outlet property="rectView" destination="5m2-Eb-Gtj" id="24n-y7-Vkt"/>
+                        <outlet property="recordBtn" destination="OVJ-3G-dHc" id="TZC-yW-rmN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Sx-Jt-ZK6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -270,6 +250,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="record.circle" catalog="system" width="128" height="123"/>
+        <image name="stop.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

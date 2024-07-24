@@ -9,13 +9,10 @@ import UIKit
 import NvStreamingSdkCore
 
 class CaptureFilterService: NSObject, FilterService {
-    var dataSources = [DataSourceItem]()
-    let filterAssetGetter = DataSource(Bundle.main.bundlePath + "/videofx", typeString: "videofx")
     var filterFx: NvsCaptureVideoFx?
     var streamingContext = NvsStreamingContext.sharedInstance()!
     override init() {
         super.init()
-        dataSources = filterAssetGetter.loadAsset()
     }
     func setFilterStrength(value: Float) {
         guard let filterFx = filterFx else { return }
@@ -47,8 +44,7 @@ class CaptureFilterService: NSObject, FilterService {
         }
     }
 
-    func applyFilterIndex(index: Int) {
-        let item = dataSources[index]
+    func applyFilter(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         applyFilter(packageId: pid as String)

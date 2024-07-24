@@ -15,9 +15,8 @@
 		5806CB7D2BCE215200AD93EF /* CaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5806CB7C2BCE215200AD93EF /* CaptionView.swift */; };
 		58131F272B6CFFC200FED7FE /* videofx in Resources */ = {isa = PBXBuildFile; fileRef = 58131F262B6CFFC100FED7FE /* videofx */; };
 		582B4F942BE08DE3000D26CC /* CaptionServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B4F932BE08DE3000D26CC /* CaptionServiceImp.swift */; };
-		582BBF062B91ADEA00089072 /* CaptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582BBF052B91ADEA00089072 /* CaptionService.swift */; };
+		582BBF062B91ADEA00089072 /* Moveable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582BBF052B91ADEA00089072 /* Moveable.swift */; };
 		584584552BD7B1B7007F7247 /* ms in Resources */ = {isa = PBXBuildFile; fileRef = 584584542BD7B1B7007F7247 /* ms */; };
-		5845848D2BD7B96D007F7247 /* ARService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5845848C2BD7B96D007F7247 /* ARService.swift */; };
 		585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69BC2A7BBDC300BB945E /* AppDelegate.swift */; };
 		585C69BF2A7BBDC300BB945E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */; };
 		585C69C12A7BBDC300BB945E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69C02A7BBDC300BB945E /* ViewController.swift */; };
@@ -27,7 +26,6 @@
 		585C69D22A7CC2C400BB945E /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C69D02A7CC2C400BB945E /* EditViewController.swift */; };
 		585C69D62A7CC5D500BB945E /* NvStreamingSdkCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */; };
 		585C69D72A7CC5D500BB945E /* NvStreamingSdkCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5862AAB22B6F3D4900195421 /* FilterProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAB12B6F3D4900195421 /* FilterProtocal.swift */; };
 		5862AAB72B6F71B100195421 /* SequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5862AAB62B6F71B100195421 /* SequenceView.swift */; };
 		5862AABB2B6F888100195421 /* SequenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5862AABA2B6F888100195421 /* SequenceView.xib */; };
 		5873F4BE2BAC65F100170BE7 /* RectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5873F4BD2BAC65F100170BE7 /* RectView.swift */; };
@@ -54,7 +52,6 @@
 		588B7E7B2B6A4669005ADA60 /* AssetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */; };
 		588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E7D2B6A49D2005ADA60 /* DataSource.swift */; };
 		58B85E922BA9B0BA004C7A96 /* compoundcaption in Resources */ = {isa = PBXBuildFile; fileRef = 58B85E912BA9B0BA004C7A96 /* compoundcaption */; };
-		58B85E9A2BAA8092004C7A96 /* CompoundCaptionProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85E992BAA8092004C7A96 /* CompoundCaptionProtocal.swift */; };
 		58B85E9C2BAA8240004C7A96 /* CompoundCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85E9B2BAA8240004C7A96 /* CompoundCaptionView.swift */; };
 		58C6FAD92C4906E4008277FB /* StickerServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C6FAD82C4906E4008277FB /* StickerServiceImp.swift */; };
 		58C6FB042C4DFABC008277FB /* CaptureFilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C6FB032C4DFABC008277FB /* CaptureFilterService.swift */; };
@@ -128,9 +125,8 @@
 		5806CB7C2BCE215200AD93EF /* CaptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionView.swift; sourceTree = "<group>"; };
 		58131F262B6CFFC100FED7FE /* videofx */ = {isa = PBXFileReference; lastKnownFileType = folder; path = videofx; sourceTree = "<group>"; };
 		582B4F932BE08DE3000D26CC /* CaptionServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionServiceImp.swift; sourceTree = "<group>"; };
-		582BBF052B91ADEA00089072 /* CaptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionService.swift; sourceTree = "<group>"; };
+		582BBF052B91ADEA00089072 /* Moveable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moveable.swift; sourceTree = "<group>"; };
 		584584542BD7B1B7007F7247 /* ms */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ms; sourceTree = "<group>"; };
-		5845848C2BD7B96D007F7247 /* ARService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARService.swift; sourceTree = "<group>"; };
 		585C69B92A7BBDC300BB945E /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		585C69BC2A7BBDC300BB945E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		585C69BE2A7BBDC300BB945E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,7 +137,6 @@
 		585C69CA2A7BBDC400BB945E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		585C69D02A7CC2C400BB945E /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NvStreamingSdkCore.framework; sourceTree = "<group>"; };
-		5862AAB12B6F3D4900195421 /* FilterProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterProtocal.swift; sourceTree = "<group>"; };
 		5862AAB62B6F71B100195421 /* SequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceView.swift; sourceTree = "<group>"; };
 		5862AABA2B6F888100195421 /* SequenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SequenceView.xib; sourceTree = "<group>"; };
 		5873F4BD2BAC65F100170BE7 /* RectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectView.swift; sourceTree = "<group>"; };
@@ -167,7 +162,6 @@
 		588B7E792B6A4669005ADA60 /* AssetCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetCollectionViewCell.xib; sourceTree = "<group>"; };
 		588B7E7D2B6A49D2005ADA60 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		58B85E912BA9B0BA004C7A96 /* compoundcaption */ = {isa = PBXFileReference; lastKnownFileType = folder; path = compoundcaption; sourceTree = "<group>"; };
-		58B85E992BAA8092004C7A96 /* CompoundCaptionProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundCaptionProtocal.swift; sourceTree = "<group>"; };
 		58B85E9B2BAA8240004C7A96 /* CompoundCaptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundCaptionView.swift; sourceTree = "<group>"; };
 		58C6FAD82C4906E4008277FB /* StickerServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerServiceImp.swift; sourceTree = "<group>"; };
 		58C6FB032C4DFABC008277FB /* CaptureFilterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureFilterService.swift; sourceTree = "<group>"; };
@@ -267,10 +261,8 @@
 		5862AAB02B6F3D3C00195421 /* protocal */ = {
 			isa = PBXGroup;
 			children = (
-				5862AAB12B6F3D4900195421 /* FilterProtocal.swift */,
 				58F4D3492B84AB8E00334AA9 /* TransitionProtocal.swift */,
-				58B85E992BAA8092004C7A96 /* CompoundCaptionProtocal.swift */,
-				582BBF052B91ADEA00089072 /* CaptionService.swift */,
+				582BBF052B91ADEA00089072 /* Moveable.swift */,
 			);
 			path = protocal;
 			sourceTree = "<group>";
@@ -325,7 +317,6 @@
 				0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */,
 				58C6FB312C4E6C7B008277FB /* CaptureARSceneServiceImp.swift */,
 				588B7E162B63E572005ADA60 /* TimelineCreate.swift */,
-				5845848C2BD7B96D007F7247 /* ARService.swift */,
 				588B7E1E2B63F1B6005ADA60 /* TimelineService.swift */,
 				58FB6FDD2C469DD4003FC269 /* FilterServiceImp.swift */,
 				58C6FB032C4DFABC008277FB /* CaptureFilterService.swift */,
@@ -550,7 +541,6 @@
 				588B7E752B6A3D92005ADA60 /* AssetView.swift in Sources */,
 				588B7E682B68EE04005ADA60 /* CaptureService.swift in Sources */,
 				5862AAB72B6F71B100195421 /* SequenceView.swift in Sources */,
-				5862AAB22B6F3D4900195421 /* FilterProtocal.swift in Sources */,
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
 				58C6FB2C2C4E0B37008277FB /* PropView.swift in Sources */,
 				58C6FAD92C4906E4008277FB /* StickerServiceImp.swift in Sources */,
@@ -563,7 +553,6 @@
 				588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */,
 				585C69D22A7CC2C400BB945E /* EditViewController.swift in Sources */,
 				58FB6FE22C4768C4003FC269 /* ComCaptionServiceImp.swift in Sources */,
-				5845848D2BD7B96D007F7247 /* ARService.swift in Sources */,
 				588B7E612B68DBB3005ADA60 /* AlbumUtils.swift in Sources */,
 				5873F4C12BAC673300170BE7 /* AlignProperty.swift in Sources */,
 				0CE9447A2C4ACF3A00C0B23A /* RectMoveableImp.swift in Sources */,
@@ -574,7 +563,6 @@
 				585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */,
 				58C6FB322C4E6C7B008277FB /* CaptureARSceneServiceImp.swift in Sources */,
 				588B7E7A2B6A4669005ADA60 /* AssetCollectionViewCell.swift in Sources */,
-				58B85E9A2BAA8092004C7A96 /* CompoundCaptionProtocal.swift in Sources */,
 				587725C02C47FEBD00ED78CC /* LiveWindowServiceImp.swift in Sources */,
 				587725C72C49013E00ED78CC /* StickerView.swift in Sources */,
 				58F4D34A2B84AB8E00334AA9 /* TransitionProtocal.swift in Sources */,
@@ -584,7 +572,7 @@
 				58B85E9C2BAA8240004C7A96 /* CompoundCaptionView.swift in Sources */,
 				58FB6FE62C478898003FC269 /* PackageList.swift in Sources */,
 				585C69BF2A7BBDC300BB945E /* SceneDelegate.swift in Sources */,
-				582BBF062B91ADEA00089072 /* CaptionService.swift in Sources */,
+				582BBF062B91ADEA00089072 /* Moveable.swift in Sources */,
 				588B7E212B64E92E005ADA60 /* Utils.swift in Sources */,
 				58FB6FDE2C469DD4003FC269 /* FilterServiceImp.swift in Sources */,
 				5873F4BE2BAC65F100170BE7 /* RectView.swift in Sources */,

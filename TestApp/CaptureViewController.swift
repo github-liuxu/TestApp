@@ -7,12 +7,16 @@
 
 import NvStreamingSdkCore
 import UIKit
+import Combine
 
 class CaptureViewController: UIViewController {
+    @IBOutlet weak var recordBtn: UIButton!
     @IBOutlet var livewindow: NvsLiveWindow!
-    @IBOutlet weak var rectView: RectView!
+    var rectView: RectView = RectView()
     let streamingContext = NvsStreamingContext.sharedInstance()!
     var capture: CaptureService?
+    var isLimitRecord = true
+    private var cancellables = Set<AnyCancellable>()
     deinit {
         capture?.clear()
         capture = nil
@@ -22,22 +26,42 @@ class CaptureViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(rectView)
+        livewindow.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            rectView.leadingAnchor.constraint(equalTo: livewindow.leadingAnchor),
+            rectView.trailingAnchor.constraint(equalTo: livewindow.trailingAnchor),
+            rectView.topAnchor.constraint(equalTo: livewindow.topAnchor),
+            rectView.bottomAnchor.constraint(equalTo: livewindow.bottomAnchor)
+        ])
         capture = CaptureService()
+        livewindow.insertSubview(rectView, at: 0)
         capture?.startPreview(livewindow: livewindow)
+        capture?.$isRecording
+            .receive(on: RunLoop.main)
+            .assign(to: \.isSelected, on: recordBtn)
+            .store(in: &cancellables)
         // Do any additional setup after loading the view.
     }
 
     @IBAction func recordClick(_ sender: UIButton) {
-        var text = ""
-        if sender.isSelected {
-            capture?.stopRecording()
-            text = "Record"
+        if isLimitRecord {
+            if sender.isSelected {
+                capture?.pauseRecording()
+            } else {
+                if capture!.streamingIsRecording() {
+                    capture?.resumeRecording()
+                } else {
+                    capture?.startRecording(seconds: 15)
+                }
+            }
         } else {
-            capture?.startRecording()
-            text = "Stop"
+            if sender.isSelected {
+                capture?.stopRecording()
+            } else {
+                capture?.startRecording()
+            }
         }
-        sender.isSelected = !sender.isSelected
-        sender.setTitle(text, for: .normal)
     }
 
     @IBAction func filterClick(_ sender: UIButton) {

@@ -9,15 +9,7 @@ import UIKit
 import JXSegmentedView
 
 class StickerView: UIView, BottomViewService {
-    weak var stickerService: StickerService? {
-        didSet {
-            for (index, _) in segmentedDataSource.titles.enumerated() {
-                if let listVC = listContainerView.validListDict[index] as? ListViewController {
-                    listVC.packageList.dataSource = stickerService?.assetGetter.loadAsset()
-                }
-            }
-        }
-    }
+    weak var stickerService: StickerService?
     var segmentedView: JXSegmentedView!
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
@@ -100,32 +92,11 @@ extension StickerView: JXSegmentedListContainerViewDataSource {
 
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         let list =  ListViewController()
-        list.assetGetter = stickerService?.assetGetter
+        let path = Bundle.main.bundlePath + "/animationsticker"
+        list.assetGetter = DataSource(path, typeString: "animatedsticker")
         list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, index in
             self?.stickerService?.applyPackage(packagePath: packagePath, licPath: licPath)
         }
         return list
     }
 }
-
-//class StickerViewController: UIViewController, JXSegmentedListContainerViewListDelegate {
-//    var packageList: PackageList = PackageList.newInstance()
-//    var assetGetter: AssetGetter!
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        view.addSubview(packageList)
-//        // 设置布局
-//        packageList.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            packageList.topAnchor.constraint(equalTo: view.topAnchor),
-//            packageList.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            packageList.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            packageList.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//        ])
-//        packageList.dataSource = assetGetter.loadAsset()
-//    }
-//    
-//    func listView() -> UIView {
-//        return view
-//    }
-//}

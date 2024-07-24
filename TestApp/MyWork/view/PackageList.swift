@@ -11,7 +11,7 @@ import NvStreamingSdkCore
 class PackageList: UIView {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var dataSource: [DataSourceItem]? {
+    var dataSource: [DataSourceItemProtocol]? {
         didSet {
             collectionView.reloadData()
         }

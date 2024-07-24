@@ -12,6 +12,7 @@ class AssetView: UIView, BottomViewService {
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var collectionView: UICollectionView!
     var filterService: FilterService!
+    var assetFetch: AssetGetter?
     override func awakeFromNib() {
         setup()
         super.awakeFromNib()
@@ -36,7 +37,11 @@ class AssetView: UIView, BottomViewService {
         num -= 1
         let offsetX: CGFloat = (frame.size.width - CGFloat(num) * layout.itemSize.width - CGFloat(num - 1) * layout.minimumInteritemSpacing) / 2.0
         collectionView.contentInset = UIEdgeInsets(top: 0, left: offsetX + 4, bottom: 34, right: offsetX + 4)
-        
+        assetFetch = DataSource(Bundle.main.bundlePath + "/videofx", typeString: "videofx")
+        assetFetch?.fetchData()
+        assetFetch?.didFetchSuccess = { [weak self] dataSource in
+            self?.collectionView.reloadData()
+        }
     }
     
     @IBAction func closeClick(_ sender: UIButton) {
@@ -73,13 +78,15 @@ class AssetView: UIView, BottomViewService {
 
 extension AssetView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filterService.dataSources.count
+        return assetFetch?.dataSource.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssetCollectionViewCell", for: indexPath) as! AssetCollectionViewCell
-        cell.imageView.image = UIImage(contentsOfFile: filterService.dataSources[indexPath.item].imagePath)
-        cell.name.text = filterService.dataSources[indexPath.item].name
+        guard let assetFetch = assetFetch else { return cell }
+        let item = assetFetch.dataSource[indexPath.item]
+        cell.imageView.image = UIImage(contentsOfFile: item.imagePath)
+        cell.name.text = item.name
         return cell
     }
     
@@ -89,7 +96,9 @@ extension AssetView: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.contentView.layer.borderWidth = 5
         cell.contentView.layer.borderColor = UIColor.blue.cgColor
         cell.contentView.layer.masksToBounds = true
-        filterService.applyFilterIndex(index: indexPath.item)
+        guard let assetFetch = assetFetch else { return }
+        let item = assetFetch.dataSource[indexPath.item]
+        filterService.applyFilter(item: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

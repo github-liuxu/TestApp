@@ -7,6 +7,7 @@
 
 import UIKit
 import NvStreamingSdkCore
+import Combine
 
 class CaptureService: NSObject {
     var streamingContext = NvsStreamingContext.sharedInstance()!
@@ -15,22 +16,15 @@ class CaptureService: NSObject {
     let filterService = CaptureFilterService()
     let arsceneService = CaptureARSceneServiceImp()
     var arsceneFx: NvsCaptureVideoFx?
+    var seconds: Int64 = 0
+    @Published var isRecording = false
     override init() {
         super.init()
         NvsStreamingContext.setSpecialCameraDeviceType("AVCaptureDeviceTypeBuiltInUltraWideCamera")
-        initAR()
         arsceneFx = streamingContext.appendBuiltinCaptureVideoFx("AR Scene")
         arsceneFx?.setBooleanVal("Max Faces Respect Min", val: true)
         arsceneFx?.setBooleanVal("Use Face Extra Info", val: true)
         arsceneService.arsceneFx = arsceneFx
-    }
-    func initAR() {
-        let licPath = Bundle.main.bundlePath + "/ms/meishesdk.lic"
-        let ms_face240ModelPath = Bundle.main.bundlePath + "/ms/ms_face240_v2.0.8.model"
-        let humanSegModelPath = Bundle.main.bundlePath + "/ms/ms_humanseg_v1.0.15.model"
-        var sss = NvsStreamingContext.initHumanDetection(ms_face240ModelPath, licenseFilePath: licPath, features: Int32(NvsHumanDetectionFeature_FaceLandmark.rawValue|NvsHumanDetectionFeature_FaceAction.rawValue | NvsHumanDetectionFeature_SemiImageMode.rawValue))
-        sss = NvsStreamingContext.initHumanDetectionExt(humanSegModelPath, licenseFilePath: licPath, features: Int32(NvsEffectSdkHumanDetectionFeature_Background.rawValue))
-        print("加载模型: \(sss)")
     }
     
     func startPreview(livewindow: NvsLiveWindow) {
@@ -42,14 +36,30 @@ class CaptureService: NSObject {
         streamingContext.startCapturePreview(cameraIndex, videoResGrade: NvsVideoCaptureResolutionGradeHigh, flags: Int32(NvsStreamingEngineCaptureFlag_StrictPreviewVideoSize.rawValue|NvsStreamingEngineCaptureFlag_CaptureBuddyHostVideoFrame.rawValue), aspectRatio: ratio)
     }
     
-    func startRecording() {
+    func startRecording(seconds: Int64 = 0) {
+        self.seconds = seconds
         let recordingPath = Documents + currentDateAndTime() + ".mov"
+        streamingContext.stopRecording()
         let result = streamingContext.startRecording(withFx: recordingPath, withFlags: 0, withRecordConfigurations: nil)
         print(result ? "record success" : "record error")
     }
     
     func stopRecording() {
         streamingContext.stopRecording()
+    }
+    
+    func pauseRecording() {
+        streamingContext.pauseRecording()
+        isRecording = false
+    }
+    
+    func resumeRecording() {
+        streamingContext.resumeRecording()
+        isRecording = true
+    }
+    
+    func streamingIsRecording() -> Bool {
+        return streamingContext.getStreamingEngineState() == NvsStreamingEngineState_CaptureRecording
     }
     
     func switchCamera() {
@@ -79,5 +89,22 @@ extension CaptureService: NvsStreamingContextDelegate {
     func didCaptureDeviceCapsReady(_ captureDeviceIndex: UInt32) {
         let cap = streamingContext.getCaptureDeviceCapability(captureDeviceIndex);
         print(cap?.maxZoomFactor)
+    }
+    
+    func didCaptureRecordingDurationUpdated(_ captureDeviceIndex: Int32, duration: Int64) {
+        if seconds > 0 && duration >= (seconds * 1000000) {
+            DispatchQueue.main.async { [weak self] in
+                self?.streamingContext.stopRecording()
+            }
+        }
+    }
+    
+    func didStreamingEngineStateChanged(_ state: NvsStreamingEngineState) {
+        print("state:\(state)")
+        if state == NvsStreamingEngineState_CaptureRecording {
+            isRecording = true
+        } else {
+            isRecording = false
+        }
     }
 }

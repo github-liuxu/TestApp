@@ -9,22 +9,19 @@ import UIKit
 import NvStreamingSdkCore
 
 protocol FilterService {
-    func applyFilterIndex(index: Int)
-    func applyFilter(packageId: String)
+    func applyFilter(item: DataSourceItemProtocol)
     func setFilterStrength(value: Float)
     func getFilterStrength() -> Float
-    var dataSources: [DataSourceItem] { get set }
 }
 
-class FilterServiceImp: NSObject, FilterService {
-    var dataSources = [DataSourceItem]()
+class FilterServiceImp: NSObject, FilterService, DataSourceService {
+    var assetGetter: (any AssetGetter)?
     let filterAssetGetter = DataSource(Bundle.main.bundlePath + "/videofx", typeString: "videofx")
     var filterFx: NvsTimelineVideoFx?
     var timeline: NvsTimeline!
     var streamingContext = NvsStreamingContext.sharedInstance()!
     override init() {
         super.init()
-        dataSources = filterAssetGetter.loadAsset()
     }
     func setFilterStrength(value: Float) {
         guard let filterFx = filterFx else { return }
@@ -58,8 +55,7 @@ class FilterServiceImp: NSObject, FilterService {
         seek(timeline: timeline)
     }
 
-    func applyFilterIndex(index: Int) {
-        let item = dataSources[index]
+    func applyFilter(item: any DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         applyFilter(packageId: pid as String)

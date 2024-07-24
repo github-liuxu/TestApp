@@ -10,6 +10,7 @@ import UIKit
 class CompoundCaptionView: UIView, BottomViewService {
     @IBOutlet weak var collectionView: UICollectionView!
     var comCaptionService: ComCaptionService!
+    var assetGetter: AssetGetter!
     var didViewClose: (() -> Void)?
     override func awakeFromNib() {
         setup()
@@ -21,6 +22,9 @@ class CompoundCaptionView: UIView, BottomViewService {
         collectionView.register(nib, forCellWithReuseIdentifier: "AssetCollectionViewCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        let captionDir = Bundle.main.bundlePath + "/compoundcaption"
+        assetGetter = DataSource(captionDir, typeString: "compoundcaption")
+        assetGetter.fetchData()
     }
     
     static func newInstance() -> BottomViewService {
@@ -48,13 +52,13 @@ class CompoundCaptionView: UIView, BottomViewService {
 }
 extension CompoundCaptionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comCaptionService.dataSources.count
+        return assetGetter.dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssetCollectionViewCell", for: indexPath) as! AssetCollectionViewCell
-        cell.imageView.image = UIImage(contentsOfFile: comCaptionService.dataSources[indexPath.item].imagePath)
-        cell.name.text = comCaptionService.dataSources[indexPath.item].name
+        cell.imageView.image = UIImage(contentsOfFile: assetGetter.dataSource[indexPath.item].imagePath)
+        cell.name.text = assetGetter.dataSource[indexPath.item].name
         return cell
     }
     
@@ -64,7 +68,7 @@ extension CompoundCaptionView: UICollectionViewDelegate, UICollectionViewDataSou
         cell.contentView.layer.borderWidth = 5
         cell.contentView.layer.borderColor = UIColor.blue.cgColor
         cell.contentView.layer.masksToBounds = true
-        comCaptionService.applyComCaptionIndex(index: indexPath.item)
+        comCaptionService.applyComCaptionPackage(item: assetGetter.dataSource[indexPath.item])
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
