@@ -35,7 +35,6 @@ class TimelineService: NSObject, TimelineFxService {
     var filterService = FilterServiceImp()
     var comCaptionService: ComCaptionServiceImp = ComCaptionServiceImp()
     var videoTransitionFx: NvsVideoTransition?
-    var caption: NvsTimelineCaption?
     
     var didPlaybackTimelinePosition:((_ posotion: Int64, _ progress: Float) -> ())? = nil
     var playStateChanged:((_ isPlay: Bool)->())? = nil
@@ -78,6 +77,17 @@ class TimelineService: NSObject, TimelineFxService {
         seek(time: currentTime)
     }
     
+    func getClipService(index: UInt32, trackIndex: UInt32 = 0) -> VideoClipService? {
+        guard let timeline = timeline else { return nil }
+        let videoTrack = timeline.getVideoTrack(by: trackIndex)
+        if let clip = videoTrack?.getClipWith(index) {
+            let videoClipService = VideoClipServiceImp()
+            videoClipService.videoClip = clip
+            return videoClipService
+        }
+        return nil
+    }
+    
     func playClick(_ sender: UIButton) {
         guard let timeline = timeline else { return }
         if streamingContext.getStreamingEngineState() != NvsStreamingEngineState_Playback {
@@ -96,23 +106,6 @@ class TimelineService: NSObject, TimelineFxService {
 //        let image = streamingContext.grabImage(from: timeline, timestamp: 100, proxyScale: nil)
 //        print(image)
     }
-    
-    func addAnimationSticker() {
-        guard let timeline = timeline else { return }
-        let stickerPath = Bundle.main.path(forResource: "animationSticker/6FF9E1FC-3C2C-49B6-A3A7-BA51B1DA8AE0.1.animatedsticker", ofType: "")
-        let path = Bundle.main.path(forResource: "9DD65EAD-DA38-4C19-AF17-621265A6B010.3", ofType: "captioninanimation")
-        
-        let pid = NSMutableString()
-//        streamingContext.assetPackageManager.installAssetPackage(stickerPath, license: nil, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
-//        
-//        timeline.addAnimatedSticker(0, duration: timeline.duration, animatedStickerPackageId: pid as String)
-        
-        streamingContext.assetPackageManager.installAssetPackage(path, license: nil, type: NvsAssetPackageType_CaptionInAnimation, sync: true, assetPackageId: pid)
-        let caption = timeline.addModularCaption("hjsdfhlaskdjfl;\naskjdfl;askdj", inPoint: 0, duration: timeline.duration)
-        caption?.applyModularCaption(inAnimation: pid as String)
-        caption?.setModularCaptionInAnimationDuration(Int32(timeline.duration))
-    }
-    
     
     func seek(time: Int64) {
         streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)

@@ -20,6 +20,7 @@ class SequenceView: UIView {
     let coverView = NvSequeceCoverView(frame: .zero)
     var valueChangedAction: ((_ value: Int64)->())? = nil
     var addAlbmAction:(() -> ())? = nil
+    var didSelectClipIndex:((_ index: UInt32) -> Void)? = nil
     class func LoadView() -> SequenceView? {
         let nib = UINib.init(nibName: "SequenceView", bundle: Bundle.main)
         return nib.instantiate(withOwner: self).first as? SequenceView

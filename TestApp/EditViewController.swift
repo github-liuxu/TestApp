@@ -125,6 +125,11 @@ class EditViewController: UIViewController {
             }
         }
         
+        sequence?.didSelectClipIndex = { [weak self] index in
+            let videoClipService = self?.timelineService?.getClipService(index: index)
+            
+        }
+        
         timelineService?.didPlaybackTimelinePosition = { [weak self] position, _ in
             guard let weakSelf = self else { return }
             weakSelf.sequence?.seekValue(position)
