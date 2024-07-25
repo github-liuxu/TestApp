@@ -45,6 +45,13 @@ extension CaptureStickerServiceImp: StickerService {
         streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
         streamingContext.appendCaptureAnimatedSticker(0, duration: 1000000000, animatedStickerPackageId: pid as String)
     }
+    
+    func applyCustomPackage(packagePath: String, licPath: String, imagePath: String) {
+        let pid = NSMutableString()
+        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        sticker = streamingContext.addCustomCaptureAnimatedSticker(0, duration: 1000000000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
+        drawRects()
+    }
 }
 
 extension CaptureStickerServiceImp: Moveable {

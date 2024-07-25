@@ -23,17 +23,22 @@ class AlbumUtils: NSObject {
 
 extension AlbumUtils: OpenAlbumEnable {
     func openAlbum(viewController: UIViewController, _ block: @escaping ([PHAsset])->()) {
+        openAlbum(viewController: viewController, mediaType: .any, multiSelect: true, block)
+    }
+    
+    func openAlbum(viewController: UIViewController, mediaType: LDXImagePickerMediaType = .any, multiSelect: Bool = true, _ block: @escaping ([PHAsset])->()) {
         self.viewController = viewController;
         selectAssetBlock = block
         let picker = LDXImagePickerController()
         picker.delegate = self
-        picker.mediaType = .any
-        picker.allowsMultipleSelection = true
+        picker.mediaType = mediaType
+        picker.allowsMultipleSelection = multiSelect
         picker.showsNumberOfSelectedAssets = true
         picker.numberOfColumnsInPortrait = 3
         picker.modalPresentationStyle = .fullScreen
         viewController.present(picker, animated: true)
     }
+    
 }
 
 extension AlbumUtils: LDXImagePickerControllerDelegate {

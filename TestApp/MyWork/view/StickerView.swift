@@ -7,6 +7,7 @@
 
 import UIKit
 import JXSegmentedView
+import PhotosUI
 
 class StickerView: UIView, BottomViewService {
     weak var stickerService: StickerService?
@@ -14,6 +15,7 @@ class StickerView: UIView, BottomViewService {
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
     var didViewClose: (() -> Void)?
+    var albumUtils = AlbumUtils()
     override func awakeFromNib() {
         super.awakeFromNib()
         // 初始化并配置 JXSegmentedView
@@ -92,10 +94,32 @@ extension StickerView: JXSegmentedListContainerViewDataSource {
 
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         let list =  ListViewController()
-        let path = Bundle.main.bundlePath + "/animationsticker"
-        list.assetGetter = DataSource(path, typeString: "animatedsticker")
-        list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, index in
-            self?.stickerService?.applyPackage(packagePath: packagePath, licPath: licPath)
+        if index == 0 {
+            let path = Bundle.main.bundlePath + "/sticker/animationsticker"
+            list.assetGetter = DataSource(path, typeString: "animatedsticker")
+            list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, index in
+                self?.stickerService?.applyPackage(packagePath: packagePath, licPath: licPath)
+            }
+        } else if index == 1 {
+            let path = Bundle.main.bundlePath + "/sticker/custom"
+            list.assetGetter = DataSource(path, typeString: "animatedsticker")
+            list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, index in
+                // album
+                let viewController = self!.findViewController()!
+                self?.albumUtils.openAlbum(viewController: viewController, mediaType: .image, multiSelect: false) { [weak self] assets in
+                    viewController.dismiss(animated: true)
+                    if assets.count > 0 {
+                        let phasset = assets.first!
+                        saveAssetToSandbox(asset: phasset) { url in
+                            if let path = url?.absoluteString.replacingOccurrences(of: "file://", with: "") {
+                                self?.stickerService?.applyCustomPackage(packagePath: packagePath, licPath: licPath, imagePath: path)
+                            }
+                        }
+                        
+                    }
+                }
+            }
+
         }
         return list
     }

@@ -11,6 +11,7 @@ import NvStreamingSdkCore
 protocol StickerService: NSObjectProtocol {
     func deleteSticker()
     func applyPackage(packagePath: String, licPath: String)
+    func applyCustomPackage(packagePath: String, licPath: String, imagePath: String)
 }
 
 class StickerServiceImp: NSObject {
@@ -100,6 +101,31 @@ extension StickerServiceImp: StickerService {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
         timeline?.addAnimatedSticker(0, duration: timeline?.duration ?? 0, animatedStickerPackageId: pid as String)
+        seek(timeline: timeline)
+    }
+    
+    func applyCustomPackage(packagePath: String, licPath: String, imagePath: String) {
+        let pid = NSMutableString()
+        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        sticker = timeline?.addCustomAnimatedSticker(0, duration: timeline?.duration ?? 1000000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
+        
+//        if let vertices = sticker?.getBoundingRectangleVertices() as? NSArray {
+//            var points = [CGPoint]()
+//            for point in vertices {
+//                if let p = livewindow?.mapCanonical(toView: point as! CGPoint) {
+//                    points.append(p)
+//                }
+//            }
+//        }
+//        var scale: Float = 1.0
+//        if let rect = sticker?.getOriginalBoundingRect() {
+//            let width: Float = rect.right - rect.left
+//            let height = rect.top - rect.bottom
+//            scale = Float(timeline!.videoRes.imageWidth) / width
+//            print("width: \(width), height:\(height), scale:\(scale)")
+//        }
+//        sticker?.setScale(scale)
+        drawRects()
         seek(timeline: timeline)
     }
     
