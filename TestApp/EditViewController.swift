@@ -10,6 +10,7 @@ import Dispatch
 import NvStreamingSdkCore
 import Toast_Swift
 import UIKit
+import Combine
 
 class EditViewController: UIViewController {
     var albumUtils: OpenAlbumEnable?
@@ -23,7 +24,7 @@ class EditViewController: UIViewController {
     @IBOutlet var sequenceTop: NSLayoutConstraint!
     let operate = RectMoveableImp()
     var bottomDataSource = [BottomItem]()
-    
+    private var cancellables = Set<AnyCancellable>()
     deinit {
         timelineService?.clear()
         NvsStreamingContext.destroyInstance()
@@ -48,7 +49,18 @@ class EditViewController: UIViewController {
     
     @objc func saveAction() {
         view.makeToastActivity(.center)
-        timelineService?.saveAction(nil)
+        timelineService?.saveAction(nil)?
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    print("Completed")
+                case .failure(let error):
+                    print("Received error: \(error)")
+                }
+                self?.view.hideToastActivity()
+        }, receiveValue: { progress in
+            print(progress)
+        }).store(in: &cancellables )
     }
     
     func Subview() {
@@ -94,10 +106,6 @@ class EditViewController: UIViewController {
             guard let weakSelf = self else { return }
             weakSelf.preview.currentTime.text = currentTime
             weakSelf.preview.durationTime.text = duration
-        }
-
-        timelineService?.compileProgressChanged = { progress in
-            print(progress)
         }
         
         sequence?.valueChangedAction = { [weak self] value in

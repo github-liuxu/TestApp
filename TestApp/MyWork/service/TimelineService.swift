@@ -7,6 +7,7 @@
 
 import Foundation
 import NvStreamingSdkCore
+import Combine
 
 func seek(timeline: NvsTimeline?, timestamp: Int64 = -1, flags: Int32 = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue|NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)) {
     guard let timeline = timeline else { return }
@@ -40,6 +41,7 @@ class TimelineService: NSObject, TimelineFxService {
     var playStateChanged:((_ isPlay: Bool)->())? = nil
     var timeValueChanged:((_ currentTime: String, _ duration: String)->())? = nil
     var compileProgressChanged:((_ progress: Int32) -> ())? = nil
+    private var compileProgress: PassthroughSubject<Int32, Error>?
     let seekFlag = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue|NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)
     init(livewindow: NvsLiveWindow) {
         self.livewindow = livewindow
@@ -115,15 +117,17 @@ class TimelineService: NSObject, TimelineFxService {
     func seek(time: Int64) {
         streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
     }
-    
-    func saveAction(_ path: String?) {
-        guard let timeline = timeline else { return }
+    @discardableResult
+    func saveAction(_ path: String?) -> PassthroughSubject<Int32, Error>? {
+        guard let timeline = timeline else { return nil }
+        compileProgress = PassthroughSubject<Int32, Error>()
         var compilePath = path
         if path == nil {
             compilePath = NSHomeDirectory() + "/Documents/" + currentDateAndTime() + ".mp4"
         }
         streamingContext.setCustomCompileVideoHeight(timeline.videoRes.imageHeight)
         streamingContext.compileTimeline(timeline, startTime: 0, endTime: timeline.duration, outputFilePath: compilePath, videoResolutionGrade: NvsCompileVideoResolutionGradeCustom, videoBitrateGrade: NvsCompileVideoBitrateGrade(rawValue: NvsCompileBitrateGradeMedium.rawValue), flags: Int32(NvsStreamingEngineCompileFlag_IgnoreTimelineVideoSize.rawValue|NvsStreamingEngineCompileFlag_BuddyHostVideoFrame.rawValue))
+        return compileProgress
     }
     
     func sliderValueChanged(_ value: Int64) {
@@ -176,11 +180,15 @@ extension TimelineService: NvsStreamingContextDelegate {
     
     func didCompileProgress(_ timeline: NvsTimeline!, progress: Int32) {
         compileProgressChanged?(progress)
+        compileProgress?.send(progress)
     }
     
     func didCompileCompleted(_ timeline: NvsTimeline!, isHardwareEncoding: Bool, errorType: Int32, errorString: String!, flags: Int32) {
         if errorType == NvsStreamingEngineCompileErrorType_No_Error.rawValue {
-            
+            compileProgress?.send(completion: .finished)
+        } else {
+            let error = NSError(domain: errorString, code: Int(errorType)) as Error
+            compileProgress?.send(completion: .failure(error))
         }
     }
     
