@@ -15,6 +15,8 @@ class CaptureService: NSObject {
     let captionService = CaptureCaptionServiceImp()
     let filterService = CaptureFilterService()
     let arsceneService = CaptureARSceneServiceImp()
+    let stickerService = CaptureStickerServiceImp()
+    let comCaptionService = CaptureComCaptionServiceImp()
     var arsceneFx: NvsCaptureVideoFx?
     var seconds: Int64 = 0
     @Published var isRecording = false

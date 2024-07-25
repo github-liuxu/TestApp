@@ -60,6 +60,8 @@
 		58C6FB302C4E6AA8008277FB /* PropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58C6FB2F2C4E6AA8008277FB /* PropView.xib */; };
 		58C6FB322C4E6C7B008277FB /* CaptureARSceneServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C6FB312C4E6C7B008277FB /* CaptureARSceneServiceImp.swift */; };
 		58C6FB342C4E6E02008277FB /* arscene in Resources */ = {isa = PBXBuildFile; fileRef = 58C6FB332C4E6E02008277FB /* arscene */; };
+		58C6FB6F2C51FCA6008277FB /* CaptureStickerServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C6FB6E2C51FCA6008277FB /* CaptureStickerServiceImp.swift */; };
+		58C6FB722C5218F6008277FB /* CaptureComCaptionServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C6FB712C5218F6008277FB /* CaptureComCaptionServiceImp.swift */; };
 		58F2CA302BFCC163004347BA /* animationsticker in Resources */ = {isa = PBXBuildFile; fileRef = 58F2CA2F2BFCC163004347BA /* animationsticker */; };
 		58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4D3412B849C5200334AA9 /* NvSequeceView.swift */; };
 		58F4D3442B84A75700334AA9 /* videotransition in Resources */ = {isa = PBXBuildFile; fileRef = 58F4D3432B84A75700334AA9 /* videotransition */; };
@@ -170,6 +172,8 @@
 		58C6FB2F2C4E6AA8008277FB /* PropView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PropView.xib; sourceTree = "<group>"; };
 		58C6FB312C4E6C7B008277FB /* CaptureARSceneServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureARSceneServiceImp.swift; sourceTree = "<group>"; };
 		58C6FB332C4E6E02008277FB /* arscene */ = {isa = PBXFileReference; lastKnownFileType = folder; path = arscene; sourceTree = "<group>"; };
+		58C6FB6E2C51FCA6008277FB /* CaptureStickerServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureStickerServiceImp.swift; sourceTree = "<group>"; };
+		58C6FB712C5218F6008277FB /* CaptureComCaptionServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureComCaptionServiceImp.swift; sourceTree = "<group>"; };
 		58F2CA2F2BFCC163004347BA /* animationsticker */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animationsticker; sourceTree = "<group>"; };
 		58F4D3412B849C5200334AA9 /* NvSequeceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NvSequeceView.swift; sourceTree = "<group>"; };
 		58F4D3432B84A75700334AA9 /* videotransition */ = {isa = PBXFileReference; lastKnownFileType = folder; path = videotransition; sourceTree = "<group>"; };
@@ -316,6 +320,8 @@
 				588B7E672B68EE04005ADA60 /* CaptureService.swift */,
 				0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */,
 				58C6FB312C4E6C7B008277FB /* CaptureARSceneServiceImp.swift */,
+				58C6FB6E2C51FCA6008277FB /* CaptureStickerServiceImp.swift */,
+				58C6FB712C5218F6008277FB /* CaptureComCaptionServiceImp.swift */,
 				588B7E162B63E572005ADA60 /* TimelineCreate.swift */,
 				588B7E1E2B63F1B6005ADA60 /* TimelineService.swift */,
 				58FB6FDD2C469DD4003FC269 /* FilterServiceImp.swift */,
@@ -568,11 +574,13 @@
 				58F4D34A2B84AB8E00334AA9 /* TransitionProtocal.swift in Sources */,
 				0CE944802C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift in Sources */,
 				58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */,
+				58C6FB6F2C51FCA6008277FB /* CaptureStickerServiceImp.swift in Sources */,
 				58C6FB042C4DFABC008277FB /* CaptureFilterService.swift in Sources */,
 				58B85E9C2BAA8240004C7A96 /* CompoundCaptionView.swift in Sources */,
 				58FB6FE62C478898003FC269 /* PackageList.swift in Sources */,
 				585C69BF2A7BBDC300BB945E /* SceneDelegate.swift in Sources */,
 				582BBF062B91ADEA00089072 /* Moveable.swift in Sources */,
+				58C6FB722C5218F6008277FB /* CaptureComCaptionServiceImp.swift in Sources */,
 				588B7E212B64E92E005ADA60 /* Utils.swift in Sources */,
 				58FB6FDE2C469DD4003FC269 /* FilterServiceImp.swift in Sources */,
 				5873F4BE2BAC65F100170BE7 /* RectView.swift in Sources */,

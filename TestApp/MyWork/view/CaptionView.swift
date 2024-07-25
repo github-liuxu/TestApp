@@ -176,10 +176,10 @@ class ListViewController: UIViewController, JXSegmentedListContainerViewListDele
             packageList.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             packageList.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        assetGetter?.fetchData()
         assetGetter?.didFetchSuccess = { [weak self] dataSource in
             self?.packageList.dataSource = dataSource
         }
+        assetGetter?.fetchData()
     }
 
     func listView() -> UIView {

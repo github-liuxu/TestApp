@@ -12,7 +12,7 @@ import Combine
 class CaptureViewController: UIViewController {
     @IBOutlet weak var recordBtn: UIButton!
     @IBOutlet var livewindow: NvsLiveWindow!
-    var rectView: RectView = RectView()
+    let rectView: RectView = RectView()
     let streamingContext = NvsStreamingContext.sharedInstance()!
     var capture: CaptureService?
     var isLimitRecord = true
@@ -22,12 +22,13 @@ class CaptureViewController: UIViewController {
         capture = nil
         streamingContext.stop()
         NvsStreamingContext.destroyInstance()
+        print("CaptureViewController: NvsStreamingContext.destroyInstance")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(rectView)
-        livewindow.translatesAutoresizingMaskIntoConstraints = false
+        livewindow.addSubview(rectView)
+        rectView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             rectView.leadingAnchor.constraint(equalTo: livewindow.leadingAnchor),
             rectView.trailingAnchor.constraint(equalTo: livewindow.trailingAnchor),
@@ -86,6 +87,7 @@ class CaptureViewController: UIViewController {
         
         rectView.moveable = capture.captionService
         capture.captionService.rectable = rectView
+        capture.captionService.livewindow = livewindow
         captionView.captionService = capture.captionService
         _ = capture.captionService.addCaption(text: "请输入字幕")
         
@@ -95,11 +97,31 @@ class CaptureViewController: UIViewController {
     }
     
     @IBAction func sticker(_ sender: Any) {
-        
+        if let stickerView = StickerView.newInstance() as? StickerView {
+            view.addSubview(stickerView)
+            stickerView.show()
+            rectView.moveable = capture?.stickerService
+            capture?.stickerService.livewindow = livewindow
+            capture?.stickerService.rectable = rectView
+            stickerView.stickerService = capture?.stickerService
+            stickerView.didViewClose = { [weak self] in
+                self?.rectView.moveable = nil
+            }
+        }
     }
     
     @IBAction func comCaption(_ sender: Any) {
-        
+        if let comCaptionView = CompoundCaptionView.newInstance() as? CompoundCaptionView {
+            view.addSubview(comCaptionView)
+            comCaptionView.show()
+            rectView.moveable = capture?.comCaptionService
+            capture?.stickerService.livewindow = livewindow
+            capture?.stickerService.rectable = rectView
+            comCaptionView.comCaptionService = capture?.comCaptionService
+            comCaptionView.didViewClose = { [weak self] in
+                self?.rectView.moveable = nil
+            }
+        }
     }
     
     @IBAction func props(_ sender: Any) {

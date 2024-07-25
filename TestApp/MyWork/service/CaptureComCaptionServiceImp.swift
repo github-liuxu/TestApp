@@ -1,29 +1,24 @@
 //
-//  ComCaptionServiceImp.swift
+//  CaptureComCaptionServiceImp.swift
 //  TestApp
 //
-//  Created by Mac-Mini on 2024/7/17.
+//  Created by Mac-Mini on 2024/7/25.
 //
 
 import UIKit
 import NvStreamingSdkCore
 
-protocol ComCaptionService {
-    func applyComCaptionPackage(item: DataSourceItemProtocol)
-}
-
-class ComCaptionServiceImp: NSObject {
+class CaptureComCaptionServiceImp: NSObject {
     var comCaption: NvsCompoundCaption?
     var timeline: NvsTimeline!
     var livewindow: NvsLiveWindow?
     var streamingContext = NvsStreamingContext.sharedInstance()!
     weak var rectable: Rectable?
-    override init() {
-        super.init()
-    }
+    var selectIndex: UInt32 = 0
+
 }
 
-extension ComCaptionServiceImp: ComCaptionService {
+extension CaptureComCaptionServiceImp: ComCaptionService {
     func applyComCaptionPackage(item: any DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
@@ -32,19 +27,19 @@ extension ComCaptionServiceImp: ComCaptionService {
     
     func applyComCaption(packageId: String) {
         let pid = packageId
-        if let comCaptionFx = comCaption as? NvsTimelineCompoundCaption {
-            timeline.remove(comCaptionFx)
+        if let comCaptionFx = comCaption as? NvsCaptureCompoundCaption {
+            streamingContext.removeCaptureCompoundCaption(selectIndex)
             self.comCaption = nil
         }
         if pid.count > 0 {
-            comCaption = timeline.addCompoundCaption(0, duration: timeline.duration, compoundCaptionPackageId: pid)
+            selectIndex = streamingContext.getCaptureCompoundCaptionCount() + 1
+            comCaption = streamingContext.appendCaptureCompoundCaption(0, duration: 1000000000, compoundCaptionPackageId: pid)
         }
         drawRects()
-        seek(timeline: timeline)
     }
 }
 
-extension ComCaptionServiceImp: Moveable {
+extension CaptureComCaptionServiceImp: Moveable {
     func translate(prePoint: CGPoint, curPoint: CGPoint) {
         guard let comCaption = comCaption else { return }
         guard let livewindow = livewindow else { return }
@@ -52,14 +47,12 @@ extension ComCaptionServiceImp: Moveable {
         let p2 = livewindow.mapView(toCanonical: curPoint)
         comCaption.translate(CGPoint(x: p2.x - p1.x, y: p2.y - p1.y))
         drawRects()
-        seek(timeline: timeline)
     }
     
     func scale(scale: Float) {
         guard let comCaption = comCaption else { return }
         comCaption.scale(scale, anchor: comCaption.getAnchorPoint())
         drawRects()
-        seek(timeline: timeline)
     }
     
     func rotate(rotate: Float) {
@@ -67,25 +60,25 @@ extension ComCaptionServiceImp: Moveable {
         let r = -rotate * Float(180.0/Double.pi)
         comCaption.rotateCaption(r, anchor: comCaption.getAnchorPoint())
         drawRects()
-        seek(timeline: timeline)
     }
     
     func tap(point: CGPoint) {
         guard let livewindow = livewindow else { return }
         let p1 = livewindow.mapView(toCanonical: point)
-        guard let timeline = timeline else { return }
-        let position = streamingContext.getTimelineCurrentPosition(timeline)
-        let comCaptions = timeline.getCompoundCaptions(byTimelinePosition: position)
+        let count = streamingContext.getCaptureCompoundCaptionCount()
         comCaption = nil
-        comCaptions?.forEach({ comCaption in
-            let vertices = comCaption.getCompoundBoundingVertices(NvsBoundingType_Frame) as NSArray
-            if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
-                self.comCaption = comCaption
-                return
+        selectIndex = 0
+        for (index, element) in (0..<count).enumerated() {
+            if let compoundCaption = streamingContext.getCaptureCompoundCaption(by: UInt32(index)) {
+                let vertices = compoundCaption.getCompoundBoundingVertices(NvsBoundingType_Frame) as NSArray
+                if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
+                    self.comCaption = compoundCaption
+                    selectIndex = UInt32(index)
+                    return
+                }
             }
-        })
+        }
         drawRects()
-        seek(timeline: timeline)
     }
     
     func drawRects() {
