@@ -50,14 +50,14 @@ class EditViewController: UIViewController {
     @objc func saveAction() {
         view.makeToastActivity(.center)
         timelineService?.saveAction(nil)?
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .finished:
-                    print("Completed")
-                case .failure(let error):
-                    print("Received error: \(error)")
-                }
-                self?.view.hideToastActivity()
+        .sink(receiveCompletion: { [weak self] completion in
+            switch completion {
+            case .finished:
+                print("Completed")
+            case .failure(let error):
+                print("Received error: \(error)")
+            }
+            self?.view.hideToastActivity()
         }, receiveValue: { progress in
             print(progress)
         }).store(in: &cancellables )
