@@ -5,16 +5,16 @@
 //  Created by Mac-Mini on 2024/7/18.
 //
 
-import UIKit
 import JXSegmentedView
 import PhotosUI
+import UIKit
 
 class StickerView: UIView, BottomViewService {
     weak var stickerService: StickerService?
     var segmentedView: JXSegmentedView!
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
-    var didViewClose: (() -> Void)?
+    var didViewClose: ((Bool) -> Void)?
     var albumUtils = AlbumUtils()
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,7 +40,7 @@ class StickerView: UIView, BottomViewService {
         listContainerView = JXSegmentedListContainerView(dataSource: self)
         segmentedView.listContainer = listContainerView
         addSubview(listContainerView)
-        
+
         // 设置布局
         segmentedView.translatesAutoresizingMaskIntoConstraints = false
         listContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,61 +49,66 @@ class StickerView: UIView, BottomViewService {
             segmentedView.leadingAnchor.constraint(equalTo: leadingAnchor),
             segmentedView.trailingAnchor.constraint(equalTo: trailingAnchor),
             segmentedView.heightAnchor.constraint(equalToConstant: 50),
-            
+
             listContainerView.topAnchor.constraint(equalTo: segmentedView.bottomAnchor),
             listContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             listContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             listContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-    
+
     func show() {
         let height: CGFloat = 300
         let size = UIScreen.main.bounds.size
-        self.frame = CGRectMake(0, size.height, size.width, height)
+        frame = CGRectMake(0, size.height, size.width, height)
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRectMake(0, size.height - height, size.width, height)
         }
     }
-    
-    @IBAction func okClick(_ sender: Any) {
+
+    @IBAction func okClick(_: Any) {
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: self.frame.size)
-        } completion: { finish in
+        } completion: { _ in
             self.removeFromSuperview()
         }
-        didViewClose?()
+        didViewClose?(false)
     }
-    
-    @IBAction func closeClick(_ sender: Any) {
+
+    @IBAction func closeClick(_: Any) {
         stickerService?.deleteSticker()
-        okClick(sender)
+        UIView.animate(withDuration: 0.25) {
+            self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: self.frame.size)
+        } completion: { _ in
+            self.removeFromSuperview()
+        }
+        didViewClose?(true)
     }
-    
+
     static func newInstance() -> BottomViewService {
         let nib = UINib(nibName: "StickerView", bundle: Bundle(for: StickerView.self))
         return nib.instantiate(withOwner: self).first as! BottomViewService
     }
-
 }
+
 // 实现 JXSegmentedListContainerViewDataSource 协议
 extension StickerView: JXSegmentedListContainerViewDataSource {
-    func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
+    func numberOfLists(in _: JXSegmentedListContainerView) -> Int {
         return segmentedDataSource.titles.count
     }
 
-    func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        let list =  ListViewController()
+    func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = ListViewController()
         if index == 0 {
             let path = Bundle.main.bundlePath + "/sticker/animationsticker"
             list.assetGetter = DataSource(path, typeString: "animatedsticker")
-            list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, index in
-                self?.stickerService?.applyPackage(packagePath: packagePath, licPath: licPath)
+            list.packageList.didSelectedPackage = { [weak self] item in
+                self?.stickerService?.applyPackage(packagePath: item.packagePath, licPath: item.licPath)
             }
         } else if index == 1 {
             let path = Bundle.main.bundlePath + "/sticker/custom"
             list.assetGetter = DataSource(path, typeString: "animatedsticker")
-            list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, index in
+            list.packageList.didSelectedPackage = { [weak self] item in
                 // album
                 let viewController = self!.findViewController()!
                 self?.albumUtils.openAlbum(viewController: viewController, mediaType: .image, multiSelect: false) { [weak self] assets in
@@ -112,14 +117,12 @@ extension StickerView: JXSegmentedListContainerViewDataSource {
                         let phasset = assets.first!
                         saveAssetToSandbox(asset: phasset) { url in
                             if let path = url?.absoluteString.replacingOccurrences(of: "file://", with: "") {
-                                self?.stickerService?.applyCustomPackage(packagePath: packagePath, licPath: licPath, imagePath: path)
+                                self?.stickerService?.applyCustomPackage(packagePath: item.packagePath, licPath: item.licPath, imagePath: path)
                             }
                         }
-                        
                     }
                 }
             }
-
         }
         return list
     }

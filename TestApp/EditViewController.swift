@@ -6,11 +6,11 @@
 //
 
 import AVFAudio
+import Combine
 import Dispatch
 import NvStreamingSdkCore
 import Toast_Swift
 import UIKit
-import Combine
 
 class EditViewController: UIViewController {
     var albumUtils: OpenAlbumEnable?
@@ -29,7 +29,7 @@ class EditViewController: UIViewController {
         timelineService?.clear()
         NvsStreamingContext.destroyInstance()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = getVertionString()
@@ -46,23 +46,23 @@ class EditViewController: UIViewController {
         navigationItem.setRightBarButton(save, animated: true)
         // Do any additional setup after loading the view.
     }
-    
+
     @objc func saveAction() {
         view.makeToastActivity(.center)
         timelineService?.saveAction(nil)?
-        .sink(receiveCompletion: { [weak self] completion in
-            switch completion {
-            case .finished:
-                print("Completed")
-            case .failure(let error):
-                print("Received error: \(error)")
-            }
-            self?.view.hideToastActivity()
-        }, receiveValue: { progress in
-            print(progress)
-        }).store(in: &cancellables )
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    print("Completed")
+                case let .failure(error):
+                    print("Received error: \(error)")
+                }
+                self?.view.hideToastActivity()
+            }, receiveValue: { progress in
+                print(progress)
+            }).store(in: &cancellables)
     }
-    
+
     func Subview() {
         guard let livewidow = PreView.loadView() else { return }
         var navBottom = 30.0
@@ -91,13 +91,13 @@ class EditViewController: UIViewController {
         let nib = UINib(nibName: "BottomCollectionViewCell", bundle: Bundle(for: BottomCollectionViewCell.self))
         bottomCollectionView.register(nib, forCellWithReuseIdentifier: "BottomCollectionViewCell")
     }
-    
+
     func Listen() {
         preview.playBackAction = { [weak self] btn in
             guard let weakSelf = self else { return }
             weakSelf.timelineService?.playClick(btn)
         }
-        
+
         timelineService?.playStateChanged = { [weak self] isPlay in
             guard let weakSelf = self else { return }
             weakSelf.preview.setPlayState(isPlay: isPlay)
@@ -107,12 +107,12 @@ class EditViewController: UIViewController {
             weakSelf.preview.currentTime.text = currentTime
             weakSelf.preview.durationTime.text = duration
         }
-        
+
         sequence?.valueChangedAction = { [weak self] value in
             guard let weakSelf = self else { return }
             weakSelf.timelineService?.sliderValueChanged(value)
         }
-        
+
         sequence?.addAlbmAction = { [weak self] in
             guard let weakSelf = self else { return }
             let time = weakSelf.timelineService?.timeline?.duration ?? 0
@@ -124,12 +124,11 @@ class EditViewController: UIViewController {
                 weakSelf.sequence?.seekValue(time)
             }
         }
-        
+
         sequence?.didSelectClipIndex = { [weak self] index in
             let videoClipService = self?.timelineService?.getClipService(index: index)
-            
         }
-        
+
         timelineService?.didPlaybackTimelinePosition = { [weak self] position, _ in
             guard let weakSelf = self else { return }
             weakSelf.sequence?.seekValue(position)
@@ -138,7 +137,7 @@ class EditViewController: UIViewController {
 }
 
 extension EditViewController: TransitionCoverViewDelegate {
-    func didSelectIndex(index: Int) {
+    func didSelectIndex(index _: Int) {
         let transitionView = AssetView.newInstance() as! AssetView
         view.addSubview(transitionView)
         let height: CGFloat = 300
@@ -152,22 +151,22 @@ extension EditViewController: TransitionCoverViewDelegate {
 }
 
 extension EditViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         bottomDataSource.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BottomCollectionViewCell", for: indexPath) as! BottomCollectionViewCell
         cell.title.text = bottomDataSource[indexPath.item].title
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = bottomDataSource[indexPath.item]
         let subview = item.viewClass.newInstance()
         view.addSubview(subview)
         subview.show()
-        subview.didViewClose = { [weak self] in
+        subview.didViewClose = { [weak self] isCancelled in
             self?.preview.rectView.moveable = self?.operate
         }
         if item.title == "Filter" {

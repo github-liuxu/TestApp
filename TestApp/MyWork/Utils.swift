@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+
 let screenWidth = UIScreen.main.bounds.size.width
 let screenHeight = UIScreen.main.bounds.size.height
 
@@ -18,12 +19,12 @@ func currentDateAndTime() -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "YYYYMMddHHmmssSSS"
     dateFormatter.timeZone = zone
-    let dateString = dateFormatter.string(from: date);
+    let dateString = dateFormatter.string(from: date)
     return dateString
 }
 
 func formatTime(time: Int64) -> String {
-    let t = time / 1000000
+    let t = time / 1_000_000
     let sec = t % 60
     let min = t / 60
     return "\(min):\(sec)"

@@ -5,8 +5,8 @@
 //  Created by Mac-Mini on 2024/7/16.
 //
 
-import UIKit
 import NvStreamingSdkCore
+import UIKit
 
 protocol FilterService {
     func applyFilter(item: DataSourceItemProtocol)
@@ -23,16 +23,17 @@ class FilterServiceImp: NSObject, FilterService, DataSourceService {
     override init() {
         super.init()
     }
+
     func setFilterStrength(value: Float) {
         guard let filterFx = filterFx else { return }
         filterFx.setFilterIntensity(value)
         seek(timeline: timeline)
     }
-    
+
     func getFilterStrength() -> Float {
         return filterFx?.getFilterIntensity() ?? 0
     }
-    
+
     func applyFilter(packageId: String) {
         let pid = packageId
         if filterFx?.timelineVideoFxType == NvsTimelineVideoFxType_Builtin {
@@ -44,7 +45,7 @@ class FilterServiceImp: NSObject, FilterService, DataSourceService {
                 return
             }
         }
-        
+
         if let filterFx = filterFx {
             timeline.remove(filterFx)
             self.filterFx = nil
@@ -60,5 +61,4 @@ class FilterServiceImp: NSObject, FilterService, DataSourceService {
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         applyFilter(packageId: pid as String)
     }
-    
 }

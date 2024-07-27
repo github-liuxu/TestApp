@@ -6,15 +6,15 @@
 //
 
 import Foundation
-import Photos
 import LDXImagePicker
+import Photos
 
 protocol OpenAlbumEnable {
-    func openAlbum(viewController: UIViewController, _ block: @escaping ([PHAsset])->());
+    func openAlbum(viewController: UIViewController, _ block: @escaping ([PHAsset]) -> Void)
 }
 
 class AlbumUtils: NSObject {
-    var selectAssetBlock: (([PHAsset]) -> ())? = nil
+    var selectAssetBlock: (([PHAsset]) -> Void)? = nil
     var viewController: UIViewController?
     deinit {
         print("AlbumUtils deinit")
@@ -22,12 +22,12 @@ class AlbumUtils: NSObject {
 }
 
 extension AlbumUtils: OpenAlbumEnable {
-    func openAlbum(viewController: UIViewController, _ block: @escaping ([PHAsset])->()) {
+    func openAlbum(viewController: UIViewController, _ block: @escaping ([PHAsset]) -> Void) {
         openAlbum(viewController: viewController, mediaType: .any, multiSelect: true, block)
     }
-    
-    func openAlbum(viewController: UIViewController, mediaType: LDXImagePickerMediaType = .any, multiSelect: Bool = true, _ block: @escaping ([PHAsset])->()) {
-        self.viewController = viewController;
+
+    func openAlbum(viewController: UIViewController, mediaType: LDXImagePickerMediaType = .any, multiSelect: Bool = true, _ block: @escaping ([PHAsset]) -> Void) {
+        self.viewController = viewController
         selectAssetBlock = block
         let picker = LDXImagePickerController()
         picker.delegate = self
@@ -38,16 +38,15 @@ extension AlbumUtils: OpenAlbumEnable {
         picker.modalPresentationStyle = .fullScreen
         viewController.present(picker, animated: true)
     }
-    
 }
 
 extension AlbumUtils: LDXImagePickerControllerDelegate {
-    func ldx_imagePickerController(_ imagePickerController: LDXImagePickerController!, didFinishPickingAssets assets: [Any]!) {
-        self.viewController?.dismiss(animated: true)
-        self.selectAssetBlock?(assets as! [PHAsset])
+    func ldx_imagePickerController(_: LDXImagePickerController!, didFinishPickingAssets assets: [Any]!) {
+        viewController?.dismiss(animated: true)
+        selectAssetBlock?(assets as! [PHAsset])
     }
-    
-    func ldx_imagePickerControllerDidCancel(_ imagePickerController: LDXImagePickerController!) {
-        self.viewController?.dismiss(animated: true)
+
+    func ldx_imagePickerControllerDidCancel(_: LDXImagePickerController!) {
+        viewController?.dismiss(animated: true)
     }
 }

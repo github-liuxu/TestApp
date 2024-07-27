@@ -5,15 +5,15 @@
 //  Created by Mac-Mini on 2024/7/25.
 //
 
-import UIKit
 import NvStreamingSdkCore
+import UIKit
 
 class CaptureStickerServiceImp: NSObject {
     weak var rectable: Rectable?
     let streamingContext = NvsStreamingContext.sharedInstance()!
     var sticker: NvsAnimatedSticker?
     var livewindow: NvsLiveWindow?
-    
+
     func getAnchorPoint(sticker: NvsAnimatedSticker?) -> CGPoint {
         guard let sticker = sticker else { return .zero }
         let vertices = sticker.getBoundingRectangleVertices() as NSArray
@@ -43,13 +43,13 @@ extension CaptureStickerServiceImp: StickerService {
     func applyPackage(packagePath: String, licPath: String) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
-        streamingContext.appendCaptureAnimatedSticker(0, duration: 1000000000, animatedStickerPackageId: pid as String)
+        streamingContext.appendCaptureAnimatedSticker(0, duration: 1_000_000_000, animatedStickerPackageId: pid as String)
     }
-    
+
     func applyCustomPackage(packagePath: String, licPath: String, imagePath: String) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
-        sticker = streamingContext.addCustomCaptureAnimatedSticker(0, duration: 1000000000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
+        sticker = streamingContext.addCustomCaptureAnimatedSticker(0, duration: 1_000_000_000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
         drawRects()
     }
 }
@@ -63,36 +63,36 @@ extension CaptureStickerServiceImp: Moveable {
         sticker.translate(CGPoint(x: p2.x - p1.x, y: p2.y - p1.y))
         drawRects()
     }
-    
+
     func scale(scale: Float) {
         guard let sticker = sticker else { return }
         sticker.scale(scale, anchor: getAnchorPoint(sticker: sticker))
         drawRects()
     }
-    
+
     func rotate(rotate: Float) {
         guard let sticker = sticker else { return }
-        let r = -rotate * Float(180.0/Double.pi)
+        let r = -rotate * Float(180.0 / Double.pi)
         sticker.rotateAnimatedSticker(r)
         drawRects()
     }
-    
+
     func tap(point: CGPoint) {
         guard let livewindow = livewindow else { return }
         let p1 = livewindow.mapView(toCanonical: point)
         let count = streamingContext.getCaptureAnimatedStickerCount()
-        self.sticker = nil
-        (0..<count).forEach { element in
+        sticker = nil
+        for element in 0 ..< count {
             let sticker = streamingContext.getCaptureAnimatedSticker(by: element)
             let vertices = sticker!.getBoundingRectangleVertices() as NSArray
             if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
                 self.sticker = sticker
-                return
+                continue
             }
         }
         drawRects()
     }
-    
+
     func drawRects() {
         if sticker == nil {
             rectable?.setPoints([])

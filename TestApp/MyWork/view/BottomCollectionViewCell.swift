@@ -8,11 +8,9 @@
 import UIKit
 
 class BottomCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var title: UILabel!
+    @IBOutlet var title: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
 }

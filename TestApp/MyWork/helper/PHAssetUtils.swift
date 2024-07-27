@@ -12,7 +12,7 @@ import Photos
 func saveAssetToSandbox(asset: PHAsset, completion: @escaping (URL?) -> Void) {
     let options = PHImageRequestOptions()
     options.isNetworkAccessAllowed = true
-    
+
     if asset.mediaType == .image {
         // 请求图像数据
         PHImageManager.default().requestImageDataAndOrientation(for: asset, options: options) { data, _, _, _ in
@@ -56,7 +56,7 @@ func saveAssetToSandbox(asset: PHAsset, completion: @escaping (URL?) -> Void) {
 func saveToSandbox(data: Data, fileExtension: String) -> URL? {
     let fileName = "\(CFAbsoluteTime())" + "." + fileExtension
     let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
-    
+
     do {
         try data.write(to: fileURL)
         return fileURL

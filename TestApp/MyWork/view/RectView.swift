@@ -22,7 +22,7 @@ class RectView: UIView, Rectable {
     var moveable: Moveable?
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan(gesture:)))
         addGestureRecognizer(panGesture)
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
@@ -34,10 +34,10 @@ class RectView: UIView, Rectable {
         pinchGesture.delegate = self
         addGestureRecognizer(pinchGesture)
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan(gesture:)))
         addGestureRecognizer(panGesture)
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
@@ -49,7 +49,7 @@ class RectView: UIView, Rectable {
         pinchGesture.delegate = self
         addGestureRecognizer(pinchGesture)
     }
-    
+
     @objc func pan(gesture: UIPanGestureRecognizer) {
         guard let view = gesture.view else { return }
         let translation = gesture.translation(in: view)
@@ -67,44 +67,43 @@ class RectView: UIView, Rectable {
         }
         gesture.setTranslation(.zero, in: view)
     }
-    
+
     @objc func tap(gesture: UITapGestureRecognizer) {
         guard let view = gesture.view else { return }
         let location = gesture.location(in: view)
         moveable?.tap(point: location)
     }
-    
+
     @objc func rotate(gesture: UIRotationGestureRecognizer) {
         switch gesture.state {
         case .changed:
             moveable?.rotate(rotate: Float(gesture.rotation))
-            break
         default:
             break
         }
         gesture.rotation = 0
     }
-    
+
     @objc func pinch(gesture: UIPinchGestureRecognizer) {
         moveable?.scale(scale: Float(gesture.scale))
         gesture.scale = 1
     }
-    
+
     // 设置点并触发重绘
     func setPoints(_ points: [CGPoint]) {
-        self.subPoints = []
+        subPoints = []
         self.points = points
         setNeedsDisplay() // 触发重绘
     }
-    
+
     func setSubPoints(_ points: [[CGPoint]]) {
-        self.subPoints = points
+        subPoints = points
         setNeedsDisplay() // 触发重绘
     }
-    
+
     func drawPoints(points: [CGPoint]) {
         guard points.count == 4 else { return } // 确保有4个点
-        
+
         // 创建路径
         let path = UIBezierPath()
         path.move(to: points[0])
@@ -117,13 +116,13 @@ class RectView: UIView, Rectable {
         let dashes: [CGFloat] = [6, 2] // 6个点的线，2个点的间隔
         path.setLineDash(dashes, count: dashes.count, phase: 0)
         UIColor.white.setStroke()
-        
+
         // 绘制路径
         path.stroke()
     }
-    
+
     // 绘制方法
-    override func draw(_ rect: CGRect) {
+    override func draw(_: CGRect) {
         drawPoints(points: points)
         for points in subPoints {
             drawPoints(points: points)
@@ -132,7 +131,7 @@ class RectView: UIView, Rectable {
 }
 
 extension RectView: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
         return true
     }
 }

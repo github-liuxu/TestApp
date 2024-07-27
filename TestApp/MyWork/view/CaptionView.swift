@@ -5,17 +5,17 @@
 //  Created by Mac-Mini on 2024/4/16.
 //
 
-import UIKit
 import JXSegmentedView
 import NvStreamingSdkCore
+import UIKit
 
 class CaptionView: UIView, BottomViewService {
     var captionService: CaptionService?
     var segmentedView: JXSegmentedView!
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
-    @IBOutlet weak var textField: UITextField!
-    var didViewClose: (() -> Void)?
+    @IBOutlet var textField: UITextField!
+    var didViewClose: ((Bool) -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         textField.delegate = self
@@ -43,7 +43,7 @@ class CaptionView: UIView, BottomViewService {
         listContainerView = JXSegmentedListContainerView(dataSource: self)
         segmentedView.listContainer = listContainerView
         addSubview(listContainerView)
-        
+
         // 设置布局
         segmentedView.translatesAutoresizingMaskIntoConstraints = false
         listContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +52,7 @@ class CaptionView: UIView, BottomViewService {
             segmentedView.leadingAnchor.constraint(equalTo: leadingAnchor),
             segmentedView.trailingAnchor.constraint(equalTo: trailingAnchor),
             segmentedView.heightAnchor.constraint(equalToConstant: 50),
-            
+
             listContainerView.topAnchor.constraint(equalTo: segmentedView.bottomAnchor),
             listContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             listContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -62,7 +62,7 @@ class CaptionView: UIView, BottomViewService {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
     deinit {
         // 移除观察者
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -75,56 +75,61 @@ class CaptionView: UIView, BottomViewService {
             captionService?.setCaptionText(text: text)
         }
     }
-    
+
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo, let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return
         }
-        
+
         // 调整视图布局，避免被键盘遮挡
         let keyboardHeight = keyboardFrame.height
         let p = convert(CGPoint(x: 0, y: textField.frame.maxY), to: superview)
         let size = UIScreen.main.bounds.size
         let offset = keyboardHeight - (size.height - p.y)
-        self.frame.origin.y = self.frame.origin.y - offset
+        frame.origin.y = frame.origin.y - offset
     }
 
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification _: NSNotification) {
         // 恢复视图布局
         let size = UIScreen.main.bounds.size
-        self.frame.origin.y = size.height - 300
+        frame.origin.y = size.height - 300
     }
-    
+
     func show() {
         let height: CGFloat = 300
         let size = UIScreen.main.bounds.size
-        self.frame = CGRectMake(0, size.height, size.width, height)
+        frame = CGRectMake(0, size.height, size.width, height)
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRectMake(0, size.height - height, size.width, height)
         }
     }
-    
+
     // 处理 “Done” 按钮点击事件的方法
     func handleDoneButtonTap() {
         guard let text = textField.text else { return }
         print("User entered: \(text)")
         // 在这里添加你的处理逻辑，例如验证输入或提交数据
     }
-    
-    @IBAction func close(_ sender: Any) {
+
+    @IBAction func close(_: Any) {
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: self.frame.size)
-        } completion: { finish in
+        } completion: { _ in
             self.removeFromSuperview()
         }
-        didViewClose?()
+        didViewClose?(false)
     }
-    
-    @IBAction func closeDelete(_ sender: Any) {
+
+    @IBAction func closeDelete(_: Any) {
         captionService?.deleteCaption()
-        close(sender)
+        UIView.animate(withDuration: 0.25) {
+            self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: self.frame.size)
+        } completion: { _ in
+            self.removeFromSuperview()
+        }
+        didViewClose?(true)
     }
-    
+
     static func newInstance() -> BottomViewService {
         let nib = UINib(nibName: "CaptionView", bundle: Bundle(for: CaptionView.self))
         return nib.instantiate(withOwner: self).first as! BottomViewService
@@ -133,14 +138,14 @@ class CaptionView: UIView, BottomViewService {
 
 // 实现 JXSegmentedListContainerViewDataSource 协议
 extension CaptionView: JXSegmentedListContainerViewDataSource {
-    func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
+    func numberOfLists(in _: JXSegmentedListContainerView) -> Int {
         return segmentedDataSource.titles.count
     }
 
-    func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        let list =  ListViewController()
-        list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, type in
-            self?.captionService?.applyCaptionPackage(packagePath: packagePath, licPath: licPath, type: type)
+    func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = ListViewController()
+        list.packageList.didSelectedPackage = { [weak self] item in
+            self?.captionService?.applyCaptionPackage(packagePath: item.packagePath, licPath: item.licPath, type: item.type)
         }
         if index == 0 {
             let captionDir = Bundle.main.bundlePath + "/captions/captionrenderer"
@@ -163,7 +168,7 @@ extension CaptionView: JXSegmentedListContainerViewDataSource {
 }
 
 class ListViewController: UIViewController, JXSegmentedListContainerViewListDelegate {
-    var packageList: PackageList = PackageList.newInstance()
+    var packageList: PackageList = .newInstance()
     var assetGetter: AssetGetter?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,8 +195,8 @@ class ListViewController: UIViewController, JXSegmentedListContainerViewListDele
 extension CaptionView: UITextFieldDelegate {
     // 实现 UITextFieldDelegate 方法
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()  // 隐藏键盘
-        handleDoneButtonTap()  // 调用处理方法
+        textField.resignFirstResponder() // 隐藏键盘
+        handleDoneButtonTap() // 调用处理方法
         return true
     }
 }

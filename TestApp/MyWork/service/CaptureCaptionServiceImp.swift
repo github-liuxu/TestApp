@@ -5,8 +5,8 @@
 //  Created by 刘东旭 on 2024/7/21.
 //
 
-import UIKit
 import NvStreamingSdkCore
+import UIKit
 
 class CaptureCaptionServiceImp: NSObject, DataSourceService {
     weak var rectable: Rectable?
@@ -19,23 +19,23 @@ class CaptureCaptionServiceImp: NSObject, DataSourceService {
         let captionDir = Bundle.main.bundlePath + "/captionrenderer"
         assetGetter = DataSource(captionDir, typeString: "captionrenderer")
     }
-    
+
     func clear() {
         let streamingContext = NvsStreamingContext.sharedInstance()!
         streamingContext.removeAllCaptureCaption()
         caption = nil
     }
-    
 }
+
 extension CaptureCaptionServiceImp: CaptionService {
     func addCaption(text: String) -> NvsCaption {
         let streamingContext = NvsStreamingContext.sharedInstance()!
-        caption = streamingContext.appendCaptureModularCaption(text, offsetTime: 0, duration: 1000000000)
+        caption = streamingContext.appendCaptureModularCaption(text, offsetTime: 0, duration: 1_000_000_000)
         didCaptionTextChanged?(caption?.getText())
         drawRects()
         return caption!
     }
-    
+
     func deleteCaption() {
         let streamingContext = NvsStreamingContext.sharedInstance()!
         let count = streamingContext.getCaptureCaptionCount()
@@ -43,7 +43,7 @@ extension CaptureCaptionServiceImp: CaptionService {
         caption = nil
         drawRects()
     }
-    
+
     func getAllCaption() -> [NvsCaption] {
         var captios = [NvsCaption]()
 //        if let cap = timeline?.getFirstCaption() {
@@ -53,16 +53,14 @@ extension CaptureCaptionServiceImp: CaptionService {
 //            }}
         return captios
     }
-    
+
     func setCaptionText(text: String) {
         caption?.setText(text)
         drawRects()
     }
-    
-    func setCaptionTextColor(text: String) {
-        
-    }
-    
+
+    func setCaptionTextColor(text _: String) {}
+
     func applyCaptionPackage(packagePath: String, licPath: String, type: String) {
         let streamingContext = NvsStreamingContext.sharedInstance()!
         let pid = NSMutableString()
@@ -95,38 +93,38 @@ extension CaptureCaptionServiceImp: Moveable {
         caption.translate(CGPoint(x: p2.x - p1.x, y: p2.y - p1.y))
         drawRects()
     }
-    
+
     func scale(scale: Float) {
         guard let caption = caption else { return }
         caption.scale(scale, anchor: caption.getAnchorPoint())
         drawRects()
     }
-    
+
     func rotate(rotate: Float) {
         guard let caption = caption else { return }
-        let r = -rotate * Float(180.0/Double.pi)
+        let r = -rotate * Float(180.0 / Double.pi)
         caption.rotateCaption(r, anchor: caption.getAnchorPoint())
         drawRects()
     }
-    
+
     func tap(point: CGPoint) {
         guard let livewindow = livewindow else { return }
         let p1 = livewindow.mapView(toCanonical: point)
         let streamingContext = NvsStreamingContext.sharedInstance()!
         let count = streamingContext.getCaptureCaptionCount()
-        self.caption = nil
-        (0..<count).forEach { index in
+        caption = nil
+        for index in 0 ..< count {
             if let caption = streamingContext.getCaptureCaption(by: index) {
                 let vertices = caption.getBoundingVertices(NvsBoundingType_Frame) as NSArray
                 if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
                     self.caption = caption
-                    return
+                    continue
                 }
             }
         }
         drawRects()
     }
-    
+
     func drawRects() {
         if caption == nil {
             rectable?.setPoints([])

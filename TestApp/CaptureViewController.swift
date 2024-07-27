@@ -5,14 +5,14 @@
 //  Created by Mac-Mini on 2024/1/30.
 //
 
+import Combine
 import NvStreamingSdkCore
 import UIKit
-import Combine
 
 class CaptureViewController: UIViewController {
-    @IBOutlet weak var recordBtn: UIButton!
+    @IBOutlet var recordBtn: UIButton!
     @IBOutlet var livewindow: NvsLiveWindow!
-    let rectView: RectView = RectView()
+    let rectView: RectView = .init()
     let streamingContext = NvsStreamingContext.sharedInstance()!
     var capture: CaptureService?
     var isLimitRecord = true
@@ -33,7 +33,7 @@ class CaptureViewController: UIViewController {
             rectView.leadingAnchor.constraint(equalTo: livewindow.leadingAnchor),
             rectView.trailingAnchor.constraint(equalTo: livewindow.trailingAnchor),
             rectView.topAnchor.constraint(equalTo: livewindow.topAnchor),
-            rectView.bottomAnchor.constraint(equalTo: livewindow.bottomAnchor)
+            rectView.bottomAnchor.constraint(equalTo: livewindow.bottomAnchor),
         ])
         capture = CaptureService()
         livewindow.insertSubview(rectView, at: 0)
@@ -65,7 +65,7 @@ class CaptureViewController: UIViewController {
         }
     }
 
-    @IBAction func filterClick(_ sender: UIButton) {
+    @IBAction func filterClick(_: UIButton) {
         let filterView = AssetView.newInstance() as! AssetView
         view.addSubview(filterView)
         filterView.filterService = capture?.filterService
@@ -75,28 +75,28 @@ class CaptureViewController: UIViewController {
         }
     }
 
-    @IBAction func switchCamera(_ sender: UISwitch) {
+    @IBAction func switchCamera(_: UISwitch) {
         capture?.switchCamera()
     }
-    
-    @IBAction func captionClick(_ sender: Any) {
+
+    @IBAction func captionClick(_: Any) {
         guard let capture = capture else { return }
         let captionView = CaptionView.newInstance() as! CaptionView
         view.addSubview(captionView)
         captionView.show()
-        
+
         rectView.moveable = capture.captionService
         capture.captionService.rectable = rectView
         capture.captionService.livewindow = livewindow
         captionView.captionService = capture.captionService
         _ = capture.captionService.addCaption(text: "请输入字幕")
-        
-        captionView.didViewClose = { [weak self] in
+
+        captionView.didViewClose = { [weak self] isCancelled in
             self?.rectView.moveable = nil
         }
     }
-    
-    @IBAction func sticker(_ sender: Any) {
+
+    @IBAction func sticker(_: Any) {
         if let stickerView = StickerView.newInstance() as? StickerView {
             view.addSubview(stickerView)
             stickerView.show()
@@ -104,13 +104,13 @@ class CaptureViewController: UIViewController {
             capture?.stickerService.livewindow = livewindow
             capture?.stickerService.rectable = rectView
             stickerView.stickerService = capture?.stickerService
-            stickerView.didViewClose = { [weak self] in
+            stickerView.didViewClose = { [weak self] isCancelled in
                 self?.rectView.moveable = nil
             }
         }
     }
-    
-    @IBAction func comCaption(_ sender: Any) {
+
+    @IBAction func comCaption(_: Any) {
         if let comCaptionView = CompoundCaptionView.newInstance() as? CompoundCaptionView {
             view.addSubview(comCaptionView)
             comCaptionView.show()
@@ -118,22 +118,20 @@ class CaptureViewController: UIViewController {
             capture?.stickerService.livewindow = livewindow
             capture?.stickerService.rectable = rectView
             comCaptionView.comCaptionService = capture?.comCaptionService
-            comCaptionView.didViewClose = { [weak self] in
+            comCaptionView.didViewClose = { [weak self] isCancelled in
                 self?.rectView.moveable = nil
             }
         }
     }
-    
-    @IBAction func props(_ sender: Any) {
+
+    @IBAction func props(_: Any) {
         guard let capture = capture else { return }
         let propView = PropView.newInstance() as! PropView
         view.addSubview(propView)
         propView.show()
-        
+
         rectView.moveable = capture.captionService
         capture.captionService.rectable = rectView
         propView.arsceneService = capture.arsceneService
-
     }
-    
 }

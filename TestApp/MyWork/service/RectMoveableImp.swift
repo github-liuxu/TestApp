@@ -16,23 +16,23 @@ class RectMoveableImp: Moveable {
     func translate(prePoint: CGPoint, curPoint: CGPoint) {
         moveable?.translate(prePoint: prePoint, curPoint: curPoint)
     }
-    
+
     func scale(scale: Float) {
         moveable?.scale(scale: scale)
     }
-    
+
     func rotate(rotate: Float) {
         moveable?.rotate(rotate: rotate)
     }
-    
+
     func tap(point: CGPoint) {
         guard let livewindow = livewindow else { return }
         let p1 = livewindow.mapView(toCanonical: point)
         guard let timeline = timelineService?.timeline else { return }
         let position = streamingContext.getTimelineCurrentPosition(timeline)
-        
+
         let stickers = timeline.getAnimatedStickers(byTimelinePosition: position)
-        stickers?.forEach({ sticker in
+        stickers?.forEach { sticker in
             let sticker = sticker as! NvsAnimatedSticker
             let vertices = sticker.getBoundingRectangleVertices() as NSArray
             if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
@@ -45,10 +45,10 @@ class RectMoveableImp: Moveable {
                 }
                 return
             }
-        })
-        
+        }
+
         let captions = timeline.getCaptionsByTimelinePosition(position)
-        captions?.forEach({ caption in
+        captions?.forEach { caption in
             let cap = caption as! NvsCaption
             let vertices = cap.getBoundingVertices(NvsBoundingType_Frame) as NSArray
             if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
@@ -61,10 +61,10 @@ class RectMoveableImp: Moveable {
                 }
                 return
             }
-        })
-        
+        }
+
         let comCaptions = timeline.getCompoundCaptions(byTimelinePosition: position)
-        comCaptions?.forEach({ comCaption in
+        comCaptions?.forEach { comCaption in
             let comCap = comCaption as NvsCompoundCaption
             let vertices = comCap.getCompoundBoundingVertices(NvsBoundingType_Frame) as NSArray
             if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
@@ -77,9 +77,9 @@ class RectMoveableImp: Moveable {
                 }
                 return
             }
-        })
+        }
     }
-    
+
     func drawRects() {
         moveable?.drawRects()
     }

@@ -5,8 +5,8 @@
 //  Created by Mac-Mini on 2024/7/22.
 //
 
-import UIKit
 import NvStreamingSdkCore
+import UIKit
 
 class CaptureFilterService: NSObject, FilterService {
     var filterFx: NvsCaptureVideoFx?
@@ -14,15 +14,16 @@ class CaptureFilterService: NSObject, FilterService {
     override init() {
         super.init()
     }
+
     func setFilterStrength(value: Float) {
         guard let filterFx = filterFx else { return }
         filterFx.setFilterIntensity(value)
     }
-    
+
     func getFilterStrength() -> Float {
         return filterFx?.getFilterIntensity() ?? 0
     }
-    
+
     func applyFilter(packageId: String) {
         let pid = packageId
         if filterFx?.captureVideoFxType == NvsCaptureVideoFxType_Builtin {
@@ -34,7 +35,7 @@ class CaptureFilterService: NSObject, FilterService {
                 return
             }
         }
-        
+
         if let filterFx = filterFx {
             streamingContext.removeCaptureVideoFx(filterFx.index)
             self.filterFx = nil
@@ -49,5 +50,4 @@ class CaptureFilterService: NSObject, FilterService {
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         applyFilter(packageId: pid as String)
     }
-    
 }

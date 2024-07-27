@@ -31,7 +31,6 @@ class CaptionServiceImp: NSObject {
         let captionDir = Bundle.main.bundlePath + "/captionrenderer"
         assetGetter = DataSource(captionDir, typeString: "captionrenderer")
     }
-    
 }
 
 extension CaptionServiceImp: CaptionService {
@@ -42,34 +41,33 @@ extension CaptionServiceImp: CaptionService {
         seek(timeline: timeline)
         return caption!
     }
-    
+
     func deleteCaption() {
         timeline?.remove(caption as! NvsTimelineCaption?)
         caption = nil
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func getAllCaption() -> [NvsCaption] {
         var captios = [NvsCaption]()
         if let cap = timeline?.getFirstCaption() {
             captios.append(cap)
             while let caption = timeline?.getNextCaption(cap) {
                 captios.append(caption)
-            }}
+            }
+        }
         return captios
     }
-    
+
     func setCaptionText(text: String) {
         caption?.setText(text)
         drawRects()
         seek(timeline: timeline)
     }
-    
-    func setCaptionTextColor(text: String) {
-        
-    }
-    
+
+    func setCaptionTextColor(text _: String) {}
+
     func applyCaptionPackage(packagePath: String, licPath: String, type: String) {
         let pid = NSMutableString()
         if type == "captioncontext" {
@@ -103,41 +101,41 @@ extension CaptionServiceImp: Moveable {
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func scale(scale: Float) {
         guard let caption = caption else { return }
         caption.scale(scale, anchor: caption.getAnchorPoint())
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func rotate(rotate: Float) {
         guard let caption = caption else { return }
-        let r = -rotate * Float(180.0/Double.pi)
+        let r = -rotate * Float(180.0 / Double.pi)
         caption.rotateCaption(r, anchor: caption.getAnchorPoint())
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func tap(point: CGPoint) {
         guard let livewindow = livewindow else { return }
         let p1 = livewindow.mapView(toCanonical: point)
         guard let timeline = timeline else { return }
         let position = streamingContext.getTimelineCurrentPosition(timeline)
         let captions = timeline.getCaptionsByTimelinePosition(position)
-        self.caption = nil
-        captions?.forEach({ caption in
+        caption = nil
+        captions?.forEach { caption in
             let cap = caption as! NvsCaption
             let vertices = cap.getBoundingVertices(NvsBoundingType_Frame) as NSArray
             if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
                 self.caption = cap
                 return
             }
-        })
+        }
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func drawRects() {
         if caption == nil {
             rectable?.setPoints([])

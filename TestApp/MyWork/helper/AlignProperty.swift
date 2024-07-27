@@ -15,6 +15,7 @@ struct AlignWrapper {
             wrappedValue = (wrappedValue + align) & ~align
         }
     }
+
     init(align: UInt = 2) {
         self.align = align - 1
     }

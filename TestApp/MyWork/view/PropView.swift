@@ -5,30 +5,30 @@
 //  Created by Mac-Mini on 2024/7/22.
 //
 
-import UIKit
 import JXSegmentedView
 import NvStreamingSdkCore
+import UIKit
 
 class PropView: UIView, BottomViewService {
+    var didViewClose: ((Bool) -> Void)?
     var arsceneService: CaptureARSceneService?
     var segmentedView: JXSegmentedView!
     var segmentedDataSource: JXSegmentedTitleDataSource!
     var listContainerView: JXSegmentedListContainerView!
-    var didViewClose: (() -> Void)?
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
     }
-    
+
     func setup() {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: DispatchWorkItem(block: { [weak self] in
             self?.arsceneService?.readARSceneInfo()
@@ -55,7 +55,7 @@ class PropView: UIView, BottomViewService {
         listContainerView = JXSegmentedListContainerView(dataSource: self)
         segmentedView.listContainer = listContainerView
         addSubview(listContainerView)
-        
+
         // 设置布局
         segmentedView.translatesAutoresizingMaskIntoConstraints = false
         listContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,42 +64,42 @@ class PropView: UIView, BottomViewService {
             segmentedView.leadingAnchor.constraint(equalTo: leadingAnchor),
             segmentedView.trailingAnchor.constraint(equalTo: trailingAnchor),
             segmentedView.heightAnchor.constraint(equalToConstant: 50),
-            
+
             listContainerView.topAnchor.constraint(equalTo: segmentedView.bottomAnchor),
             listContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             listContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             listContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-    
-    @IBAction func cancel(_ sender: Any) {
-        didViewClose?()
+
+    @IBAction func cancel(_: Any) {
+        didViewClose?(true)
         arsceneService?.cancelProps()
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: self.frame.size)
-        } completion: { finish in
+        } completion: { _ in
             self.removeFromSuperview()
         }
     }
-    
-    @IBAction func close(_ sender: Any) {
-        didViewClose?()
+
+    @IBAction func close(_: Any) {
+        didViewClose?(false)
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: self.frame.size)
-        } completion: { finish in
+        } completion: { _ in
             self.removeFromSuperview()
         }
     }
-    
+
     static func newInstance() -> any BottomViewService {
         let nib = UINib(nibName: "PropView", bundle: Bundle(for: PropView.self))
         return nib.instantiate(withOwner: self).first as! BottomViewService
     }
-    
+
     func show() {
         let height: CGFloat = 300
         let size = UIScreen.main.bounds.size
-        self.frame = CGRectMake(0, size.height, size.width, height)
+        frame = CGRectMake(0, size.height, size.width, height)
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRectMake(0, size.height - height, size.width, height)
         }
@@ -108,14 +108,14 @@ class PropView: UIView, BottomViewService {
 
 // 实现 JXSegmentedListContainerViewDataSource 协议
 extension PropView: JXSegmentedListContainerViewDataSource {
-    func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
+    func numberOfLists(in _: JXSegmentedListContainerView) -> Int {
         return segmentedDataSource.titles.count
     }
 
-    func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        let list =  ListViewController()
-        list.packageList.didSelectedPackage = { [weak self] packagePath, licPath, type in
-            self?.arsceneService?.applyARScenePackage(packagePath: packagePath, licPath: licPath, type: type)
+    func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = ListViewController()
+        list.packageList.didSelectedPackage = { [weak self] item in
+            self?.arsceneService?.applyARScenePackage(packagePath: item.packagePath, licPath: item.licPath, type: item.type)
         }
         if index == 0 {
             let arsceneDir = Bundle.main.bundlePath + "/arscene/2D"

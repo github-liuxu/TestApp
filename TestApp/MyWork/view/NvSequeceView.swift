@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol NvSequeceCoverViewDelegate : NSObjectProtocol {
+protocol NvSequeceCoverViewDelegate: NSObjectProtocol {
     func didSelectIndex(index: Int)
 }
 
@@ -21,20 +21,20 @@ class NvSequeceCoverView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
-        
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func reload(with points:Array<CGPoint>) {
-        subviews.forEach { subView in
+
+    func reload(with points: [CGPoint]) {
+        for subView in subviews {
             if subView.classForCoder == TransitionView.self {
                 subView.removeFromSuperview()
             }
         }
-        var tag: Int = 0
+        var tag = 0
         for point in points {
             let transitionView = TransitionView()
             transitionView.backgroundColor = .orange
@@ -43,13 +43,13 @@ class NvSequeceCoverView: UIView {
             transitionView.frame.size = CGSize(width: 20, height: 20)
             transitionView.center = point
             transitionView.tag = tag
-            tag = tag+1
+            tag = tag + 1
             let tap = UITapGestureRecognizer(target: self, action: #selector(tapGesture(_:)))
             transitionView.addGestureRecognizer(tap)
         }
     }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+
+    override func hitTest(_ point: CGPoint, with _: UIEvent?) -> UIView? {
         for view in subviews {
             if view.frame.contains(point) {
                 return view
@@ -57,15 +57,15 @@ class NvSequeceCoverView: UIView {
         }
         return nil
     }
-    
-    func updateSubViews(contentOffsetx:CGFloat) {
-        subviews.forEach { subView in
+
+    func updateSubViews(contentOffsetx: CGFloat) {
+        for subView in subviews {
             if subView.classForCoder == TransitionView.self {
                 subView.center = CGPoint(x: (subView as! TransitionView).originCenter.x - contentOffsetx, y: subView.center.y)
             }
         }
     }
-    
+
     @objc func tapGesture(_ gesture: UIGestureRecognizer) {
         if let view = gesture.view {
             delegate?.didSelectIndex(index: view.tag)

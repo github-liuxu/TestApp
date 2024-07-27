@@ -48,21 +48,22 @@ struct DataSource: AssetGetter {
         typeString = ""
         dataSource = [DataSourceItemProtocol]()
     }
+
     init(_ assetDir: String, typeString: String) {
         self.assetDir = assetDir
         self.typeString = typeString
         dataSource = [DataSourceItemProtocol]()
     }
-    
+
     mutating func fetchData() {
         dataSource = loadAsset()
         didFetchSuccess?(dataSource)
     }
-    
+
     func loadAsset() -> [DataSourceItemProtocol] {
         return loadAsset(path: assetDir, typeString: typeString)
     }
-    
+
     func loadAsset(path: String, typeString: String) -> [DataSourceItemProtocol] {
         let fm = FileManager.default
         var array = [DataSourceItem]()
@@ -72,7 +73,7 @@ struct DataSource: AssetGetter {
         item.name = "无"
         item.type = typeString
         array.append(item)
-        fm.subpaths(atPath: path)?.forEach({ name in
+        fm.subpaths(atPath: path)?.forEach { name in
             if name.hasSuffix(typeString) {
                 var item = DataSourceItem()
                 item.type = typeString
@@ -90,7 +91,7 @@ struct DataSource: AssetGetter {
                 }
                 array.append(item)
             }
-        })
+        }
         return array
     }
 }

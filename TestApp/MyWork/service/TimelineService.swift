@@ -5,11 +5,11 @@
 //  Created by Mac-Mini on 2024/1/26.
 //
 
+import Combine
 import Foundation
 import NvStreamingSdkCore
-import Combine
 
-func seek(timeline: NvsTimeline?, timestamp: Int64 = -1, flags: Int32 = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue|NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)) {
+func seek(timeline: NvsTimeline?, timestamp: Int64 = -1, flags: Int32 = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue | NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue | NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue | NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)) {
     guard let timeline = timeline else { return }
     let streamingContext = NvsStreamingContext.sharedInstance()
     var time = timestamp
@@ -21,7 +21,7 @@ func seek(timeline: NvsTimeline?, timestamp: Int64 = -1, flags: Int32 = Int32(Nv
 
 protocol TimelineFxService {
     var captionService: CaptionServiceImp { get set }
-    var stickerService: StickerServiceImp { get  set }
+    var stickerService: StickerServiceImp { get set }
     var comCaptionService: ComCaptionServiceImp { get set }
     var timeline: NvsTimeline? { get set }
 }
@@ -30,18 +30,18 @@ class TimelineService: NSObject, TimelineFxService {
     var livewindow: NvsLiveWindow
     var timeline: NvsTimeline?
     let streamingContext = NvsStreamingContext.sharedInstance()!
-    var captionService: CaptionServiceImp = CaptionServiceImp()
-    var stickerService: StickerServiceImp = StickerServiceImp()
+    var captionService: CaptionServiceImp = .init()
+    var stickerService: StickerServiceImp = .init()
     var filterService = FilterServiceImp()
-    var comCaptionService: ComCaptionServiceImp = ComCaptionServiceImp()
+    var comCaptionService: ComCaptionServiceImp = .init()
     var videoTransitionFx: NvsVideoTransition?
-    
-    var didPlaybackTimelinePosition:((_ posotion: Int64, _ progress: Float) -> ())? = nil
-    var playStateChanged:((_ isPlay: Bool)->())? = nil
-    var timeValueChanged:((_ currentTime: String, _ duration: String)->())? = nil
-    var compileProgressChanged:((_ progress: Int32) -> ())? = nil
+
+    var didPlaybackTimelinePosition: ((_ posotion: Int64, _ progress: Float) -> Void)? = nil
+    var playStateChanged: ((_ isPlay: Bool) -> Void)? = nil
+    var timeValueChanged: ((_ currentTime: String, _ duration: String) -> Void)? = nil
+    var compileProgressChanged: ((_ progress: Int32) -> Void)? = nil
     private var compileProgress: PassthroughSubject<Int32, Error>?
-    let seekFlag = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue|NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue|NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)
+    let seekFlag = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue | NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue | NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue | NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)
     init(livewindow: NvsLiveWindow) {
         self.livewindow = livewindow
         super.init()
@@ -59,24 +59,24 @@ class TimelineService: NSObject, TimelineFxService {
         streamingContext.seekTimeline(timeline, timestamp: 0, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
         streamingContext.delegate = self
     }
-    
+
     func clear() {
         if let timeline = timeline {
             streamingContext.remove(timeline)
         }
     }
-    
-    func addClips(localIds: Array<String>) {
+
+    func addClips(localIds: [String]) {
         guard let timeline = timeline else { return }
         let currentTime = streamingContext.getTimelineCurrentPosition(timeline)
         let videoTrack = timeline.getVideoTrack(by: 0)
-        localIds.forEach { localId in
+        for localId in localIds {
             videoTrack?.appendClip(localId)
         }
         timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))
         seek(time: currentTime)
     }
-    
+
     func getClipService(index: UInt32, trackIndex: UInt32 = 0) -> VideoClipService? {
         guard let timeline = timeline else { return nil }
         let videoTrack = timeline.getVideoTrack(by: trackIndex)
@@ -87,16 +87,16 @@ class TimelineService: NSObject, TimelineFxService {
         }
         return nil
     }
-    
-    func playClick(_ sender: UIButton) {
+
+    func playClick(_: UIButton) {
         guard let timeline = timeline else { return }
         if streamingContext.getStreamingEngineState() != NvsStreamingEngineState_Playback {
-            streamingContext.playbackTimeline(timeline, startTime: streamingContext.getTimelineCurrentPosition(timeline), endTime: timeline.duration, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, preload: true, flags: Int32(NvsStreamingEnginePlaybackFlag_BuddyHostVideoFrame.rawValue|NvsStreamingEnginePlaybackFlag_BuddyOriginHostVideoFrame.rawValue))
+            streamingContext.playbackTimeline(timeline, startTime: streamingContext.getTimelineCurrentPosition(timeline), endTime: timeline.duration, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, preload: true, flags: Int32(NvsStreamingEnginePlaybackFlag_BuddyHostVideoFrame.rawValue | NvsStreamingEnginePlaybackFlag_BuddyOriginHostVideoFrame.rawValue))
         } else {
             streamingContext.stop()
         }
     }
-    
+
     func matting() {
         /// 添加轨道
         /// 添加背景分割特效
@@ -106,10 +106,11 @@ class TimelineService: NSObject, TimelineFxService {
 //        let image = streamingContext.grabImage(from: timeline, timestamp: 100, proxyScale: nil)
 //        print(image)
     }
-    
+
     func seek(time: Int64) {
         streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
     }
+
     @discardableResult
     func saveAction(_ path: String?) -> PassthroughSubject<Int32, Error>? {
         guard let timeline = timeline else { return nil }
@@ -119,10 +120,10 @@ class TimelineService: NSObject, TimelineFxService {
             compilePath = NSHomeDirectory() + "/Documents/" + currentDateAndTime() + ".mp4"
         }
         streamingContext.setCustomCompileVideoHeight(timeline.videoRes.imageHeight)
-        streamingContext.compileTimeline(timeline, startTime: 0, endTime: timeline.duration, outputFilePath: compilePath, videoResolutionGrade: NvsCompileVideoResolutionGradeCustom, videoBitrateGrade: NvsCompileVideoBitrateGrade(rawValue: NvsCompileBitrateGradeMedium.rawValue), flags: Int32(NvsStreamingEngineCompileFlag_IgnoreTimelineVideoSize.rawValue|NvsStreamingEngineCompileFlag_BuddyHostVideoFrame.rawValue))
+        streamingContext.compileTimeline(timeline, startTime: 0, endTime: timeline.duration, outputFilePath: compilePath, videoResolutionGrade: NvsCompileVideoResolutionGradeCustom, videoBitrateGrade: NvsCompileVideoBitrateGrade(rawValue: NvsCompileBitrateGradeMedium.rawValue), flags: Int32(NvsStreamingEngineCompileFlag_IgnoreTimelineVideoSize.rawValue | NvsStreamingEngineCompileFlag_BuddyHostVideoFrame.rawValue))
         return compileProgress
     }
-    
+
     func sliderValueChanged(_ value: Int64) {
         guard let timeline = timeline else { return }
         var time = value
@@ -135,10 +136,9 @@ class TimelineService: NSObject, TimelineFxService {
         streamingContext.seekTimeline(timeline, timestamp: time, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
         timeValueChanged?(formatTime(time: time), formatTime(time: timeline.duration))
     }
-    
 }
 
-//extension TimelineService: CompoundCaptionProtocal {
+// extension TimelineService: CompoundCaptionProtocal {
 //    func applyCompoundCaption(item: DataSourceItem) {
 //        guard let timeline = timeline else { return }
 //        let pid = NSMutableString()
@@ -147,7 +147,7 @@ class TimelineService: NSObject, TimelineFxService {
 //        let text = ccc?.getText(0)
 //        print(text)
 //    }
-//    
+//
 //    func applyCrop() {
 //        guard let timeline = timeline else { return }
 //        let clip = timeline.getVideoTrack(by: 0).getClipWith(0)
@@ -164,19 +164,19 @@ class TimelineService: NSObject, TimelineFxService {
 //        fx?.setFloatVal("Bounding Top", val: 1152)
 //        fx?.setFloatVal("Bounding Bottom",val: -1152)
 //    }
-//}
+// }
 
 extension TimelineService: NvsStreamingContextDelegate {
     func didStreamingEngineStateChanged(_ state: NvsStreamingEngineState) {
         playStateChanged?(state == NvsStreamingEngineState_Playback)
     }
-    
-    func didCompileProgress(_ timeline: NvsTimeline!, progress: Int32) {
+
+    func didCompileProgress(_: NvsTimeline!, progress: Int32) {
         compileProgressChanged?(progress)
         compileProgress?.send(progress)
     }
-    
-    func didCompileCompleted(_ timeline: NvsTimeline!, isHardwareEncoding: Bool, errorType: Int32, errorString: String!, flags: Int32) {
+
+    func didCompileCompleted(_: NvsTimeline!, isHardwareEncoding _: Bool, errorType: Int32, errorString: String!, flags _: Int32) {
         if errorType == NvsStreamingEngineCompileErrorType_No_Error.rawValue {
             compileProgress?.send(completion: .finished)
         } else {
@@ -184,27 +184,19 @@ extension TimelineService: NvsStreamingContextDelegate {
             compileProgress?.send(completion: .failure(error))
         }
     }
-    
+
     func didPlaybackTimelinePosition(_ timeline: NvsTimeline!, position: Int64) {
         let currentTime = streamingContext.getTimelineCurrentPosition(timeline)
         timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))
-        
+
         didPlaybackTimelinePosition?(position, Float(position) / Float(timeline.duration))
     }
-    
-    func didPlaybackStopped(_ timeline: NvsTimeline!) {
-        
-    }
-    
-    func didPlaybackEOF(_ timeline: NvsTimeline!) {
-        
-    }
-    
-    func onPlaybackException(_ timeline: NvsTimeline!, exceptionType: NvsStreamingEnginePlaybackExceptionType, exceptionString: String!) {
-        
-    }
 
+    func didPlaybackStopped(_: NvsTimeline!) {}
 
+    func didPlaybackEOF(_: NvsTimeline!) {}
+
+    func onPlaybackException(_: NvsTimeline!, exceptionType _: NvsStreamingEnginePlaybackExceptionType, exceptionString _: String!) {}
 }
 
 extension TimelineService: TransitionProtocal {
@@ -228,7 +220,6 @@ extension TimelineService: TransitionProtocal {
             videoTransitionFx = videoTrack?.setBuiltinTransition(index, withName: item.bultinName)
         }
         let clip = videoTrack?.getClipWith(index)
-        streamingContext.playbackTimeline(timeline, startTime: clip!.outPoint - 500000, endTime: clip!.outPoint + 500000, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, preload: true, flags: 0)
+        streamingContext.playbackTimeline(timeline, startTime: clip!.outPoint - 500_000, endTime: clip!.outPoint + 500_000, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, preload: true, flags: 0)
     }
-    
 }

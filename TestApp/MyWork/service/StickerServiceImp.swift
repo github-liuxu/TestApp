@@ -5,8 +5,8 @@
 //  Created by Mac-Mini on 2024/7/18.
 //
 
-import UIKit
 import NvStreamingSdkCore
+import UIKit
 
 protocol StickerService: NSObjectProtocol {
     func deleteSticker()
@@ -23,7 +23,7 @@ class StickerServiceImp: NSObject {
     override init() {
         super.init()
     }
-    
+
     func getAnchorPoint(sticker: NvsAnimatedSticker?) -> CGPoint {
         guard let sticker = sticker else { return .zero }
         let vertices = sticker.getBoundingRectangleVertices() as NSArray
@@ -44,41 +44,41 @@ extension StickerServiceImp: Moveable {
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func scale(scale: Float) {
         guard let sticker = sticker else { return }
         sticker.scale(scale, anchor: getAnchorPoint(sticker: sticker))
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func rotate(rotate: Float) {
         guard let sticker = sticker else { return }
-        let r = -rotate * Float(180.0/Double.pi)
+        let r = -rotate * Float(180.0 / Double.pi)
         sticker.rotateAnimatedSticker(r)
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func tap(point: CGPoint) {
         guard let livewindow = livewindow else { return }
         let p1 = livewindow.mapView(toCanonical: point)
         guard let timeline = timeline else { return }
         let position = streamingContext.getTimelineCurrentPosition(timeline)
         let stickers = timeline.getAnimatedStickers(byTimelinePosition: position)
-        self.sticker = nil
-        stickers?.forEach({ sticker in
+        sticker = nil
+        stickers?.forEach { sticker in
             let sticker = sticker as! NvsAnimatedSticker
             let vertices = sticker.getBoundingRectangleVertices() as NSArray
             if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
                 self.sticker = sticker
                 return
             }
-        })
+        }
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func drawRects() {
         if sticker == nil {
             rectable?.setPoints([])
@@ -103,12 +103,12 @@ extension StickerServiceImp: StickerService {
         timeline?.addAnimatedSticker(0, duration: timeline?.duration ?? 0, animatedStickerPackageId: pid as String)
         seek(timeline: timeline)
     }
-    
+
     func applyCustomPackage(packagePath: String, licPath: String, imagePath: String) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
-        sticker = timeline?.addCustomAnimatedSticker(0, duration: timeline?.duration ?? 1000000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
-        
+        sticker = timeline?.addCustomAnimatedSticker(0, duration: timeline?.duration ?? 1_000_000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
+
 //        if let vertices = sticker?.getBoundingRectangleVertices() as? NSArray {
 //            var points = [CGPoint]()
 //            for point in vertices {
@@ -128,7 +128,7 @@ extension StickerServiceImp: StickerService {
         drawRects()
         seek(timeline: timeline)
     }
-    
+
     func deleteSticker() {
 //        timeline?.remove(sticker)
         sticker = nil

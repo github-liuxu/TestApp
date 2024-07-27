@@ -5,18 +5,19 @@
 //  Created by Mac-Mini on 2024/7/17.
 //
 
-import UIKit
+import JXSegmentedView
 import NvStreamingSdkCore
+import UIKit
 
 class PackageList: UIView {
-    
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var collectionView: UICollectionView!
     var dataSource: [DataSourceItemProtocol]? {
         didSet {
             collectionView.reloadData()
         }
     }
-    var didSelectedPackage: ((String, String, String) -> Void)?
+
+    var didSelectedPackage: ((DataSourceItemProtocol) -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         let layout = UICollectionViewFlowLayout()
@@ -39,18 +40,32 @@ class PackageList: UIView {
         let nib = UINib(nibName: "AssetCollectionViewCell", bundle: Bundle(for: AssetCollectionViewCell.self))
         collectionView.register(nib, forCellWithReuseIdentifier: "AssetCollectionViewCell")
     }
-    
+
     static func newInstance() -> PackageList {
         let nib = UINib(nibName: "PackageList", bundle: Bundle(for: PackageList.self))
         return nib.instantiate(withOwner: self).first as! PackageList
     }
 }
 
+extension PackageList: JXSegmentedListContainerViewListDelegate {
+    func listView() -> UIView {
+        return self
+    }
+
+    @objc func listWillAppear() {}
+
+    @objc func listDidAppear() {}
+
+    @objc func listWillDisappear() {}
+
+    @objc func listDidDisappear() {}
+}
+
 extension PackageList: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return dataSource?.count ?? 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssetCollectionViewCell", for: indexPath) as! AssetCollectionViewCell
         let item = dataSource?[indexPath.item]
@@ -58,9 +73,9 @@ extension PackageList: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.name.text = item!.name
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = dataSource?[indexPath.item]
-        didSelectedPackage?(item!.packagePath, item!.licPath, item!.type)
+        didSelectedPackage?(item!)
     }
 }

@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func editClick(_ sender: Any) {
+    @IBAction func editClick(_: Any) {
 //        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
 //            if (status == .authorized || status == .limited) {
 //                DispatchQueue.main.async {
