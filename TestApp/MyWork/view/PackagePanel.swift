@@ -16,13 +16,13 @@ protocol PackageService {
 
 protocol PackageSubviewSource {
     func titles() -> [String]
-    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate?
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate
 }
 
 class PackagePanel: UIView, BottomViewService {
-    var segmentedView: JXSegmentedView!
-    var segmentedDataSource: JXSegmentedTitleDataSource!
-    var listContainerView: JXSegmentedListContainerView!
+    private var segmentedView: JXSegmentedView!
+    private var segmentedDataSource: JXSegmentedTitleDataSource!
+    private var listContainerView: JXSegmentedListContainerView!
     var didViewClose: ((Bool) -> Void)?
     var packageService: PackageService?
     var packageSubviewSource: PackageSubviewSource? {
@@ -115,7 +115,13 @@ class PackagePanel: UIView, BottomViewService {
         return PackagePanel()
     }
 
-    func show() {}
+    func show() {
+        let height: CGFloat = 300
+        self.frame = CGRectMake(0, frame.size.height, frame.size.width, height)
+        UIView.animate(withDuration: 0.25) {
+            self.frame = CGRectMake(0, self.frame.size.height - height, self.frame.size.width, height)
+        }
+    }
 
     @objc func closeTapped(_: UIButton) {
         didViewClose?(true)

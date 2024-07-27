@@ -23,6 +23,7 @@ protocol TimelineFxService {
     var captionService: CaptionServiceImp { get set }
     var stickerService: StickerServiceImp { get set }
     var comCaptionService: ComCaptionServiceImp { get set }
+    var transitionService: TransitionServiceImp { get set }
     var timeline: NvsTimeline? { get set }
 }
 
@@ -34,7 +35,7 @@ class TimelineService: NSObject, TimelineFxService {
     var stickerService: StickerServiceImp = .init()
     var filterService = FilterServiceImp()
     var comCaptionService: ComCaptionServiceImp = .init()
-    var videoTransitionFx: NvsVideoTransition?
+    var transitionService: TransitionServiceImp = TransitionServiceImp()
 
     var didPlaybackTimelinePosition: ((_ posotion: Int64, _ progress: Float) -> Void)? = nil
     var playStateChanged: ((_ isPlay: Bool) -> Void)? = nil
@@ -197,29 +198,4 @@ extension TimelineService: NvsStreamingContextDelegate {
     func didPlaybackEOF(_: NvsTimeline!) {}
 
     func onPlaybackException(_: NvsTimeline!, exceptionType _: NvsStreamingEnginePlaybackExceptionType, exceptionString _: String!) {}
-}
-
-extension TimelineService: TransitionProtocal {
-    func applyTransition(item: DataSourceItem, index: UInt32) {
-        guard let timeline = timeline else { return }
-        let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoTransition, sync: true, assetPackageId: pid)
-        if videoTransitionFx?.videoTransitionType == NvsVideoTransitionType_Builtin {
-            if videoTransitionFx?.bultinVideoTransitionName == item.bultinName {
-                return
-            }
-        } else {
-            if videoTransitionFx?.videoTransitionPackageId == pid as String {
-                return
-            }
-        }
-        let videoTrack = timeline.getVideoTrack(by: 0)
-        if pid.length > 0 {
-            videoTransitionFx = videoTrack?.setPackagedTransition(index, withPackageId: pid as String)
-        } else {
-            videoTransitionFx = videoTrack?.setBuiltinTransition(index, withName: item.bultinName)
-        }
-        let clip = videoTrack?.getClipWith(index)
-        streamingContext.playbackTimeline(timeline, startTime: clip!.outPoint - 500_000, endTime: clip!.outPoint + 500_000, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, preload: true, flags: 0)
-    }
 }

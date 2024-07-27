@@ -9,7 +9,7 @@ import NvStreamingSdkCore
 import UIKit
 
 protocol TransitionCoverViewDelegate: NSObjectProtocol {
-    func didSelectIndex(index: Int)
+    func didSelectIndex(index: UInt32)
 }
 
 class SequenceView: UIView {
@@ -89,7 +89,7 @@ extension SequenceView: UIScrollViewDelegate {
 }
 
 extension SequenceView: NvSequeceCoverViewDelegate {
-    func didSelectIndex(index: Int) {
+    func didSelectIndex(index: UInt32) {
         transitionCoverDelegate?.didSelectIndex(index: index)
     }
 }

@@ -127,6 +127,7 @@ class EditViewController: UIViewController {
 
         sequence?.didSelectClipIndex = { [weak self] index in
             let videoClipService = self?.timelineService?.getClipService(index: index)
+            
         }
 
         timelineService?.didPlaybackTimelinePosition = { [weak self] position, _ in
@@ -137,16 +138,19 @@ class EditViewController: UIViewController {
 }
 
 extension EditViewController: TransitionCoverViewDelegate {
-    func didSelectIndex(index _: Int) {
-        let transitionView = AssetView.newInstance() as! AssetView
+    func didSelectIndex(index: UInt32) {
+        let transitionView = PackagePanel.newInstance() as! PackagePanel
         view.addSubview(transitionView)
-        let height: CGFloat = 300
-        transitionView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, height)
-        UIView.animate(withDuration: 0.25) {
-            transitionView.frame = CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)
+        transitionView.show()
+        let transitionService = timelineService?.transitionService
+        transitionService?.selectedIndex = UInt32(index)
+        transitionService?.didFetchSuccess = {
+            transitionView.packageSubviewSource = transitionService
         }
-//        transitionInteraction = TransitionInteraction(transitionView, transitionAction: timelineService!)
-//        transitionInteraction!.transitionIndex = index
+        transitionService?.didFetchError = { [weak self] error in
+            self?.view.makeToast(error.localizedDescription)
+        }
+        transitionService?.fetchData()
     }
 }
 

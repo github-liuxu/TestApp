@@ -9,7 +9,7 @@
 import UIKit
 
 protocol NvSequeceCoverViewDelegate: NSObjectProtocol {
-    func didSelectIndex(index: Int)
+    func didSelectIndex(index: UInt32)
 }
 
 class TransitionView: UIView {
@@ -68,7 +68,7 @@ class NvSequeceCoverView: UIView {
 
     @objc func tapGesture(_ gesture: UIGestureRecognizer) {
         if let view = gesture.view {
-            delegate?.didSelectIndex(index: view.tag)
+            delegate?.didSelectIndex(index: UInt32(view.tag))
         }
     }
 }
