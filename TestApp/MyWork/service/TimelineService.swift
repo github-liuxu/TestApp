@@ -55,6 +55,7 @@ class TimelineService: NSObject, TimelineFxService {
         comCaptionService.livewindow = livewindow
         stickerService.livewindow = livewindow
         stickerService.timeline = timeline
+        transitionService.timeline = timeline
         streamingContext.connect(timeline, with: livewindow)
         timeline?.appendVideoTrack()
         streamingContext.seekTimeline(timeline, timestamp: 0, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)

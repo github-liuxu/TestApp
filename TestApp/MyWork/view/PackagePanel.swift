@@ -34,12 +34,9 @@ class PackagePanel: UIView, BottomViewService {
     override init(frame: CGRect) {
         super.init(frame: frame)
         let closeBtn = UIButton(type: .custom)
-        closeBtn.setTitle("", for: .normal)
-        closeBtn.setImage(UIImage(named: "xmark"), for: .normal)
-        closeBtn.backgroundColor = .systemBlue
+        closeBtn.setImage(UIImage(systemName: "xmark"), for: .normal)
         closeBtn.layer.cornerRadius = 8.0
         closeBtn.titleLabel?.font = .systemFont(ofSize: 16)
-        closeBtn.setTitleColor(.white, for: .normal)
         closeBtn.addTarget(self, action: #selector(closeTapped(_:)), for: .touchUpInside)
         closeBtn.translatesAutoresizingMaskIntoConstraints = false
         addSubview(closeBtn)
@@ -51,12 +48,9 @@ class PackagePanel: UIView, BottomViewService {
         ])
 
         let sureBtn = UIButton(type: .custom)
-        sureBtn.setTitle("", for: .normal)
-        sureBtn.setImage(UIImage(named: "checkmark"), for: .normal)
-        sureBtn.backgroundColor = .systemBlue
+        sureBtn.setImage(UIImage(systemName: "checkmark"), for: .normal)
         sureBtn.layer.cornerRadius = 8.0
         sureBtn.titleLabel?.font = .systemFont(ofSize: 16)
-        sureBtn.setTitleColor(.white, for: .normal)
         sureBtn.addTarget(self, action: #selector(sureTapped(_:)), for: .touchUpInside)
         sureBtn.translatesAutoresizingMaskIntoConstraints = false
         addSubview(sureBtn)
@@ -117,9 +111,9 @@ class PackagePanel: UIView, BottomViewService {
 
     func show() {
         let height: CGFloat = 300
-        self.frame = CGRectMake(0, frame.size.height, frame.size.width, height)
+        self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: CGSize(width: screenWidth, height: height))
         UIView.animate(withDuration: 0.25) {
-            self.frame = CGRectMake(0, self.frame.size.height - height, self.frame.size.width, height)
+            self.frame = CGRectMake(0, screenHeight - height, screenWidth, height)
         }
     }
 
