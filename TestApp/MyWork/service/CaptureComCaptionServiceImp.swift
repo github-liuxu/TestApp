@@ -18,7 +18,15 @@ class CaptureComCaptionServiceImp: NSObject {
 }
 
 extension CaptureComCaptionServiceImp: ComCaptionService {
-    func applyComCaptionPackage(item: any DataSourceItemProtocol) {
+    func cancelAction() {
+        
+    }
+    
+    func sureAction() {
+        
+    }
+    
+    func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
         applyComCaption(packageId: pid as String)

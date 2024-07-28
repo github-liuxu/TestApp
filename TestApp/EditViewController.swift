@@ -142,14 +142,13 @@ extension EditViewController: TransitionCoverViewDelegate {
         view.addSubview(transitionView)
         transitionView.show()
         let transitionService = timelineService?.transitionService
+        transitionView.packageService = transitionService
         transitionService?.selectedIndex = UInt32(index)
-        transitionService?.didFetchSuccess = {
-            transitionView.packageSubviewSource = transitionService
-        }
-        transitionService?.didFetchError = { [weak self] error in
-            self?.view.makeToast(error.localizedDescription)
-        }
-        transitionService?.fetchData()
+        let dataFetch = TransitionSubviewDataFetch()
+        dataFetch.packageService = transitionService
+        dataFetch.subviewService = transitionView
+        transitionView.packageSubviewSource = dataFetch
+        dataFetch.fetchData()
     }
 }
 
@@ -176,13 +175,11 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
             if let sub = subview as? PackagePanel {
                 let filterService = timelineService?.filterService
                 sub.packageService = filterService
-                filterService?.didFetchSuccess = {
-                    sub.packageSubviewSource = filterService
-                }
-                filterService?.didFetchError = { [weak self] error in
-                    self?.view.makeToast(error.localizedDescription)
-                }
-                filterService?.fetchData()
+                let filterDataFetch = FilterSubviewDataFetch()
+                filterDataFetch.packageService = filterService
+                filterDataFetch.subviewService = sub
+                sub.packageSubviewSource = filterDataFetch
+                filterDataFetch.fetchData()
             }
         }
         if item.title == "Caption" {
@@ -194,10 +191,16 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
         }
         if item.title == "CompoundCaption" {
-            if let sub = subview as? CompoundCaptionView {
-                preview.rectView.moveable = timelineService?.comCaptionService
-                timelineService?.comCaptionService.rectable = preview.rectView
-                sub.comCaptionService = timelineService?.comCaptionService
+            if let sub = subview as? PackagePanel {
+                let comCaptionService = timelineService?.comCaptionService
+                preview.rectView.moveable = comCaptionService
+                comCaptionService?.rectable = preview.rectView
+                sub.packageService = comCaptionService
+                let dataFetch = ComCaptionSubviewDataFetch()
+                dataFetch.packageService = comCaptionService
+                dataFetch.subviewService = sub
+                sub.packageSubviewSource = dataFetch
+                dataFetch.fetchData()
             }
         }
         if item.title == "Sticker" {
@@ -206,13 +209,11 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
                 timelineService?.stickerService.rectable = preview.rectView
                 let stickerService = timelineService?.stickerService
                 sub.packageService = stickerService
-                stickerService?.didFetchSuccess = {
-                    sub.packageSubviewSource = stickerService
-                }
-                stickerService?.didFetchError = { [weak self] error in
-                    self?.view.makeToast(error.localizedDescription)
-                }
-                stickerService?.fetchData()
+                let stickerDataFetch = StickerSubviewDataFetch()
+                stickerDataFetch.packageService = stickerService
+                stickerDataFetch.subviewService = sub
+                sub.packageSubviewSource = stickerDataFetch
+                stickerDataFetch.fetchData()
             }
         }
     }

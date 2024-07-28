@@ -25,20 +25,15 @@ protocol PackageSubviewSource {
     func customView(index: Int) -> JXSegmentedListContainerViewListDelegate
 }
 
-class PackagePanel: UIView, BottomViewService {
+class PackagePanel: UIView, BottomViewService, SubviewService {
     private var segmentedView: JXSegmentedView!
     private var segmentedDataSource: JXSegmentedTitleDataSource!
     private var listContainerView: JXSegmentedListContainerView!
     var didViewClose: ((Bool) -> Void)?
     var packageService: PackageService?
-    var packageSubviewSource: PackageSubviewSource? {
-        didSet {
-            segmentedDataSource.titles = packageSubviewSource?.titles() ?? []
-            segmentedView.reloadData()
-        }
-    }
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         let closeBtn = UIButton(type: .custom)
         closeBtn.setImage(UIImage(systemName: "xmark"), for: .normal)
         closeBtn.layer.cornerRadius = 8.0
@@ -122,6 +117,21 @@ class PackagePanel: UIView, BottomViewService {
             self.frame = CGRectMake(0, screenHeight - height, screenWidth, height)
         }
     }
+    
+    func willData() {
+        
+    }
+    
+    var packageSubviewSource: PackageSubviewSource?
+    func didDataSuccess(packageSubviewSource: PackageSubviewSource) {
+        self.packageSubviewSource = packageSubviewSource
+        segmentedDataSource.titles = packageSubviewSource.titles()
+        segmentedView.reloadData()
+    }
+    
+    func didDataError(error: Error) {
+        self.makeToast(error.localizedDescription)
+    }
 
     @objc func closeTapped(_: UIButton) {
         didViewClose?(true)
@@ -153,7 +163,7 @@ extension PackagePanel: JXSegmentedListContainerViewDataSource {
         var view: JXSegmentedListContainerViewListDelegate!
         if let subview = packageSubviewSource?.customView(index: index) {
             view = subview
-        } else {
+        } else { // 正常逻辑不会走else
             let list = PackageList.newInstance()
             list.didSelectedPackage = { [weak self] item in
                 self?.packageService?.applyPackage(item: item)

@@ -9,26 +9,20 @@ import NvStreamingSdkCore
 import UIKit
 import JXSegmentedView
 
-protocol CaptureARSceneService: DataSourceFetchService {
+protocol CaptureARSceneService {
     func readARSceneInfo()
 }
 
 class CaptureARSceneServiceImp: NSObject, CaptureARSceneService {
-    var didFetchSuccess: (() -> Void)?
-    var didFetchError: ((Error) -> Void)?
-    var assetGetter: DataSource?
     let streamingContext = NvsStreamingContext.sharedInstance()!
     var arsceneFx: NvsCaptureVideoFx?
     var oldPropsId = ""
     override init() {
         super.init()
-        let propsDir = Bundle.main.bundlePath + "/arscene"
-        assetGetter = DataSource(propsDir, typeString: "arscene")
         initAR()
-    }
-    
-    func fetchData() {
-        didFetchSuccess?()
+        arsceneFx = streamingContext.appendBuiltinCaptureVideoFx("AR Scene")
+        arsceneFx?.setBooleanVal("Max Faces Respect Min", val: true)
+        arsceneFx?.setBooleanVal("Use Face Extra Info", val: true)
     }
 
     func initAR() {
@@ -58,33 +52,5 @@ extension CaptureARSceneServiceImp: PackageService {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_ARScene, sync: true, assetPackageId: pid)
         arsceneFx?.setStringVal("Scene Id", val: pid as String)
-    }
-}
-
-extension CaptureARSceneServiceImp: PackageSubviewSource {
-    func titles() -> [String] {
-        return ["2D", "3D"]
-    }
-    
-    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
-        let list = PackageList.newInstance()
-        let assetDir = Bundle.main.bundlePath + "/arscene"
-        var asset: DataSource!
-        if index == 0 {
-            asset = DataSource(assetDir + "/2D", typeString: "arscene")
-        } else if index == 1 {
-            asset = DataSource(assetDir + "/3D", typeString: "arscene")
-        }
-        asset.didFetchSuccess = { dataSource in
-            list.dataSource = dataSource
-        }
-        asset.didFetchError = { error in
-            
-        }
-        asset.fetchData()
-        list.didSelectedPackage = { [weak self] item in
-            self?.applyPackage(item: item)
-        }
-        return list
     }
 }

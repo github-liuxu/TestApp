@@ -17,16 +17,11 @@ class CaptureService: NSObject {
     let arsceneService = CaptureARSceneServiceImp()
     let stickerService = CaptureStickerServiceImp()
     let comCaptionService = CaptureComCaptionServiceImp()
-    var arsceneFx: NvsCaptureVideoFx?
     var seconds: Int64 = 0
     @Published var isRecording = false
     override init() {
         super.init()
         NvsStreamingContext.setSpecialCameraDeviceType("AVCaptureDeviceTypeBuiltInUltraWideCamera")
-        arsceneFx = streamingContext.appendBuiltinCaptureVideoFx("AR Scene")
-        arsceneFx?.setBooleanVal("Max Faces Respect Min", val: true)
-        arsceneFx?.setBooleanVal("Use Face Extra Info", val: true)
-        arsceneService.arsceneFx = arsceneFx
     }
 
     func startPreview(livewindow: NvsLiveWindow) {

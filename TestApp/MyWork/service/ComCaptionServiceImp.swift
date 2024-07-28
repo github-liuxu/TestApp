@@ -8,8 +8,8 @@
 import NvStreamingSdkCore
 import UIKit
 
-protocol ComCaptionService {
-    func applyComCaptionPackage(item: DataSourceItemProtocol)
+protocol ComCaptionService: PackageService {
+    
 }
 
 class ComCaptionServiceImp: NSObject {
@@ -18,13 +18,18 @@ class ComCaptionServiceImp: NSObject {
     var livewindow: NvsLiveWindow?
     var streamingContext = NvsStreamingContext.sharedInstance()!
     weak var rectable: Rectable?
-    override init() {
-        super.init()
-    }
 }
 
 extension ComCaptionServiceImp: ComCaptionService {
-    func applyComCaptionPackage(item: any DataSourceItemProtocol) {
+    func cancelAction() {
+        
+    }
+    
+    func sureAction() {
+        
+    }
+    
+    func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
         applyComCaption(packageId: pid as String)

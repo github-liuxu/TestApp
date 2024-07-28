@@ -72,14 +72,11 @@ class CaptureViewController: UIViewController {
         if let filterView = filterView as? PackagePanel {
             let filterService = capture?.filterService
             filterView.packageService = filterService
-            filterView.packageService = filterService
-            filterService?.didFetchSuccess = {
-                filterView.packageSubviewSource = filterService
-            }
-            filterService?.didFetchError = { [weak self] error in
-                self?.view.makeToast(error.localizedDescription)
-            }
-            filterService?.fetchData()
+            let filterDataFetch = FilterSubviewDataFetch()
+            filterDataFetch.packageService = filterService
+            filterDataFetch.subviewService = filterView
+            filterView.packageSubviewSource = filterDataFetch
+            filterDataFetch.fetchData()
         }
     }
 
@@ -116,25 +113,29 @@ class CaptureViewController: UIViewController {
             capture?.stickerService.livewindow = livewindow
             capture?.stickerService.rectable = rectView
             let stickerService = capture?.stickerService
-            sticker.packageService = stickerService
-            stickerService?.didFetchSuccess = {
-                sticker.packageSubviewSource = stickerService
-            }
-            stickerService?.didFetchError = { [weak self] error in
-                self?.view.makeToast(error.localizedDescription)
-            }
-            stickerService?.fetchData()
+            sticker.packageService = stickerService            
+            let stickerDataFetch = StickerSubviewDataFetch()
+            stickerDataFetch.packageService = stickerService
+            stickerDataFetch.subviewService = sticker
+            sticker.packageSubviewSource = stickerDataFetch
+            stickerDataFetch.fetchData()
         }
     }
 
     @IBAction func comCaption(_: Any) {
-        if let comCaptionView = CompoundCaptionView.newInstance() as? CompoundCaptionView {
+        if let comCaptionView = PackagePanel.newInstance() as? PackagePanel {
             view.addSubview(comCaptionView)
             comCaptionView.show()
-            rectView.moveable = capture?.comCaptionService
-            capture?.stickerService.livewindow = livewindow
-            capture?.stickerService.rectable = rectView
-            comCaptionView.comCaptionService = capture?.comCaptionService
+            let comCaptionService = capture?.comCaptionService
+            rectView.moveable = comCaptionService
+            comCaptionService?.livewindow = livewindow
+            comCaptionService?.rectable = rectView
+            comCaptionView.packageService = comCaptionService
+            let dataFetch = ComCaptionSubviewDataFetch()
+            dataFetch.packageService = comCaptionService
+            dataFetch.subviewService = comCaptionView
+            comCaptionView.packageSubviewSource = dataFetch
+            dataFetch.fetchData()
             comCaptionView.didViewClose = { [weak self] isCancelled in
                 self?.rectView.moveable = nil
             }
@@ -149,13 +150,11 @@ class CaptureViewController: UIViewController {
         if let propView = propView as? PackagePanel {
             let arsceneService = capture.arsceneService
             propView.packageService = arsceneService
-            arsceneService.didFetchSuccess = {
-                propView.packageSubviewSource = arsceneService
-            }
-            arsceneService.didFetchError = { [weak self] error in
-                self?.view.makeToast(error.localizedDescription)
-            }
-            arsceneService.fetchData()
+            let dataFetch = ARSceneSubviewDataFetch()
+            dataFetch.packageService = arsceneService
+            dataFetch.subviewService = propView
+            propView.packageSubviewSource = dataFetch
+            dataFetch.fetchData()
         }
     }
 }
