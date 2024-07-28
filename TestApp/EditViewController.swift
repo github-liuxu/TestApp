@@ -19,7 +19,6 @@ class EditViewController: UIViewController {
     var timelineService: TimelineService?
     @IBOutlet var sequenceView: UIView!
     var sequence: SequenceView?
-    var transitionInteraction: TransitionInteraction?
     @IBOutlet var bottomCollectionView: UICollectionView!
     @IBOutlet var sequenceTop: NSLayoutConstraint!
     let operate = RectMoveableImp()
@@ -77,10 +76,10 @@ class EditViewController: UIViewController {
         sequenceView.addSubview(seq)
         sequenceTop.constant = CGRectGetMaxY(livewidow.bounds)
         sequence?.transitionCoverDelegate = self
-        bottomDataSource.append(BottomItem(viewClass: AssetView.self, title: "Filter"))
-        bottomDataSource.append(BottomItem(viewClass: CaptionView.self, title: "Caption"))
-        bottomDataSource.append(BottomItem(viewClass: StickerView.self, title: "Sticker"))
-        bottomDataSource.append(BottomItem(viewClass: CompoundCaptionView.self, title: "CompoundCaption"))
+        bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "Filter"))
+        bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "Caption"))
+        bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "Sticker"))
+        bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "CompoundCaption"))
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 88, height: 74)
@@ -174,8 +173,16 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
             self?.preview.rectView.moveable = self?.operate
         }
         if item.title == "Filter" {
-            if let sub = subview as? AssetView {
-                sub.filterService = timelineService?.filterService
+            if let sub = subview as? PackagePanel {
+                let filterService = timelineService?.filterService
+                sub.packageService = filterService
+                filterService?.didFetchSuccess = {
+                    sub.packageSubviewSource = filterService
+                }
+                filterService?.didFetchError = { [weak self] error in
+                    self?.view.makeToast(error.localizedDescription)
+                }
+                filterService?.fetchData()
             }
         }
         if item.title == "Caption" {
@@ -194,10 +201,18 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
         }
         if item.title == "Sticker" {
-            if let sub = subview as? StickerView {
+            if let sub = subview as? PackagePanel {
                 preview.rectView.moveable = timelineService?.stickerService
                 timelineService?.stickerService.rectable = preview.rectView
-                sub.stickerService = timelineService?.stickerService
+                let stickerService = timelineService?.stickerService
+                sub.packageService = stickerService
+                stickerService?.didFetchSuccess = {
+                    sub.packageSubviewSource = stickerService
+                }
+                stickerService?.didFetchError = { [weak self] error in
+                    self?.view.makeToast(error.localizedDescription)
+                }
+                stickerService?.fetchData()
             }
         }
     }

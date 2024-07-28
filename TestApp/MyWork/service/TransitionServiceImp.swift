@@ -9,10 +9,7 @@ import UIKit
 import JXSegmentedView
 import NvStreamingSdkCore
 
-protocol TransitionService {
-    var didFetchSuccess: (() -> Void)? { get set }
-    var didFetchError: ((Error) -> Void)? { get set }
-    func fetchData()
+protocol TransitionService: DataSourceFetchService {
     var selectedIndex: UInt32 { get set }
 }
 

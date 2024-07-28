@@ -7,11 +7,10 @@
 
 import NvStreamingSdkCore
 import UIKit
+import JXSegmentedView
 
-protocol StickerService: NSObjectProtocol {
-    func deleteSticker()
-    func applyPackage(packagePath: String, licPath: String)
-    func applyCustomPackage(packagePath: String, licPath: String, imagePath: String)
+protocol StickerService: NSObjectProtocol, DataSourceFetchService {
+    func applyCustomPackage(item: DataSourceItemProtocol, imagePath: String)
 }
 
 class StickerServiceImp: NSObject {
@@ -20,6 +19,9 @@ class StickerServiceImp: NSObject {
     var timeline: NvsTimeline?
     var sticker: NvsAnimatedSticker?
     var livewindow: NvsLiveWindow?
+    var didFetchSuccess: (() -> Void)?
+    var didFetchError: ((Error) -> Void)?
+    
     override init() {
         super.init()
     }
@@ -97,40 +99,93 @@ extension StickerServiceImp: Moveable {
 }
 
 extension StickerServiceImp: StickerService {
-    func applyPackage(packagePath: String, licPath: String) {
-        let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
-        timeline?.addAnimatedSticker(0, duration: timeline?.duration ?? 0, animatedStickerPackageId: pid as String)
-        seek(timeline: timeline)
+    func fetchData() {
+        didFetchSuccess?()
     }
-
-    func applyCustomPackage(packagePath: String, licPath: String, imagePath: String) {
+    
+    func applyCustomPackage(item: DataSourceItemProtocol, imagePath: String) {
         let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        if let sticker = sticker as? NvsTimelineAnimatedSticker {
+            timeline?.remove(sticker)
+        }
         sticker = timeline?.addCustomAnimatedSticker(0, duration: timeline?.duration ?? 1_000_000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
-
-//        if let vertices = sticker?.getBoundingRectangleVertices() as? NSArray {
-//            var points = [CGPoint]()
-//            for point in vertices {
-//                if let p = livewindow?.mapCanonical(toView: point as! CGPoint) {
-//                    points.append(p)
-//                }
-//            }
-//        }
-//        var scale: Float = 1.0
-//        if let rect = sticker?.getOriginalBoundingRect() {
-//            let width: Float = rect.right - rect.left
-//            let height = rect.top - rect.bottom
-//            scale = Float(timeline!.videoRes.imageWidth) / width
-//            print("width: \(width), height:\(height), scale:\(scale)")
-//        }
-//        sticker?.setScale(scale)
         drawRects()
         seek(timeline: timeline)
     }
+}
 
-    func deleteSticker() {
-//        timeline?.remove(sticker)
+extension StickerServiceImp: PackageService {
+    func cancelAction() {
+        if let sticker = sticker as? NvsTimelineAnimatedSticker {
+            timeline?.remove(sticker)
+        }
         sticker = nil
     }
+    
+    func sureAction() {
+        
+    }
+    
+    func applyPackage(item: DataSourceItemProtocol) {
+        let pid = NSMutableString()
+        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        if let sticker = sticker as? NvsTimelineAnimatedSticker {
+            timeline?.remove(sticker)
+        }
+        sticker = timeline?.addAnimatedSticker(0, duration: timeline?.duration ?? 0, animatedStickerPackageId: pid as String)
+        drawRects()
+        seek(timeline: timeline)
+    }
+}
+
+extension StickerServiceImp: PackageSubviewSource {
+    func titles() -> [String] {
+        return ["sticker", "custom"]
+    }
+    
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = PackageList.newInstance()
+        let assetDir = Bundle.main.bundlePath + "/sticker"
+        if index == 0 {
+            var asset = DataSource(assetDir + "/animationsticker", typeString: "animatedsticker")
+            asset.didFetchSuccess = { dataSource in
+                list.dataSource = dataSource
+            }
+            asset.didFetchError = { error in
+                
+            }
+            asset.fetchData()
+            list.didSelectedPackage = { [weak self] item in
+                self?.applyPackage(item: item)
+            }
+        } else if index == 1 {
+            var asset = DataSource(assetDir + "/custom", typeString: "animatedsticker")
+            asset.didFetchSuccess = { dataSource in
+                list.dataSource = dataSource
+            }
+            asset.didFetchError = { error in
+                
+            }
+            asset.fetchData()
+            list.didSelectedPackage = { [weak self] item in
+                // album
+                let viewController = list.findViewController()!
+                let albumUtils = AlbumUtils()
+                albumUtils.openAlbum(viewController: viewController, mediaType: .image, multiSelect: false) { [weak self] assets in
+                    viewController.dismiss(animated: true)
+                    if assets.count > 0 {
+                        let phasset = assets.first!
+                        saveAssetToSandbox(asset: phasset) { url in
+                            if let path = url?.absoluteString.replacingOccurrences(of: "file://", with: "") {
+                                self?.applyCustomPackage(item: item, imagePath: path)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return list
+    }
+    
 }

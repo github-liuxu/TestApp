@@ -7,14 +7,17 @@
 
 import NvStreamingSdkCore
 import UIKit
+import JXSegmentedView
 
-protocol FilterService {
+protocol FilterService: DataSourceFetchService {
     func applyFilter(item: DataSourceItemProtocol)
     func setFilterStrength(value: Float)
     func getFilterStrength() -> Float
 }
 
-class FilterServiceImp: NSObject, FilterService, DataSourceService {
+class FilterServiceImp: NSObject, DataSourceFetchService {
+    var didFetchSuccess: (() -> Void)?
+    var didFetchError: ((Error) -> Void)?
     var assetGetter: (any AssetGetter)?
     let filterAssetGetter = DataSource(Bundle.main.bundlePath + "/videofx", typeString: "videofx")
     var filterFx: NvsTimelineVideoFx?
@@ -24,6 +27,10 @@ class FilterServiceImp: NSObject, FilterService, DataSourceService {
         super.init()
     }
 
+    func fetchData() {
+        didFetchSuccess?()
+    }
+    
     func setFilterStrength(value: Float) {
         guard let filterFx = filterFx else { return }
         filterFx.setFilterIntensity(value)
@@ -56,9 +63,43 @@ class FilterServiceImp: NSObject, FilterService, DataSourceService {
         seek(timeline: timeline)
     }
 
-    func applyFilter(item: any DataSourceItemProtocol) {
+}
+
+extension FilterServiceImp: PackageService {
+    func cancelAction() {
+        
+    }
+    
+    func sureAction() {
+        
+    }
+    
+    func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         applyFilter(packageId: pid as String)
+    }
+}
+
+extension FilterServiceImp: PackageSubviewSource {
+    func titles() -> [String] {
+        return ["filter"]
+    }
+    
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = PackageList.newInstance()
+        let assetDir = Bundle.main.bundlePath + "/videofx"
+        var asset = DataSource(assetDir, typeString: "videofx")
+        asset.didFetchSuccess = { dataSource in
+            list.dataSource = dataSource
+        }
+        asset.didFetchError = { error in
+            
+        }
+        asset.fetchData()
+        list.didSelectedPackage = { [weak self] item in
+            self?.applyPackage(item: item)
+        }
+        return list
     }
 }

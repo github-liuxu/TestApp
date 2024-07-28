@@ -8,6 +8,12 @@
 import JXSegmentedView
 import UIKit
 
+protocol DataSourceFetchService {
+    var didFetchSuccess: (() -> Void)? { get set }
+    var didFetchError: ((Error) -> Void)? { get set }
+    func fetchData()
+}
+
 protocol PackageService {
     func cancelAction()
     func sureAction()

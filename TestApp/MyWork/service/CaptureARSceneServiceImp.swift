@@ -7,14 +7,15 @@
 
 import NvStreamingSdkCore
 import UIKit
+import JXSegmentedView
 
-protocol CaptureARSceneService {
-    func cancelProps()
+protocol CaptureARSceneService: DataSourceFetchService {
     func readARSceneInfo()
-    func applyARScenePackage(packagePath: String, licPath: String, type: String)
 }
 
 class CaptureARSceneServiceImp: NSObject, CaptureARSceneService {
+    var didFetchSuccess: (() -> Void)?
+    var didFetchError: ((Error) -> Void)?
     var assetGetter: DataSource?
     let streamingContext = NvsStreamingContext.sharedInstance()!
     var arsceneFx: NvsCaptureVideoFx?
@@ -24,6 +25,10 @@ class CaptureARSceneServiceImp: NSObject, CaptureARSceneService {
         let propsDir = Bundle.main.bundlePath + "/arscene"
         assetGetter = DataSource(propsDir, typeString: "arscene")
         initAR()
+    }
+    
+    func fetchData() {
+        didFetchSuccess?()
     }
 
     func initAR() {
@@ -38,14 +43,48 @@ class CaptureARSceneServiceImp: NSObject, CaptureARSceneService {
     func readARSceneInfo() {
         oldPropsId = arsceneFx?.getStringVal("Scene Id") ?? ""
     }
+}
 
-    func cancelProps() {
+extension CaptureARSceneServiceImp: PackageService {
+    func cancelAction() {
         arsceneFx?.setStringVal("Scene Id", val: oldPropsId)
     }
-
-    func applyARScenePackage(packagePath: String, licPath: String, type: String) {
+    
+    func sureAction() {
+        
+    }
+    
+    func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_ARScene, sync: true, assetPackageId: pid)
+        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_ARScene, sync: true, assetPackageId: pid)
         arsceneFx?.setStringVal("Scene Id", val: pid as String)
+    }
+}
+
+extension CaptureARSceneServiceImp: PackageSubviewSource {
+    func titles() -> [String] {
+        return ["2D", "3D"]
+    }
+    
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = PackageList.newInstance()
+        let assetDir = Bundle.main.bundlePath + "/arscene"
+        var asset: DataSource!
+        if index == 0 {
+            asset = DataSource(assetDir + "/2D", typeString: "arscene")
+        } else if index == 1 {
+            asset = DataSource(assetDir + "/3D", typeString: "arscene")
+        }
+        asset.didFetchSuccess = { dataSource in
+            list.dataSource = dataSource
+        }
+        asset.didFetchError = { error in
+            
+        }
+        asset.fetchData()
+        list.didSelectedPackage = { [weak self] item in
+            self?.applyPackage(item: item)
+        }
+        return list
     }
 }

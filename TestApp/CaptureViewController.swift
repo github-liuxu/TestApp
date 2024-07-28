@@ -66,12 +66,20 @@ class CaptureViewController: UIViewController {
     }
 
     @IBAction func filterClick(_: UIButton) {
-        let filterView = AssetView.newInstance() as! AssetView
+        let filterView = PackagePanel.newInstance()
         view.addSubview(filterView)
-        filterView.filterService = capture?.filterService
-        filterView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 300)
-        UIView.animate(withDuration: 0.25) {
-            filterView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300)
+        filterView.show()
+        if let filterView = filterView as? PackagePanel {
+            let filterService = capture?.filterService
+            filterView.packageService = filterService
+            filterView.packageService = filterService
+            filterService?.didFetchSuccess = {
+                filterView.packageSubviewSource = filterService
+            }
+            filterService?.didFetchError = { [weak self] error in
+                self?.view.makeToast(error.localizedDescription)
+            }
+            filterService?.fetchData()
         }
     }
 
@@ -97,16 +105,25 @@ class CaptureViewController: UIViewController {
     }
 
     @IBAction func sticker(_: Any) {
-        if let stickerView = StickerView.newInstance() as? StickerView {
-            view.addSubview(stickerView)
-            stickerView.show()
+        let sticker = PackagePanel.newInstance()
+        view.addSubview(sticker)
+        sticker.show()
+        sticker.didViewClose = { [weak self] isCancelled in
+            self?.rectView.moveable = nil
+        }
+        if let sticker = sticker as? PackagePanel {
             rectView.moveable = capture?.stickerService
             capture?.stickerService.livewindow = livewindow
             capture?.stickerService.rectable = rectView
-            stickerView.stickerService = capture?.stickerService
-            stickerView.didViewClose = { [weak self] isCancelled in
-                self?.rectView.moveable = nil
+            let stickerService = capture?.stickerService
+            sticker.packageService = stickerService
+            stickerService?.didFetchSuccess = {
+                sticker.packageSubviewSource = stickerService
             }
+            stickerService?.didFetchError = { [weak self] error in
+                self?.view.makeToast(error.localizedDescription)
+            }
+            stickerService?.fetchData()
         }
     }
 
@@ -126,12 +143,19 @@ class CaptureViewController: UIViewController {
 
     @IBAction func props(_: Any) {
         guard let capture = capture else { return }
-        let propView = PropView.newInstance() as! PropView
+        let propView = PackagePanel.newInstance()
         view.addSubview(propView)
         propView.show()
-
-        rectView.moveable = capture.captionService
-        capture.captionService.rectable = rectView
-        propView.arsceneService = capture.arsceneService
+        if let propView = propView as? PackagePanel {
+            let arsceneService = capture.arsceneService
+            propView.packageService = arsceneService
+            arsceneService.didFetchSuccess = {
+                propView.packageSubviewSource = arsceneService
+            }
+            arsceneService.didFetchError = { [weak self] error in
+                self?.view.makeToast(error.localizedDescription)
+            }
+            arsceneService.fetchData()
+        }
     }
 }

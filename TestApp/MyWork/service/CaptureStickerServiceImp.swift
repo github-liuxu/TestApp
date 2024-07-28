@@ -7,13 +7,16 @@
 
 import NvStreamingSdkCore
 import UIKit
+import JXSegmentedView
 
 class CaptureStickerServiceImp: NSObject {
     weak var rectable: Rectable?
     let streamingContext = NvsStreamingContext.sharedInstance()!
     var sticker: NvsAnimatedSticker?
     var livewindow: NvsLiveWindow?
-
+    var didFetchSuccess: (() -> Void)?
+    var didFetchError: ((Error) -> Void)?
+    
     func getAnchorPoint(sticker: NvsAnimatedSticker?) -> CGPoint {
         guard let sticker = sticker else { return .zero }
         let vertices = sticker.getBoundingRectangleVertices() as NSArray
@@ -25,31 +28,31 @@ class CaptureStickerServiceImp: NSObject {
 }
 
 extension CaptureStickerServiceImp: StickerService {
-    func deleteSticker() {
-//        let count = streamingContext.getCaptureAnimatedStickerCount()
-//        self.sticker = nil
-//        (0..<count).forEach { element in
-//            let sticker = streamingContext.getCaptureAnimatedSticker(by: element)
-//            let vertices = sticker!.getBoundingRectangleVertices() as NSArray
-//            if isPointInPolygon(point: p1, polygon: vertices as! [CGPoint]) {
-//                self.sticker = sticker
-//                return
-//            }
-//        }
-//        streamingContext.removeCaptureAnimatedSticker(sticker.index)
-        sticker = nil
+    func fetchData() {
+        didFetchSuccess?()
     }
-
-    func applyPackage(packagePath: String, licPath: String) {
+    
+    func applyCustomPackage(item: DataSourceItemProtocol, imagePath: String) {
         let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
-        streamingContext.appendCaptureAnimatedSticker(0, duration: 1_000_000_000, animatedStickerPackageId: pid as String)
-    }
-
-    func applyCustomPackage(packagePath: String, licPath: String, imagePath: String) {
-        let pid = NSMutableString()
-        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
         sticker = streamingContext.addCustomCaptureAnimatedSticker(0, duration: 1_000_000_000, animatedStickerPackageId: pid as String, customImagePath: imagePath)
+        drawRects()
+    }
+}
+
+extension CaptureStickerServiceImp: PackageService {
+    func cancelAction() {
+        
+    }
+    
+    func sureAction() {
+        
+    }
+    
+    func applyPackage(item: DataSourceItemProtocol) {
+        let pid = NSMutableString()
+        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
+        sticker = streamingContext.appendCaptureAnimatedSticker(0, duration: 1000000000, animatedStickerPackageId: pid as String)
         drawRects()
     }
 }
@@ -107,5 +110,55 @@ extension CaptureStickerServiceImp: Moveable {
             points.append(p)
         }
         rectable?.setPoints(points)
+    }
+}
+
+extension CaptureStickerServiceImp: PackageSubviewSource {
+    func titles() -> [String] {
+        return ["sticker", "custom"]
+    }
+    
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = PackageList.newInstance()
+        let assetDir = Bundle.main.bundlePath + "/sticker"
+        if index == 0 {
+            var asset = DataSource(assetDir + "/animationsticker", typeString: "animationsticker")
+            asset.didFetchSuccess = { dataSource in
+                list.dataSource = dataSource
+            }
+            asset.didFetchError = { error in
+                
+            }
+            asset.fetchData()
+            list.didSelectedPackage = { [weak self] item in
+                self?.applyPackage(item: item)
+            }
+        } else if index == 1 {
+            var asset = DataSource(assetDir + "/custom", typeString: "animationsticker")
+            asset.didFetchSuccess = { dataSource in
+                list.dataSource = dataSource
+            }
+            asset.didFetchError = { error in
+                
+            }
+            asset.fetchData()
+            list.didSelectedPackage = { [weak self] item in
+                // album
+                let viewController = list.findViewController()!
+                let albumUtils = AlbumUtils()
+                albumUtils.openAlbum(viewController: viewController, mediaType: .image, multiSelect: false) { [weak self] assets in
+                    viewController.dismiss(animated: true)
+                    if assets.count > 0 {
+                        let phasset = assets.first!
+                        saveAssetToSandbox(asset: phasset) { url in
+                            if let path = url?.absoluteString.replacingOccurrences(of: "file://", with: "") {
+                                self?.applyCustomPackage(item: item, imagePath: path)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return list
     }
 }
