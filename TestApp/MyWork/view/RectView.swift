@@ -7,6 +7,14 @@
 
 import UIKit
 
+protocol Moveable {
+    func translate(prePoint: CGPoint, curPoint: CGPoint)
+    func scale(scale: Float)
+    func rotate(rotate: Float)
+    func tap(point: CGPoint)
+    func drawRects()
+}
+
 protocol Rectable: NSObjectProtocol {
     func setPoints(_ points: [CGPoint])
     func setSubPoints(_ points: [[CGPoint]])
