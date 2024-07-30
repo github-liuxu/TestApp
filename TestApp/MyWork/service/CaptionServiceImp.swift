@@ -25,12 +25,6 @@ class CaptionServiceImp: NSObject {
     var timeline: NvsTimeline?
     var caption: NvsCaption?
     var livewindow: NvsLiveWindow?
-    var assetGetter: DataSource?
-    override init() {
-        super.init()
-        let captionDir = Bundle.main.bundlePath + "/captionrenderer"
-        assetGetter = DataSource(captionDir, typeString: "captionrenderer")
-    }
 }
 
 extension CaptionServiceImp: CaptionService {

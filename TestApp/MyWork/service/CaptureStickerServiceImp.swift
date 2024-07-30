@@ -7,6 +7,7 @@
 
 import NvStreamingSdkCore
 import UIKit
+import JXSegmentedView
 
 class CaptureStickerServiceImp: NSObject {
     weak var rectable: Rectable?
@@ -109,5 +110,55 @@ extension CaptureStickerServiceImp: Moveable {
             points.append(p)
         }
         rectable?.setPoints(points)
+    }
+}
+
+extension CaptureStickerServiceImp: PackageSubviewSource {
+    func titles() -> [String] {
+        return ["sticker", "custom"]
+    }
+    
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = PackageList.newInstance()
+        let assetDir = Bundle.main.bundlePath + "/sticker"
+        if index == 0 {
+            var asset = DataSource(assetDir + "/animationsticker", typeString: "animatedsticker")
+            asset.didFetchSuccess = { dataSource in
+                list.dataSource = dataSource
+            }
+            asset.didFetchError = { error in
+                
+            }
+            asset.fetchData()
+            list.didSelectedPackage = { [weak self] item in
+                self?.applyPackage(item: item)
+            }
+        } else if index == 1 {
+            var asset = DataSource(assetDir + "/custom", typeString: "animatedsticker")
+            asset.didFetchSuccess = { dataSource in
+                list.dataSource = dataSource
+            }
+            asset.didFetchError = { error in
+                
+            }
+            asset.fetchData()
+            list.didSelectedPackage = { [weak self] item in
+                // album
+                let viewController = list.findViewController()!
+                let albumUtils = AlbumUtils()
+                albumUtils.openAlbum(viewController: viewController, mediaType: .image, multiSelect: false) { [weak self] assets in
+                    viewController.dismiss(animated: true)
+                    if assets.count > 0 {
+                        let phasset = assets.first!
+                        saveAssetToSandbox(asset: phasset) { url in
+                            if let path = url?.absoluteString.replacingOccurrences(of: "file://", with: "") {
+                                self?.applyCustomPackage(item: item, imagePath: path)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return list
     }
 }

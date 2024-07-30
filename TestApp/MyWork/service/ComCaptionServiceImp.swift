@@ -7,6 +7,7 @@
 
 import NvStreamingSdkCore
 import UIKit
+import JXSegmentedView
 
 protocol ComCaptionService: PackageService {
     
@@ -123,5 +124,28 @@ extension ComCaptionServiceImp: Moveable {
             }
             rectable?.setSubPoints(subPoints)
         }
+    }
+}
+
+extension ComCaptionServiceImp: PackageSubviewSource {
+    func titles() -> [String] {
+        ["CompoundCaption"]
+    }
+    
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = PackageList.newInstance()
+        let assetDir = Bundle.main.bundlePath + "/compoundcaption"
+        var asset = DataSource(assetDir, typeString: "compoundcaption")
+        asset.didFetchSuccess = { dataSource in
+            list.dataSource = dataSource
+        }
+        asset.didFetchError = { error in
+            
+        }
+        asset.fetchData()
+        list.didSelectedPackage = { [weak self] item in
+            self?.applyPackage(item: item)
+        }
+        return list
     }
 }

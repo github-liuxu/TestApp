@@ -6,6 +6,7 @@
 //
 
 import NvStreamingSdkCore
+import JXSegmentedView
 
 class CaptureFilterService: NSObject, FilterService {
     var filterFx: NvsCaptureVideoFx?
@@ -64,5 +65,28 @@ extension CaptureFilterService: PackageService {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
         applyFilter(packageId: pid as String)
+    }
+}
+
+extension CaptureFilterService: PackageSubviewSource {
+    func titles() -> [String] {
+        return ["filter"]
+    }
+    
+    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let list = PackageList.newInstance()
+        let assetDir = Bundle.main.bundlePath + "/videofx"
+        var asset = DataSource(assetDir, typeString: "videofx")
+        asset.didFetchSuccess = { dataSource in
+            list.dataSource = dataSource
+        }
+        asset.didFetchError = { error in
+            
+        }
+        asset.fetchData()
+        list.didSelectedPackage = { [weak self] item in
+            self?.applyPackage(item: item)
+        }
+        return list
     }
 }

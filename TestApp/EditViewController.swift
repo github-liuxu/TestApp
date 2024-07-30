@@ -77,7 +77,7 @@ class EditViewController: UIViewController {
         sequenceTop.constant = CGRectGetMaxY(livewidow.bounds)
         sequence?.transitionCoverDelegate = self
         bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "Filter"))
-        bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "Caption"))
+        bottomDataSource.append(BottomItem(viewClass: CaptionView.self, title: "Caption"))
         bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "Sticker"))
         bottomDataSource.append(BottomItem(viewClass: PackagePanel.self, title: "CompoundCaption"))
         let layout = UICollectionViewFlowLayout()
@@ -143,12 +143,8 @@ extension EditViewController: TransitionCoverViewDelegate {
         transitionView.show()
         let transitionService = timelineService?.transitionService
         transitionView.packageService = transitionService
+        transitionView.dataSource = transitionService
         transitionService?.selectedIndex = UInt32(index)
-        let dataFetch = TransitionSubviewDataFetch()
-        dataFetch.packageService = transitionService
-        dataFetch.subviewService = transitionView
-        transitionView.packageSubviewSource = dataFetch
-        dataFetch.fetchData()
     }
 }
 
@@ -175,11 +171,7 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
             if let sub = subview as? PackagePanel {
                 let filterService = timelineService?.filterService
                 sub.packageService = filterService
-                let filterDataFetch = FilterSubviewDataFetch()
-                filterDataFetch.packageService = filterService
-                filterDataFetch.subviewService = sub
-                sub.packageSubviewSource = filterDataFetch
-                filterDataFetch.fetchData()
+                sub.dataSource = filterService
             }
         }
         if item.title == "Caption" {
@@ -196,11 +188,7 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
                 preview.rectView.moveable = comCaptionService
                 comCaptionService?.rectable = preview.rectView
                 sub.packageService = comCaptionService
-                let dataFetch = ComCaptionSubviewDataFetch()
-                dataFetch.packageService = comCaptionService
-                dataFetch.subviewService = sub
-                sub.packageSubviewSource = dataFetch
-                dataFetch.fetchData()
+                sub.dataSource = comCaptionService
             }
         }
         if item.title == "Sticker" {
@@ -209,11 +197,7 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
                 timelineService?.stickerService.rectable = preview.rectView
                 let stickerService = timelineService?.stickerService
                 sub.packageService = stickerService
-                let stickerDataFetch = StickerSubviewDataFetch()
-                stickerDataFetch.packageService = stickerService
-                stickerDataFetch.subviewService = sub
-                sub.packageSubviewSource = stickerDataFetch
-                stickerDataFetch.fetchData()
+                sub.dataSource = stickerService
             }
         }
     }

@@ -143,52 +143,35 @@ extension CaptionView: JXSegmentedListContainerViewDataSource {
     }
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        let list = ListViewController()
-        list.packageList.didSelectedPackage = { [weak self] item in
+        let list = PackageList.newInstance()
+        list.didSelectedPackage = { [weak self] item in
             self?.captionService?.applyCaptionPackage(packagePath: item.packagePath, licPath: item.licPath, type: item.type)
         }
+        var asset: DataSource!
         if index == 0 {
             let captionDir = Bundle.main.bundlePath + "/captions/captionrenderer"
-            list.assetGetter = DataSource(captionDir, typeString: "captionrenderer")
+            asset = DataSource(captionDir, typeString: "captionrenderer")
         } else if index == 1 {
             let captionDir = Bundle.main.bundlePath + "/captions/captioncontext"
-            list.assetGetter = DataSource(captionDir, typeString: "captioncontext")
+            asset = DataSource(captionDir, typeString: "captioncontext")
         } else if index == 2 {
             let captionDir = Bundle.main.bundlePath + "/captions/captionanimation"
-            list.assetGetter = DataSource(captionDir, typeString: "captionanimation")
+            asset = DataSource(captionDir, typeString: "captionanimation")
         } else if index == 3 {
             let captionDir = Bundle.main.bundlePath + "/captions/captioninanimation"
-            list.assetGetter = DataSource(captionDir, typeString: "captioninanimation")
+            asset = DataSource(captionDir, typeString: "captioninanimation")
         } else if index == 4 {
             let captionDir = Bundle.main.bundlePath + "/captions/captionoutanimation"
-            list.assetGetter = DataSource(captionDir, typeString: "captionoutanimation")
+            asset = DataSource(captionDir, typeString: "captionoutanimation")
         }
+        asset.didFetchSuccess = { dataSource in
+            list.dataSource = dataSource
+        }
+        asset.didFetchError = { error in
+            
+        }
+        asset.fetchData()
         return list
-    }
-}
-
-class ListViewController: UIViewController, JXSegmentedListContainerViewListDelegate {
-    var packageList: PackageList = .newInstance()
-    var assetGetter: AssetGetter?
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.addSubview(packageList)
-        // 设置布局
-        packageList.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            packageList.topAnchor.constraint(equalTo: view.topAnchor),
-            packageList.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            packageList.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            packageList.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
-        assetGetter?.didFetchSuccess = { [weak self] dataSource in
-            self?.packageList.dataSource = dataSource
-        }
-        assetGetter?.fetchData()
-    }
-
-    func listView() -> UIView {
-        return view
     }
 }
 

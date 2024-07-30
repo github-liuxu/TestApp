@@ -14,18 +14,18 @@ protocol DataSourceFetchService {
     func fetchData()
 }
 
-protocol PackageService {
+protocol PackageService: NSObjectProtocol {
     func cancelAction()
     func sureAction()
     func applyPackage(item: DataSourceItemProtocol)
 }
 
-protocol PackageSubviewSource {
+protocol PackageSubviewSource: NSObjectProtocol {
     func titles() -> [String]
     func customView(index: Int) -> JXSegmentedListContainerViewListDelegate
 }
 
-class PackagePanel: UIView, BottomViewService, SubviewService {
+class PackagePanel: UIView, BottomViewService {
     private var segmentedView: JXSegmentedView!
     private var segmentedDataSource: JXSegmentedTitleDataSource!
     private var listContainerView: JXSegmentedListContainerView!
@@ -118,19 +118,11 @@ class PackagePanel: UIView, BottomViewService, SubviewService {
         }
     }
     
-    func willData() {
-        
-    }
-    
-    var packageSubviewSource: PackageSubviewSource?
-    func didDataSuccess(packageSubviewSource: PackageSubviewSource) {
-        self.packageSubviewSource = packageSubviewSource
-        segmentedDataSource.titles = packageSubviewSource.titles()
-        segmentedView.reloadData()
-    }
-    
-    func didDataError(error: Error) {
-        self.makeToast(error.localizedDescription)
+    weak var dataSource: PackageSubviewSource? {
+        didSet {
+            segmentedDataSource.titles = dataSource?.titles() ?? []
+            segmentedView.reloadData()
+        }
     }
 
     @objc func closeTapped(_: UIButton) {
@@ -161,7 +153,7 @@ extension PackagePanel: JXSegmentedListContainerViewDataSource {
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         var view: JXSegmentedListContainerViewListDelegate!
-        if let subview = packageSubviewSource?.customView(index: index) {
+        if let subview = dataSource?.customView(index: index) {
             view = subview
         } else { // 正常逻辑不会走else
             let list = PackageList.newInstance()

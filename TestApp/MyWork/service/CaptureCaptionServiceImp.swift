@@ -8,17 +8,11 @@
 import NvStreamingSdkCore
 import UIKit
 
-class CaptureCaptionServiceImp: NSObject, DataSourceService {
+class CaptureCaptionServiceImp: NSObject {
     weak var rectable: Rectable?
     var didCaptionTextChanged: ((String?) -> Void)?
     var caption: NvsCaption?
     var livewindow: NvsLiveWindow?
-    var assetGetter: (any AssetGetter)?
-    override init() {
-        super.init()
-        let captionDir = Bundle.main.bundlePath + "/captionrenderer"
-        assetGetter = DataSource(captionDir, typeString: "captionrenderer")
-    }
 
     func clear() {
         let streamingContext = NvsStreamingContext.sharedInstance()!

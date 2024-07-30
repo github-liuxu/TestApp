@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C3079492C565804004BE9DE /* SubViewDataFetchProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3079482C565804004BE9DE /* SubViewDataFetchProtocol.swift */; };
-		0C30794B2C5658BB004BE9DE /* FilterSubviewDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C30794A2C5658BB004BE9DE /* FilterSubviewDataFetch.swift */; };
-		0CB6834A2C56737C00FFB345 /* ARSceneSubviewDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB683492C56737C00FFB345 /* ARSceneSubviewDataFetch.swift */; };
-		0CB6834D2C5678DC00FFB345 /* StickerSubviewDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6834C2C5678DC00FFB345 /* StickerSubviewDataFetch.swift */; };
-		0CB6834F2C567C6600FFB345 /* TransitionSubviewDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6834E2C567C6600FFB345 /* TransitionSubviewDataFetch.swift */; };
-		0CB683512C56836A00FFB345 /* ComCaptionSubviewDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB683502C56836A00FFB345 /* ComCaptionSubviewDataFetch.swift */; };
 		0CE9447A2C4ACF3A00C0B23A /* RectMoveableImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */; };
 		0CE944802C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */; };
 		0CF6F8532C52C5FB00E8A53A /* VideoClipServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6F8522C52C5FB00E8A53A /* VideoClipServiceImp.swift */; };
@@ -120,12 +114,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0C3079482C565804004BE9DE /* SubViewDataFetchProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewDataFetchProtocol.swift; sourceTree = "<group>"; };
-		0C30794A2C5658BB004BE9DE /* FilterSubviewDataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSubviewDataFetch.swift; sourceTree = "<group>"; };
-		0CB683492C56737C00FFB345 /* ARSceneSubviewDataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneSubviewDataFetch.swift; sourceTree = "<group>"; };
-		0CB6834C2C5678DC00FFB345 /* StickerSubviewDataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerSubviewDataFetch.swift; sourceTree = "<group>"; };
-		0CB6834E2C567C6600FFB345 /* TransitionSubviewDataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionSubviewDataFetch.swift; sourceTree = "<group>"; };
-		0CB683502C56836A00FFB345 /* ComCaptionSubviewDataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComCaptionSubviewDataFetch.swift; sourceTree = "<group>"; };
 		0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectMoveableImp.swift; sourceTree = "<group>"; };
 		0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCaptionServiceImp.swift; sourceTree = "<group>"; };
 		0CF6F8522C52C5FB00E8A53A /* VideoClipServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoClipServiceImp.swift; sourceTree = "<group>"; };
@@ -210,19 +198,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C30794C2C565C03004BE9DE /* DataFetch */ = {
-			isa = PBXGroup;
-			children = (
-				0C3079482C565804004BE9DE /* SubViewDataFetchProtocol.swift */,
-				0C30794A2C5658BB004BE9DE /* FilterSubviewDataFetch.swift */,
-				0CB683492C56737C00FFB345 /* ARSceneSubviewDataFetch.swift */,
-				0CB6834C2C5678DC00FFB345 /* StickerSubviewDataFetch.swift */,
-				0CB6834E2C567C6600FFB345 /* TransitionSubviewDataFetch.swift */,
-				0CB683502C56836A00FFB345 /* ComCaptionSubviewDataFetch.swift */,
-			);
-			path = DataFetch;
-			sourceTree = "<group>";
-		};
 		585C69B02A7BBDC300BB945E = {
 			isa = PBXGroup;
 			children = (
@@ -327,7 +302,6 @@
 		588B7E6A2B690262005ADA60 /* service */ = {
 			isa = PBXGroup;
 			children = (
-				0C30794C2C565C03004BE9DE /* DataFetch */,
 				588B7E672B68EE04005ADA60 /* CaptureService.swift */,
 				0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */,
 				58C6FB312C4E6C7B008277FB /* CaptureARSceneServiceImp.swift */,
@@ -546,24 +520,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C3079492C565804004BE9DE /* SubViewDataFetchProtocol.swift in Sources */,
 				588B7E682B68EE04005ADA60 /* CaptureService.swift in Sources */,
 				5862AAB72B6F71B100195421 /* SequenceView.swift in Sources */,
 				588B7E172B63E572005ADA60 /* TimelineCreate.swift in Sources */,
 				58C6FAD92C4906E4008277FB /* StickerServiceImp.swift in Sources */,
 				587725C52C48FCDB00ED78CC /* PointUtils.swift in Sources */,
-				0CB6834A2C56737C00FFB345 /* ARSceneSubviewDataFetch.swift in Sources */,
 				5806CB7D2BCE215200AD93EF /* CaptionView.swift in Sources */,
 				588B7E7E2B6A49D2005ADA60 /* DataSource.swift in Sources */,
 				58FB6FD72C46917F003FC269 /* BottomViewService.swift in Sources */,
-				0CB6834F2C567C6600FFB345 /* TransitionSubviewDataFetch.swift in Sources */,
 				588B7E192B63E8A7005ADA60 /* PreView.swift in Sources */,
 				588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */,
 				58C6FB7A2C524EDE008277FB /* ViewExtension.swift in Sources */,
 				585C69D22A7CC2C400BB945E /* EditViewController.swift in Sources */,
 				58FB6FE22C4768C4003FC269 /* ComCaptionServiceImp.swift in Sources */,
 				588B7E612B68DBB3005ADA60 /* AlbumUtils.swift in Sources */,
-				0CB6834D2C5678DC00FFB345 /* StickerSubviewDataFetch.swift in Sources */,
 				5873F4C12BAC673300170BE7 /* AlignProperty.swift in Sources */,
 				0CE9447A2C4ACF3A00C0B23A /* RectMoveableImp.swift in Sources */,
 				588B7E1F2B63F1B6005ADA60 /* TimelineService.swift in Sources */,
@@ -573,11 +543,9 @@
 				582B4F942BE08DE3000D26CC /* CaptionServiceImp.swift in Sources */,
 				585C69BD2A7BBDC300BB945E /* AppDelegate.swift in Sources */,
 				58C6FB322C4E6C7B008277FB /* CaptureARSceneServiceImp.swift in Sources */,
-				0C30794B2C5658BB004BE9DE /* FilterSubviewDataFetch.swift in Sources */,
 				588B7E7A2B6A4669005ADA60 /* AssetCollectionViewCell.swift in Sources */,
 				587725C02C47FEBD00ED78CC /* LiveWindowServiceImp.swift in Sources */,
 				0CF6F8602C5572D700E8A53A /* TransitionServiceImp.swift in Sources */,
-				0CB683512C56836A00FFB345 /* ComCaptionSubviewDataFetch.swift in Sources */,
 				58F4D34A2B84AB8E00334AA9 /* TransitionProtocal.swift in Sources */,
 				0CE944802C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift in Sources */,
 				58F4D3422B849C5200334AA9 /* NvSequeceView.swift in Sources */,

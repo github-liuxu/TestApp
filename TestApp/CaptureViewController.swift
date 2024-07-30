@@ -72,11 +72,7 @@ class CaptureViewController: UIViewController {
         if let filterView = filterView as? PackagePanel {
             let filterService = capture?.filterService
             filterView.packageService = filterService
-            let filterDataFetch = FilterSubviewDataFetch()
-            filterDataFetch.packageService = filterService
-            filterDataFetch.subviewService = filterView
-            filterView.packageSubviewSource = filterDataFetch
-            filterDataFetch.fetchData()
+            filterView.dataSource = filterService
         }
     }
 
@@ -114,11 +110,7 @@ class CaptureViewController: UIViewController {
             capture?.stickerService.rectable = rectView
             let stickerService = capture?.stickerService
             sticker.packageService = stickerService            
-            let stickerDataFetch = StickerSubviewDataFetch()
-            stickerDataFetch.packageService = stickerService
-            stickerDataFetch.subviewService = sticker
-            sticker.packageSubviewSource = stickerDataFetch
-            stickerDataFetch.fetchData()
+            sticker.dataSource = stickerService
         }
     }
 
@@ -131,14 +123,7 @@ class CaptureViewController: UIViewController {
             comCaptionService?.livewindow = livewindow
             comCaptionService?.rectable = rectView
             comCaptionView.packageService = comCaptionService
-            let dataFetch = ComCaptionSubviewDataFetch()
-            dataFetch.packageService = comCaptionService
-            dataFetch.subviewService = comCaptionView
-            comCaptionView.packageSubviewSource = dataFetch
-            dataFetch.fetchData()
-            comCaptionView.didViewClose = { [weak self] isCancelled in
-                self?.rectView.moveable = nil
-            }
+            comCaptionView.dataSource = comCaptionService
         }
     }
 
@@ -150,11 +135,7 @@ class CaptureViewController: UIViewController {
         if let propView = propView as? PackagePanel {
             let arsceneService = capture.arsceneService
             propView.packageService = arsceneService
-            let dataFetch = ARSceneSubviewDataFetch()
-            dataFetch.packageService = arsceneService
-            dataFetch.subviewService = propView
-            propView.packageSubviewSource = dataFetch
-            dataFetch.fetchData()
+            propView.dataSource = arsceneService
         }
     }
 }
