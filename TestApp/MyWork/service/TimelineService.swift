@@ -114,15 +114,23 @@ class TimelineService: NSObject, TimelineFxService {
     }
 
     @discardableResult
-    func saveAction(_ path: String?) -> PassthroughSubject<Int32, Error>? {
+    func saveAction(_ path: String, coverPath: String? = nil) -> PassthroughSubject<Int32, Error>? {
         guard let timeline = timeline else { return nil }
         compileProgress = PassthroughSubject<Int32, Error>()
-        var compilePath = path
-        if path == nil {
-            compilePath = NSHomeDirectory() + "/Documents/" + currentDateAndTime() + ".mp4"
+        var finaltimeline: NvsTimeline = timeline
+        if coverPath?.count ?? 0 > 0 {
+            let timeline1 = createTimeline(width: UInt(timeline.videoRes.imageWidth), height: UInt(timeline.videoRes.imageHeight))
+            let videotrack = timeline1?.appendVideoTrack()
+            videotrack?.appendTimelineClip(timeline)
+            let clip = videotrack?.insertClip(coverPath, trimIn: 0, trimOut: 100000, clipIndex: 0)
+            videotrack?.setBuiltinTransition(0, withName: "")
+            clip?.imageMotionMode = NvsStreamingEngineImageClipMotionMode_LetterBoxZoomIn
+            clip?.imageMotionAnimationEnabled = false
+            clip?.disableAmbiguousCrop(true)
+            finaltimeline = timeline1!
         }
-        streamingContext.setCustomCompileVideoHeight(timeline.videoRes.imageHeight)
-        streamingContext.compileTimeline(timeline, startTime: 0, endTime: timeline.duration, outputFilePath: compilePath, videoResolutionGrade: NvsCompileVideoResolutionGradeCustom, videoBitrateGrade: NvsCompileVideoBitrateGrade(rawValue: NvsCompileBitrateGradeMedium.rawValue), flags: Int32(NvsStreamingEngineCompileFlag_IgnoreTimelineVideoSize.rawValue | NvsStreamingEngineCompileFlag_BuddyHostVideoFrame.rawValue))
+        streamingContext.setCustomCompileVideoHeight(finaltimeline.videoRes.imageHeight)
+        streamingContext.compileTimeline(finaltimeline, startTime: 0, endTime: finaltimeline.duration, outputFilePath: path, videoResolutionGrade: NvsCompileVideoResolutionGradeCustom, videoBitrateGrade: NvsCompileVideoBitrateGrade(rawValue: NvsCompileBitrateGradeMedium.rawValue), flags: Int32(NvsStreamingEngineCompileFlag_IgnoreTimelineVideoSize.rawValue | NvsStreamingEngineCompileFlag_BuddyHostVideoFrame.rawValue))
         return compileProgress
     }
 

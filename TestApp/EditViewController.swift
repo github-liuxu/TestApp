@@ -48,11 +48,14 @@ class EditViewController: UIViewController {
 
     @objc func saveAction() {
         view.makeToastActivity(.center)
-        timelineService?.saveAction(nil)?
+        let coverPath = Bundle.main.bundlePath + "/181709.png"
+        let compilePath = NSHomeDirectory() + "/Documents/" + currentDateAndTime() + ".mp4"
+        timelineService?.saveAction(compilePath, coverPath: nil)?
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished:
                     print("Completed")
+                    UISaveVideoAtPathToSavedPhotosAlbum(compilePath, nil, nil, nil)
                 case let .failure(error):
                     print("Received error: \(error)")
                 }
