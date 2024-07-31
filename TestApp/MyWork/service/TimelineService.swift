@@ -35,7 +35,7 @@ class TimelineService: NSObject, TimelineFxService {
     var stickerService: StickerServiceImp = .init()
     var filterService = FilterServiceImp()
     var comCaptionService: ComCaptionServiceImp = .init()
-    var transitionService: TransitionServiceImp = TransitionServiceImp()
+    var transitionService: TransitionServiceImp = .init()
 
     var didPlaybackTimelinePosition: ((_ posotion: Int64, _ progress: Float) -> Void)? = nil
     var playStateChanged: ((_ isPlay: Bool) -> Void)? = nil
@@ -122,7 +122,7 @@ class TimelineService: NSObject, TimelineFxService {
             let timeline1 = createTimeline(width: UInt(timeline.videoRes.imageWidth), height: UInt(timeline.videoRes.imageHeight))
             let videotrack = timeline1?.appendVideoTrack()
             videotrack?.appendTimelineClip(timeline)
-            let clip = videotrack?.insertClip(coverPath, trimIn: 0, trimOut: 100000, clipIndex: 0)
+            let clip = videotrack?.insertClip(coverPath, trimIn: 0, trimOut: 100_000, clipIndex: 0)
             videotrack?.setBuiltinTransition(0, withName: "")
             clip?.imageMotionMode = NvsStreamingEngineImageClipMotionMode_LetterBoxZoomIn
             clip?.imageMotionAnimationEnabled = false
@@ -147,34 +147,6 @@ class TimelineService: NSObject, TimelineFxService {
         timeValueChanged?(formatTime(time: time), formatTime(time: timeline.duration))
     }
 }
-
-// extension TimelineService: CompoundCaptionProtocal {
-//    func applyCompoundCaption(item: DataSourceItem) {
-//        guard let timeline = timeline else { return }
-//        let pid = NSMutableString()
-//        streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
-//        let ccc = timeline.addCompoundCaption(0, duration: timeline.duration, compoundCaptionPackageId: pid as String)
-//        let text = ccc?.getText(0)
-//        print(text)
-//    }
-//
-//    func applyCrop() {
-//        guard let timeline = timeline else { return }
-//        let clip = timeline.getVideoTrack(by: 0).getClipWith(0)
-////        clip?.enableRawSourceMode(true)
-//        let transFx = clip?.appendRawBuiltinFx("Transform 2D")
-//        transFx?.setBooleanVal("Is Normalized Coord", val: true)
-//        transFx?.setBooleanVal("Force Identical Position", val: true)
-//        transFx?.setFloatVal("Trans X", val: 1)
-//        transFx?.setFloatVal("Trans Y", val: 0)
-//        let fx = clip?.appendRawBuiltinFx("Crop")
-//        fx?.setFilterMask(false)
-//        fx?.setFloatVal("Bounding Left", val: -2160)
-//        fx?.setFloatVal("Bounding Right", val: 0)
-//        fx?.setFloatVal("Bounding Top", val: 1152)
-//        fx?.setFloatVal("Bounding Bottom",val: -1152)
-//    }
-// }
 
 extension TimelineService: NvsStreamingContextDelegate {
     func didStreamingEngineStateChanged(_ state: NvsStreamingEngineState) {

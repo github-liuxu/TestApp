@@ -5,9 +5,9 @@
 //  Created by Mac-Mini on 2024/7/22.
 //
 
+import JXSegmentedView
 import NvStreamingSdkCore
 import UIKit
-import JXSegmentedView
 
 protocol CaptureARSceneService {
     func readARSceneInfo()
@@ -43,11 +43,9 @@ extension CaptureARSceneServiceImp: PackageService {
     func cancelAction() {
         arsceneFx?.setStringVal("Scene Id", val: oldPropsId)
     }
-    
-    func sureAction() {
-        
-    }
-    
+
+    func sureAction() {}
+
     func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_ARScene, sync: true, assetPackageId: pid)
@@ -59,7 +57,7 @@ extension CaptureARSceneServiceImp: PackageSubviewSource {
     func titles() -> [String] {
         return ["2D", "3D"]
     }
-    
+
     func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
         let list = PackageList.newInstance()
         let assetDir = Bundle.main.bundlePath + "/arscene"
@@ -72,8 +70,7 @@ extension CaptureARSceneServiceImp: PackageSubviewSource {
         asset.didFetchSuccess = { dataSource in
             list.dataSource = dataSource
         }
-        asset.didFetchError = { error in
-            
+        asset.didFetchError = { _ in
         }
         asset.fetchData()
         list.didSelectedPackage = { [weak self] item in

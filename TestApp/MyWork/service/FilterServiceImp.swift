@@ -5,8 +5,8 @@
 //  Created by Mac-Mini on 2024/7/16.
 //
 
-import NvStreamingSdkCore
 import JXSegmentedView
+import NvStreamingSdkCore
 
 protocol FilterService {
     func applyFilter(item: DataSourceItemProtocol)
@@ -21,7 +21,7 @@ class FilterServiceImp: NSObject, FilterService {
     override init() {
         super.init()
     }
-    
+
     func setFilterStrength(value: Float) {
         guard let filterFx = filterFx else { return }
         filterFx.setFilterIntensity(value)
@@ -53,6 +53,7 @@ class FilterServiceImp: NSObject, FilterService {
         }
         seek(timeline: timeline)
     }
+
     func applyFilter(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
@@ -61,14 +62,10 @@ class FilterServiceImp: NSObject, FilterService {
 }
 
 extension FilterServiceImp: PackageService {
-    func cancelAction() {
-        
-    }
-    
-    func sureAction() {
-        
-    }
-    
+    func cancelAction() {}
+
+    func sureAction() {}
+
     func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
@@ -80,16 +77,15 @@ extension FilterServiceImp: PackageSubviewSource {
     func titles() -> [String] {
         return ["filter"]
     }
-    
-    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+
+    func customView(index _: Int) -> JXSegmentedListContainerViewListDelegate {
         let list = PackageList.newInstance()
         let assetDir = Bundle.main.bundlePath + "/videofx"
         var asset = DataSource(assetDir, typeString: "videofx")
         asset.didFetchSuccess = { dataSource in
             list.dataSource = dataSource
         }
-        asset.didFetchError = { error in
-            
+        asset.didFetchError = { _ in
         }
         asset.fetchData()
         list.didSelectedPackage = { [weak self] item in

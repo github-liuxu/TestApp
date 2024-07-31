@@ -5,9 +5,9 @@
 //  Created by Mac-Mini on 2024/7/18.
 //
 
+import JXSegmentedView
 import NvStreamingSdkCore
 import UIKit
-import JXSegmentedView
 
 protocol StickerService: NSObjectProtocol, DataSourceFetchService {
     func applyCustomPackage(item: DataSourceItemProtocol, imagePath: String)
@@ -21,7 +21,7 @@ class StickerServiceImp: NSObject {
     var livewindow: NvsLiveWindow?
     var didFetchSuccess: (() -> Void)?
     var didFetchError: ((Error) -> Void)?
-    
+
     override init() {
         super.init()
     }
@@ -102,7 +102,7 @@ extension StickerServiceImp: StickerService {
     func fetchData() {
         didFetchSuccess?()
     }
-    
+
     func applyCustomPackage(item: DataSourceItemProtocol, imagePath: String) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
@@ -122,11 +122,9 @@ extension StickerServiceImp: PackageService {
         }
         sticker = nil
     }
-    
-    func sureAction() {
-        
-    }
-    
+
+    func sureAction() {}
+
     func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
@@ -139,12 +137,11 @@ extension StickerServiceImp: PackageService {
     }
 }
 
-
 extension StickerServiceImp: PackageSubviewSource {
     func titles() -> [String] {
         return ["sticker", "custom"]
     }
-    
+
     func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
         let list = PackageList.newInstance()
         let assetDir = Bundle.main.bundlePath + "/sticker"
@@ -153,8 +150,7 @@ extension StickerServiceImp: PackageSubviewSource {
             asset.didFetchSuccess = { dataSource in
                 list.dataSource = dataSource
             }
-            asset.didFetchError = { error in
-                
+            asset.didFetchError = { _ in
             }
             asset.fetchData()
             list.didSelectedPackage = { [weak self] item in
@@ -165,8 +161,7 @@ extension StickerServiceImp: PackageSubviewSource {
             asset.didFetchSuccess = { dataSource in
                 list.dataSource = dataSource
             }
-            asset.didFetchError = { error in
-                
+            asset.didFetchError = { _ in
             }
             asset.fetchData()
             list.didSelectedPackage = { [weak self] item in

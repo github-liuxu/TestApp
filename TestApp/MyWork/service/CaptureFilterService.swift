@@ -5,8 +5,8 @@
 //  Created by Mac-Mini on 2024/7/22.
 //
 
-import NvStreamingSdkCore
 import JXSegmentedView
+import NvStreamingSdkCore
 
 class CaptureFilterService: NSObject, FilterService {
     var filterFx: NvsCaptureVideoFx?
@@ -53,14 +53,10 @@ class CaptureFilterService: NSObject, FilterService {
 }
 
 extension CaptureFilterService: PackageService {
-    func cancelAction() {
-        
-    }
-    
-    func sureAction() {
-        
-    }
-    
+    func cancelAction() {}
+
+    func sureAction() {}
+
     func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_VideoFx, sync: true, assetPackageId: pid)
@@ -72,16 +68,15 @@ extension CaptureFilterService: PackageSubviewSource {
     func titles() -> [String] {
         return ["filter"]
     }
-    
-    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+
+    func customView(index _: Int) -> JXSegmentedListContainerViewListDelegate {
         let list = PackageList.newInstance()
         let assetDir = Bundle.main.bundlePath + "/videofx"
         var asset = DataSource(assetDir, typeString: "videofx")
         asset.didFetchSuccess = { dataSource in
             list.dataSource = dataSource
         }
-        asset.didFetchError = { error in
-            
+        asset.didFetchError = { _ in
         }
         asset.fetchData()
         list.didSelectedPackage = { [weak self] item in

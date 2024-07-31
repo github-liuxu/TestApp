@@ -112,12 +112,12 @@ class PackagePanel: UIView, BottomViewService {
 
     func show() {
         let height: CGFloat = 300
-        self.frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: CGSize(width: screenWidth, height: height))
+        frame = CGRect(origin: CGPoint(x: 0, y: screenHeight), size: CGSize(width: screenWidth, height: height))
         UIView.animate(withDuration: 0.25) {
             self.frame = CGRectMake(0, screenHeight - height, screenWidth, height)
         }
     }
-    
+
     weak var dataSource: PackageSubviewSource? {
         didSet {
             segmentedDataSource.titles = dataSource?.titles() ?? []

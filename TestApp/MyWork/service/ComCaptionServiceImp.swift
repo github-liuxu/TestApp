@@ -5,13 +5,11 @@
 //  Created by Mac-Mini on 2024/7/17.
 //
 
+import JXSegmentedView
 import NvStreamingSdkCore
 import UIKit
-import JXSegmentedView
 
-protocol ComCaptionService: PackageService {
-    
-}
+protocol ComCaptionService: PackageService {}
 
 class ComCaptionServiceImp: NSObject {
     var comCaption: NvsCompoundCaption?
@@ -22,14 +20,10 @@ class ComCaptionServiceImp: NSObject {
 }
 
 extension ComCaptionServiceImp: ComCaptionService {
-    func cancelAction() {
-        
-    }
-    
-    func sureAction() {
-        
-    }
-    
+    func cancelAction() {}
+
+    func sureAction() {}
+
     func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_CompoundCaption, sync: true, assetPackageId: pid)
@@ -131,16 +125,15 @@ extension ComCaptionServiceImp: PackageSubviewSource {
     func titles() -> [String] {
         ["CompoundCaption"]
     }
-    
-    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+
+    func customView(index _: Int) -> JXSegmentedListContainerViewListDelegate {
         let list = PackageList.newInstance()
         let assetDir = Bundle.main.bundlePath + "/compoundcaption"
         var asset = DataSource(assetDir, typeString: "compoundcaption")
         asset.didFetchSuccess = { dataSource in
             list.dataSource = dataSource
         }
-        asset.didFetchError = { error in
-            
+        asset.didFetchError = { _ in
         }
         asset.fetchData()
         list.didSelectedPackage = { [weak self] item in

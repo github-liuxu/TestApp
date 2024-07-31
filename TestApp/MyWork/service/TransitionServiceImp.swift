@@ -5,9 +5,9 @@
 //  Created by 刘东旭 on 2024/7/28.
 //
 
-import UIKit
 import JXSegmentedView
 import NvStreamingSdkCore
+import UIKit
 
 protocol TransitionService: DataSourceFetchService {
     var selectedIndex: UInt32 { get set }
@@ -26,14 +26,10 @@ class TransitionServiceImp: NSObject, TransitionService {
 }
 
 extension TransitionServiceImp: PackageService {
-    func cancelAction() {
-        
-    }
-    
-    func sureAction() {
-        
-    }
-    
+    func cancelAction() {}
+
+    func sureAction() {}
+
     func applyPackage(item: DataSourceItemProtocol) {
         guard let timeline = timeline else { return }
         let videoTrack = timeline.getVideoTrack(by: 0)
@@ -63,16 +59,15 @@ extension TransitionServiceImp: PackageSubviewSource {
     func titles() -> [String] {
         return ["2D", "3D"]
     }
-    
-    func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
+
+    func customView(index _: Int) -> JXSegmentedListContainerViewListDelegate {
         let list = PackageList.newInstance()
         let assetDir = Bundle.main.bundlePath + "/videotransition"
         var asset = DataSource(assetDir, typeString: "videotransition")
         asset.didFetchSuccess = { dataSource in
             list.dataSource = dataSource
         }
-        asset.didFetchError = { error in
-            
+        asset.didFetchError = { _ in
         }
         asset.fetchData()
         list.didSelectedPackage = { [weak self] item in

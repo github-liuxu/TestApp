@@ -129,7 +129,6 @@ class EditViewController: UIViewController {
 
         sequence?.didSelectClipIndex = { [weak self] index in
             let videoClipService = self?.timelineService?.getClipService(index: index)
-            
         }
 
         timelineService?.didPlaybackTimelinePosition = { [weak self] position, _ in
@@ -167,7 +166,7 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
         let subview = item.viewClass.newInstance()
         view.addSubview(subview)
         subview.show()
-        subview.didViewClose = { [weak self] isCancelled in
+        subview.didViewClose = { [weak self] _ in
             self?.preview.rectView.moveable = self?.operate
         }
         if item.title == "Filter" {

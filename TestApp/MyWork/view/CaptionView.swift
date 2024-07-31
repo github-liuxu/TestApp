@@ -167,8 +167,7 @@ extension CaptionView: JXSegmentedListContainerViewDataSource {
         asset.didFetchSuccess = { dataSource in
             list.dataSource = dataSource
         }
-        asset.didFetchError = { error in
-            
+        asset.didFetchError = { _ in
         }
         asset.fetchData()
         return list

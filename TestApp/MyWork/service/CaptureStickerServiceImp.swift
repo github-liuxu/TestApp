@@ -5,9 +5,9 @@
 //  Created by Mac-Mini on 2024/7/25.
 //
 
+import JXSegmentedView
 import NvStreamingSdkCore
 import UIKit
-import JXSegmentedView
 
 class CaptureStickerServiceImp: NSObject {
     weak var rectable: Rectable?
@@ -16,7 +16,7 @@ class CaptureStickerServiceImp: NSObject {
     var livewindow: NvsLiveWindow?
     var didFetchSuccess: (() -> Void)?
     var didFetchError: ((Error) -> Void)?
-    
+
     func getAnchorPoint(sticker: NvsAnimatedSticker?) -> CGPoint {
         guard let sticker = sticker else { return .zero }
         let vertices = sticker.getBoundingRectangleVertices() as NSArray
@@ -31,7 +31,7 @@ extension CaptureStickerServiceImp: StickerService {
     func fetchData() {
         didFetchSuccess?()
     }
-    
+
     func applyCustomPackage(item: DataSourceItemProtocol, imagePath: String) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
@@ -41,18 +41,14 @@ extension CaptureStickerServiceImp: StickerService {
 }
 
 extension CaptureStickerServiceImp: PackageService {
-    func cancelAction() {
-        
-    }
-    
-    func sureAction() {
-        
-    }
-    
+    func cancelAction() {}
+
+    func sureAction() {}
+
     func applyPackage(item: DataSourceItemProtocol) {
         let pid = NSMutableString()
         streamingContext.assetPackageManager.installAssetPackage(item.packagePath, license: item.licPath, type: NvsAssetPackageType_AnimatedSticker, sync: true, assetPackageId: pid)
-        sticker = streamingContext.appendCaptureAnimatedSticker(0, duration: 1000000000, animatedStickerPackageId: pid as String)
+        sticker = streamingContext.appendCaptureAnimatedSticker(0, duration: 1_000_000_000, animatedStickerPackageId: pid as String)
         drawRects()
     }
 }
@@ -117,7 +113,7 @@ extension CaptureStickerServiceImp: PackageSubviewSource {
     func titles() -> [String] {
         return ["sticker", "custom"]
     }
-    
+
     func customView(index: Int) -> JXSegmentedListContainerViewListDelegate {
         let list = PackageList.newInstance()
         let assetDir = Bundle.main.bundlePath + "/sticker"
@@ -126,8 +122,7 @@ extension CaptureStickerServiceImp: PackageSubviewSource {
             asset.didFetchSuccess = { dataSource in
                 list.dataSource = dataSource
             }
-            asset.didFetchError = { error in
-                
+            asset.didFetchError = { _ in
             }
             asset.fetchData()
             list.didSelectedPackage = { [weak self] item in
@@ -138,8 +133,7 @@ extension CaptureStickerServiceImp: PackageSubviewSource {
             asset.didFetchSuccess = { dataSource in
                 list.dataSource = dataSource
             }
-            asset.didFetchError = { error in
-                
+            asset.didFetchError = { _ in
             }
             asset.fetchData()
             list.didSelectedPackage = { [weak self] item in

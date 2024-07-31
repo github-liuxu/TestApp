@@ -92,7 +92,7 @@ class CaptureViewController: UIViewController {
         captionView.captionService = capture.captionService
         _ = capture.captionService.addCaption(text: "请输入字幕")
 
-        captionView.didViewClose = { [weak self] isCancelled in
+        captionView.didViewClose = { [weak self] _ in
             self?.rectView.moveable = nil
         }
     }
@@ -101,7 +101,7 @@ class CaptureViewController: UIViewController {
         let sticker = PackagePanel.newInstance()
         view.addSubview(sticker)
         sticker.show()
-        sticker.didViewClose = { [weak self] isCancelled in
+        sticker.didViewClose = { [weak self] _ in
             self?.rectView.moveable = nil
         }
         if let sticker = sticker as? PackagePanel {
@@ -109,7 +109,7 @@ class CaptureViewController: UIViewController {
             capture?.stickerService.livewindow = livewindow
             capture?.stickerService.rectable = rectView
             let stickerService = capture?.stickerService
-            sticker.packageService = stickerService            
+            sticker.packageService = stickerService
             sticker.dataSource = stickerService
         }
     }
