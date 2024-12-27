@@ -3,16 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C6251762D1EF98000AF4177 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6251752D1EF98000AF4177 /* Toast */; };
+		0C62517A2D1EF9B300AF4177 /* JXSegmentedView in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6251792D1EF9B300AF4177 /* JXSegmentedView */; };
+		0CC90A392D1EFED6005FF2A1 /* LDXImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 0CC90A382D1EFED6005FF2A1 /* LDXImagePicker */; };
+		0CC90A3A2D1EFEE3005FF2A1 /* LDXImagePicker in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 0CC90A382D1EFED6005FF2A1 /* LDXImagePicker */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0CE9447A2C4ACF3A00C0B23A /* RectMoveableImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE944792C4ACF3A00C0B23A /* RectMoveableImp.swift */; };
 		0CE944802C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9447F2C4D66ED00C0B23A /* CaptureCaptionServiceImp.swift */; };
 		0CF6F8532C52C5FB00E8A53A /* VideoClipServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6F8522C52C5FB00E8A53A /* VideoClipServiceImp.swift */; };
 		0CF6F85D2C555BE500E8A53A /* PackagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6F85C2C555BE500E8A53A /* PackagePanel.swift */; };
 		0CF6F8602C5572D700E8A53A /* TransitionServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6F85F2C5572D700E8A53A /* TransitionServiceImp.swift */; };
-		1C26F95D2EE3D98E23860605 /* Pods_TestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2CBE4C76110D3120817AC9 /* Pods_TestApp.framework */; };
 		5806CB792BCE136B00AD93EF /* other in Resources */ = {isa = PBXBuildFile; fileRef = 5806CB782BCE136B00AD93EF /* other */; };
 		5806CB7B2BCE211A00AD93EF /* CaptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5806CB7A2BCE211A00AD93EF /* CaptionView.xib */; };
 		5806CB7D2BCE215200AD93EF /* CaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5806CB7C2BCE215200AD93EF /* CaptionView.swift */; };
@@ -41,8 +44,6 @@
 		588B7E1F2B63F1B6005ADA60 /* TimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E1E2B63F1B6005ADA60 /* TimelineService.swift */; };
 		588B7E212B64E92E005ADA60 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E202B64E92E005ADA60 /* Utils.swift */; };
 		588B7E412B67A3FD005ADA60 /* meishesdk.lic in Resources */ = {isa = PBXBuildFile; fileRef = 588B7E402B67A3FD005ADA60 /* meishesdk.lic */; };
-		588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */; };
-		588B7E582B67AF61005ADA60 /* LDXImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		588B7E612B68DBB3005ADA60 /* AlbumUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */; };
 		588B7E642B68E8E9005ADA60 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E632B68E8E9005ADA60 /* CaptureViewController.swift */; };
 		588B7E682B68EE04005ADA60 /* CaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588B7E672B68EE04005ADA60 /* CaptureService.swift */; };
@@ -73,30 +74,6 @@
 		58FC08D22C086D11003FD8FE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FC08D12C086D11003FD8FE /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		588B7E502B67ACAE005ADA60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AAA8FE271ACDA0CE002A9710;
-			remoteInfo = LDXImagePickerDemo;
-		};
-		588B7E522B67ACAE005ADA60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AAA8FE031ACDA079002A9710;
-			remoteInfo = LDXImagePicker;
-		};
-		588B7E542B67ACC1005ADA60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AAA8FE021ACDA079002A9710;
-			remoteInfo = LDXImagePicker;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		585C69D82A7CC5D500BB945E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -105,7 +82,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				585C69D72A7CC5D500BB945E /* NvStreamingSdkCore.framework in Embed Frameworks */,
-				588B7E582B67AF61005ADA60 /* LDXImagePicker.framework in Embed Frameworks */,
+				0CC90A3A2D1EFEE3005FF2A1 /* LDXImagePicker in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,8 +95,6 @@
 		0CF6F8522C52C5FB00E8A53A /* VideoClipServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoClipServiceImp.swift; sourceTree = "<group>"; };
 		0CF6F85C2C555BE500E8A53A /* PackagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagePanel.swift; sourceTree = "<group>"; };
 		0CF6F85F2C5572D700E8A53A /* TransitionServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionServiceImp.swift; sourceTree = "<group>"; };
-		4BB314A834B6D9C7E647DA03 /* Pods-TestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.release.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.release.xcconfig"; sourceTree = "<group>"; };
-		5428F8C0F86EAB50C36A307F /* Pods-TestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.debug.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5806CB782BCE136B00AD93EF /* other */ = {isa = PBXFileReference; lastKnownFileType = folder; path = other; sourceTree = "<group>"; };
 		5806CB7A2BCE211A00AD93EF /* CaptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CaptionView.xib; sourceTree = "<group>"; };
 		5806CB7C2BCE215200AD93EF /* CaptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionView.swift; sourceTree = "<group>"; };
@@ -149,7 +124,6 @@
 		588B7E1E2B63F1B6005ADA60 /* TimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineService.swift; sourceTree = "<group>"; };
 		588B7E202B64E92E005ADA60 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		588B7E402B67A3FD005ADA60 /* meishesdk.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = meishesdk.lic; sourceTree = "<group>"; };
-		588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LDXImagePicker.xcodeproj; path = LDXImagePicker/LDXImagePicker.xcodeproj; sourceTree = "<group>"; };
 		588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumUtils.swift; sourceTree = "<group>"; };
 		588B7E632B68E8E9005ADA60 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		588B7E672B68EE04005ADA60 /* CaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureService.swift; sourceTree = "<group>"; };
@@ -178,7 +152,6 @@
 		58FB6FE32C478870003FC269 /* PackageList.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageList.xib; sourceTree = "<group>"; };
 		58FB6FE52C478898003FC269 /* PackageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageList.swift; sourceTree = "<group>"; };
 		58FC08D12C086D11003FD8FE /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		5D2CBE4C76110D3120817AC9 /* Pods_TestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,8 +161,9 @@
 			files = (
 				58FC08D22C086D11003FD8FE /* WebKit.framework in Frameworks */,
 				585C69D62A7CC5D500BB945E /* NvStreamingSdkCore.framework in Frameworks */,
-				588B7E572B67AF61005ADA60 /* LDXImagePicker.framework in Frameworks */,
-				1C26F95D2EE3D98E23860605 /* Pods_TestApp.framework in Frameworks */,
+				0C62517A2D1EF9B300AF4177 /* JXSegmentedView in Frameworks */,
+				0C6251762D1EF98000AF4177 /* Toast in Frameworks */,
+				0CC90A392D1EFED6005FF2A1 /* LDXImagePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,11 +173,9 @@
 		585C69B02A7BBDC300BB945E = {
 			isa = PBXGroup;
 			children = (
-				588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */,
 				585C69BB2A7BBDC300BB945E /* TestApp */,
 				585C69BA2A7BBDC300BB945E /* Products */,
 				585C69D42A7CC5D400BB945E /* Frameworks */,
-				CBE7F2843D65E420456DBABF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -248,7 +220,6 @@
 			children = (
 				58FC08D12C086D11003FD8FE /* WebKit.framework */,
 				585C69D52A7CC5D500BB945E /* NvStreamingSdkCore.framework */,
-				5D2CBE4C76110D3120817AC9 /* Pods_TestApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -277,15 +248,6 @@
 				588B7E602B68DBB3005ADA60 /* AlbumUtils.swift */,
 			);
 			path = MyWork;
-			sourceTree = "<group>";
-		};
-		588B7E4C2B67ACAE005ADA60 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				588B7E512B67ACAE005ADA60 /* LDXImagePickerDemo.app */,
-				588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		588B7E6A2B690262005ADA60 /* service */ = {
@@ -340,15 +302,6 @@
 			path = dataSource;
 			sourceTree = "<group>";
 		};
-		CBE7F2843D65E420456DBABF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5428F8C0F86EAB50C36A307F /* Pods-TestApp.debug.xcconfig */,
-				4BB314A834B6D9C7E647DA03 /* Pods-TestApp.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -356,20 +309,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 585C69CD2A7BBDC400BB945E /* Build configuration list for PBXNativeTarget "TestApp" */;
 			buildPhases = (
-				CC8DB2AA7A6E0B2F90987707 /* [CP] Check Pods Manifest.lock */,
 				585C69B52A7BBDC300BB945E /* Sources */,
 				585C69B62A7BBDC300BB945E /* Frameworks */,
 				585C69B72A7BBDC300BB945E /* Resources */,
 				585C69D82A7CC5D500BB945E /* Embed Frameworks */,
-				58582BDCF0023BF58C425E40 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				588B7E552B67ACC1005ADA60 /* PBXTargetDependency */,
 			);
 			name = TestApp;
 			packageProductDependencies = (
+				0C6251752D1EF98000AF4177 /* Toast */,
+				0C6251792D1EF9B300AF4177 /* JXSegmentedView */,
+				0CC90A382D1EFED6005FF2A1 /* LDXImagePicker */,
 			);
 			productName = TestApp;
 			productReference = 585C69B92A7BBDC300BB945E /* TestApp.app */;
@@ -400,38 +353,18 @@
 			);
 			mainGroup = 585C69B02A7BBDC300BB945E;
 			packageReferences = (
+				0C6251742D1EF98000AF4177 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				0C6251782D1EF9B300AF4177 /* XCRemoteSwiftPackageReference "JXSegmentedView" */,
+				0CC90A372D1EFED5005FF2A1 /* XCLocalSwiftPackageReference "LDXImagePicker" */,
 			);
 			productRefGroup = 585C69BA2A7BBDC300BB945E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 588B7E4C2B67ACAE005ADA60 /* Products */;
-					ProjectRef = 588B7E4B2B67ACAE005ADA60 /* LDXImagePicker.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				585C69B82A7BBDC300BB945E /* TestApp */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		588B7E512B67ACAE005ADA60 /* LDXImagePickerDemo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = LDXImagePickerDemo.app;
-			remoteRef = 588B7E502B67ACAE005ADA60 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		588B7E532B67ACAE005ADA60 /* LDXImagePicker.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LDXImagePicker.framework;
-			remoteRef = 588B7E522B67ACAE005ADA60 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		585C69B72A7BBDC300BB945E /* Resources */ = {
@@ -462,48 +395,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		58582BDCF0023BF58C425E40 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestApp/Pods-TestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestApp/Pods-TestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestApp/Pods-TestApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CC8DB2AA7A6E0B2F90987707 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TestApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		585C69B52A7BBDC300BB945E /* Sources */ = {
@@ -552,14 +443,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		588B7E552B67ACC1005ADA60 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LDXImagePicker;
-			targetProxy = 588B7E542B67ACC1005ADA60 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		585C69C22A7BBDC300BB945E /* Main.storyboard */ = {
@@ -697,7 +580,6 @@
 		};
 		585C69CE2A7BBDC400BB945E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5428F8C0F86EAB50C36A307F /* Pods-TestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -738,7 +620,6 @@
 		};
 		585C69CF2A7BBDC400BB945E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4BB314A834B6D9C7E647DA03 /* Pods-TestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -799,6 +680,49 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0CC90A372D1EFED5005FF2A1 /* XCLocalSwiftPackageReference "LDXImagePicker" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LDXImagePicker;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0C6251742D1EF98000AF4177 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		0C6251782D1EF9B300AF4177 /* XCRemoteSwiftPackageReference "JXSegmentedView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pujiaxin33/JXSegmentedView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0C6251752D1EF98000AF4177 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C6251742D1EF98000AF4177 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+		0C6251792D1EF9B300AF4177 /* JXSegmentedView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C6251782D1EF9B300AF4177 /* XCRemoteSwiftPackageReference "JXSegmentedView" */;
+			productName = JXSegmentedView;
+		};
+		0CC90A382D1EFED6005FF2A1 /* LDXImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LDXImagePicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 585C69B12A7BBDC300BB945E /* Project object */;
 }

@@ -9,7 +9,7 @@ import AVFAudio
 import Combine
 import Dispatch
 import NvStreamingSdkCore
-import Toast_Swift
+import Toast
 import UIKit
 
 class EditViewController: UIViewController {
