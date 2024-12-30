@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import NvStreamingSdkCore
+import AVFAudio
 
 func seek(timeline: NvsTimeline?, timestamp: Int64 = -1, flags: Int32 = Int32(NvsStreamingEngineSeekFlag_ShowCaptionPoster.rawValue | NvsStreamingEngineSeekFlag_ShowAnimatedStickerPoster.rawValue | NvsStreamingEngineSeekFlag_BuddyHostVideoFrame.rawValue | NvsStreamingEngineSeekFlag_BuddyOriginHostVideoFrame.rawValue)) {
     guard let timeline = timeline else { return }
@@ -27,7 +28,7 @@ protocol TimelineFxService {
     var timeline: NvsTimeline? { get set }
 }
 
-class TimelineService: NSObject, TimelineFxService {
+class TimelineService: NSObject, TimelineFxService, NvsStreamingContextWebDelegate {
     var livewindow: NvsLiveWindow
     var timeline: NvsTimeline?
     let streamingContext = NvsStreamingContext.sharedInstance()!
@@ -58,8 +59,14 @@ class TimelineService: NSObject, TimelineFxService {
         transitionService.timeline = timeline
         streamingContext.connect(timeline, with: livewindow)
         timeline?.appendVideoTrack()
+        streamingContext.webDelegate = self
         streamingContext.seekTimeline(timeline, timestamp: 0, videoSizeMode: NvsVideoPreviewSizeModeLiveWindowSize, flags: seekFlag)
         streamingContext.delegate = self
+
+    }
+    
+    func onWebRequestWaitStatusChange(_ isVideo: Bool, waiting: Bool) {
+        print("----->isVideo:\(isVideo), waiting:\(waiting)")
     }
 
     func clear() {
@@ -73,10 +80,22 @@ class TimelineService: NSObject, TimelineFxService {
         let currentTime = streamingContext.getTimelineCurrentPosition(timeline)
         let videoTrack = timeline.getVideoTrack(by: 0)
         for localId in localIds {
+            videoTrack?.appendClip("https://qasset.meishesdk.com/app/sdkdemo/video/2d595bb7ae864a0f9dd7bab49298b74e.mp4")
             videoTrack?.appendClip(localId)
         }
         timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))
         seek(time: currentTime)
+    }
+    
+    func testCaption() {
+        guard let timeline = timeline else { return }
+        let packagePath = Bundle.main.bundlePath + "/15939888-06E6-478F-9C65-B39795CF250C.1.captionstyle"
+        let pid = NSMutableString()
+        streamingContext.assetPackageManager.installAssetPackage(packagePath, license: "", type: NvsAssetPackageType_CaptionStyle, sync: true, assetPackageId: pid)
+        let caption = timeline.addCaption("你好，你好，hello", inPoint: 0, duration: timeline.duration, captionStylePackageId:nil)
+        caption?.applyStyle(pid as String)
+//        let caption = timeline.addModularCaption("你好，你好，hello", inPoint: 0, duration: timeline.duration)
+//        caption?.applyStyle(pid as String)
     }
 
     func getClipService(index: UInt32, trackIndex: UInt32 = 0) -> VideoClipService? {

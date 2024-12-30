@@ -12,6 +12,8 @@ import WebKit
 
 class ViewController: UIViewController {
     let albumUtils = AlbumUtils()
+    var palyer: AVAudioPlayer?
+    var avplayer: AVPlayer?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -22,6 +24,14 @@ class ViewController: UIViewController {
         } else {
             print("faild")
         }
+//        NvsStreamingContext.sharedInstance(withFlags: NvsStreamingContextFlag_DisableHardwareAudioReader)
+        
+//        self.palyer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.bundlePath + "/IMG_0022.MOV"))
+//        self.palyer?.play()
+//        
+//        self.avplayer = AVPlayer(url: URL(fileURLWithPath: Bundle.main.bundlePath + "/IMG_0022.MOV"))
+//        self.avplayer?.play()
+        
     }
 
     @IBAction func editClick(_: Any) {
