@@ -54,7 +54,6 @@ class EditViewController: UIViewController {
 
     @objc func saveAction() {
         view.makeToastActivity(.center)
-        let coverPath = Bundle.main.bundlePath + "/181709.png"
         let compilePath = NSHomeDirectory() + "/Documents/" + currentDateAndTime() + ".mp4"
         timelineService?.saveAction(compilePath, coverPath: nil)?
             .sink(receiveCompletion: { [weak self] completion in
