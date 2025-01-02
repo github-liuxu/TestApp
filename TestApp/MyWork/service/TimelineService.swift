@@ -80,7 +80,6 @@ class TimelineService: NSObject, TimelineFxService, NvsStreamingContextWebDelega
         let currentTime = streamingContext.getTimelineCurrentPosition(timeline)
         let videoTrack = timeline.getVideoTrack(by: 0)
         for localId in localIds {
-            videoTrack?.appendClip("https://qasset.meishesdk.com/app/sdkdemo/video/2d595bb7ae864a0f9dd7bab49298b74e.mp4")
             videoTrack?.appendClip(localId)
         }
         timeValueChanged?(formatTime(time: currentTime), formatTime(time: timeline.duration))

@@ -44,12 +44,6 @@ class EditViewController: UIViewController {
         let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveAction))
         navigationItem.setRightBarButton(save, animated: true)
         // Do any additional setup after loading the view.
-        
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 1000000000), execute: DispatchWorkItem(block: {
-//            self.timelineService?.testCaption()
-//        }))
-        
-        
     }
 
     @objc func saveAction() {
